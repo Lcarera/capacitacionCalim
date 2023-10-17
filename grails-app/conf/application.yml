@@ -4,10 +4,17 @@ grails:
     codegen:
         defaultPackage: capacitacioncalim
     gorm:
+        autowire: true
         reactor:
             # Whether to translate GORM events into Reactor events
             # Disabled by default for performance reasons
             events: false
+        default:
+            mapping: 
+                id: 
+                    generator: 'org.hibernate.id.enhanced.SequenceStyleGenerator'
+                    params: [prefer_sequence_per_entity: true]
+            
 info:
     app:
         name: '@info.app.name@'
