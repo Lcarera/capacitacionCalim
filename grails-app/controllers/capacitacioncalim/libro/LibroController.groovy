@@ -19,4 +19,27 @@ class LibroController {
         def libros = libroService.listLibros()
         [libros: libros]
     }
+
+    def create() {  
+    }
+
+    def save(String titulo, String autor) {
+        libroService.save(titulo, autor)
+        redirect(action: "list")
+    }
+
+    def edit(Long id) {
+        def libro = libroService.getLibro(id)
+        [libro: libro]
+    }
+
+    def update(Long id, String titulo, String autor) {
+        libroService.update(id, titulo, autor)
+        redirect(action: "list")
+    }
+
+    def delete(Long id) {
+        libroService.delete(id)
+        redirect(action: "list")
+    }
 }
