@@ -3,7 +3,7 @@
 ## Groovy y Grails
 Groovy es un lenguaje de programación dinámico que se ejecuta en la JVM (Java Virtual Machine). Es un lenguaje de programación orientado a objetos que se utiliza principalmente para escribir scripts y aplicaciones de automatización. 
 
-Por otro lado, GSP (Groovy Server Pages) es un lenguaje de plantillas que se utiliza para generar contenido HTML dinámico en aplicaciones web de Grails. Los archivos GSP se utilizan para definir la estructura y el diseño de las páginas web, mientras que los archivos Groovy se utilizan para definir la lógica de la aplicación.
+Por otro lado, GSP (Groovy Server Pages) es un lenguaje que se utiliza para generar contenido HTML dinámico en aplicaciones web de Grails. Los archivos GSP se utilizan para definir la estructura y el diseño de las páginas web, mientras que los archivos Groovy se utilizan para definir la lógica de la aplicación.
 
 Los archivos .groovy contienen código Groovy que se ejecuta en el servidor, mientras que los archivos .gsp contienen código GSP que se utiliza para generar contenido HTML dinámico en el navegador del usuario. 
 
