@@ -63,3 +63,41 @@ Clonar (clone): es el proceso de copiar un repositorio remoto en una carpeta loc
 Push: es el proceso de enviar los cambios realizados en una rama local a un repositorio remoto.
 
 Pull: es el proceso de obtener los cambios realizados en un repositorio remoto y fusionarlos con una rama local.
+
+## Relaciones entre Objetos
+En Groovy, belongsTo y hasMany son propiedades que se utilizan para definir relaciones entre clases de dominio.
+
+belongsTo se utiliza para definir una relación de muchos a uno entre dos clases de dominio. Esto significa que muchas instancias de una clase de dominio están asociadas con una instancia de otra clase de dominio. La propiedad belongsTo se define en la clase de dominio que no tiene la clave foránea y especifica el nombre de la clase de dominio asociada.
+
+Por otro lado, hasMany se utiliza para definir una relación de uno a muchos entre dos clases de dominio. Esto significa que una instancia de una clase de dominio está asociada con muchas instancias de otra clase de dominio. La propiedad hasMany se define en la clase de dominio que tiene la clave foránea y especifica el nombre de la clase de dominio asociada.
+
+```groovy
+class Libro {
+    String titulo
+    String autor
+
+    static belongsTo = [editorial: Editorial]
+
+    static constraints = {
+        titulo nullable: false
+        autor nullable: false
+        editorial nullable: true
+    }
+}
+```
+```groovy
+class Editorial {
+
+    String nombre
+    String direccion
+    Integer anoCreacion
+
+    static hasMany = [libros: Libro]
+    
+    static constraints = {
+        nombre nullable: false
+        direccion nullable: false
+        anoCreacion nullable: false
+    }
+}
+```
