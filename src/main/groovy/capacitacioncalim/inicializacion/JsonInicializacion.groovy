@@ -1,6 +1,9 @@
 package capacitacioncalim.inicializacion
+
 import grails.converters.JSON
+
 import capacitacioncalim.libro.Libro
+import capacitacioncalim.editorial.Editorial
 
 class JsonInicializacion {
     static def inicializar(){
@@ -8,7 +11,17 @@ class JsonInicializacion {
 			def returnArray = [:]
             returnArray['id'] = it.id
             returnArray['titulo'] = it.titulo
-            returnArray['autor'] = it.autor
+            returnArray['nombreAutor'] = it.autor
+            
+            return returnArray
+        }
+
+        JSON.registerObjectMarshaller(Editorial){
+			def returnArray = [:]
+            returnArray['id'] = it.id
+            returnArray['nombre'] = it.nombre
+            returnArray['direccion'] = it.direccion
+            returnArray['anoCreacion'] = it.anoCreacion
 
             return returnArray
         }

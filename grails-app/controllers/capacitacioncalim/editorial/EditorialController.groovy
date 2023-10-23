@@ -21,4 +21,8 @@ class EditorialController {
     
     }
 
+    def ajaxGetEditoriales() {
+        render editorialService.list() as JSON
+    }
+
 }
