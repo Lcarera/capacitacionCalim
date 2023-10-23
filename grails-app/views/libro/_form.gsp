@@ -4,6 +4,9 @@
 <label for="autor">Autor:</label>
 <input type="text" class="form-control" name="autor" id="autor" value="${libro?.autor}">
 <br>
+<label for="ano">Ano:</label>
+<input type="text" class="form-control" name="ano" id="ano" value="${libro?.ano}">
+<br>
 <label for="editorial">Editorial:</label>
 <select id="cbEditorial" class="form-control" name="editorialId"></select>
 <br>
@@ -31,7 +34,7 @@
             comboId : "cbEditorial",
             ajaxLink : "${createLink(controller: 'editorial', action: 'ajaxGetEditoriales')}",
             idDefault : '${libro?.editorialId}',
-            atributo: "nombre"
+            atributo: "anoCreacion"
         });
     });
 </script>
