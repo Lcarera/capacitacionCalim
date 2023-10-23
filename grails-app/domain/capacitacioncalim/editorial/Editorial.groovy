@@ -8,8 +8,6 @@ class Editorial {
     String direccion
     Integer anoCreacion
 
-    static hasMany = [libros: Libro]
-
     static constraints = {
         nombre nullable: false
         direccion nullable: false
