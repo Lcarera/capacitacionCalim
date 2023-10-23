@@ -29,7 +29,7 @@
                 color: white;
                 
             }
-            h1.librotitulo {
+            h1.editorialtitulo {
                 text-align: center;
                 color: white;
             }
@@ -41,32 +41,32 @@
     <body>
         <div class="container col-8">
             <div class="container col-12 xd">
-                <h1 class="librotitulo">LIBROS</h1>
+                <h1 class="editorialtitulo">EDITORIALES</h1>
             </div>
             <table>
                 <thead>
                     
                     <tr>
-                        <th>Título</th>
-                        <th>Autor</th>
-                        <th>Año</th>
+                        <th>Nombre</th>
+                        <th>Direccion</th>
+                        <th>Año Creación</th>
                         <th>Editar</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <g:each var="libro" in="${libros}">
+                    <g:each var="editorial" in="${editoriales}">
                         <tr>
-                            <td>${libro.titulo}</td>
-                            <td>${libro.autor}</td>
-                            <td>${libro.ano}</td>
+                            <td>${editorial.nombre}</td>
+                            <td>${editorial.direccion}</td>
+                            <td>${editorial.anoCreacion}</td>
                             <td>
-                                <g:link action="edit" class="btn btn-info" params='[id:"${libro.id}"]'>Editar</g:link>
+                                <g:link action="edit" class="btn btn-info" params='[id:"${editorial.id}"]'>Editar</g:link>
                             </td>
                         </tr>
                     </g:each>
                 </tbody>                
             </table>
-            <g:link controller="libro" action="create" class="btn btn-primary">Agregar Libro</g:link>
+            <g:link controller="editorial" action="create" class="btn btn-primary">Agregar Editorial</g:link>
         </div>
     </body>
 </html>
