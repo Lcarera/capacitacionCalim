@@ -1,5 +1,5 @@
 package capacitacioncalim.inicializacion
-
+import grails.converters.JSON
 import capacitacioncalim.libro.Libro
 
 class JsonInicializacion {
