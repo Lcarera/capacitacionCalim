@@ -5,13 +5,12 @@
 <input type="text" class="form-control" name="autor" id="autor" value="${libro?.autor}">
 <br>
 <label for="ano">Ano:</label>
-<input type="text" class="form-control" name="ano" id="ano" value="${libro?.ano}">
+<input type="number" class="form-control" name="ano" id="ano" value="${libro?.ano}">
 <br>
 <label for="editorial">Editorial:</label>
 <select id="cbEditorial" class="form-control" name="editorialId"></select>
 <br>
-<button class="btn btn-success" type="submit">Guardar</button>
-<g:link class="btn btn-secondary" controller="libro" action="list">Volver</g:link>
+
 <script>
     $(document).ready(function () {
 
@@ -34,7 +33,7 @@
             comboId : "cbEditorial",
             ajaxLink : "${createLink(controller: 'editorial', action: 'ajaxGetEditoriales')}",
             idDefault : '${libro?.editorialId}',
-            atributo: "anoCreacion"
+            atributo: "nombre"
         });
     });
 </script>
