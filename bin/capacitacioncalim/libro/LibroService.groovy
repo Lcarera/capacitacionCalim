@@ -14,6 +14,9 @@ class LibroService {
     }
 
     public Libro save(String titulo, String autor, Integer ano, Long editorialId) {
+        print("HOLAASS $ano")
+        print("HOLAASS $editorialId")
+
         Editorial editorial = editorialService.getEditorial(editorialId)
         Libro libro = new Libro(titulo: titulo, autor: autor, ano: ano, editorial: editorial)
         libro.save(flush:true, failOnError:true)
