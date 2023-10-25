@@ -33,8 +33,8 @@ class LibroController {
         [libro: libro, editorialId: libro.editorial.id]
     }
 
-    def update(Long id, String titulo, String autor, Integer ano) {
-        libroService.update(id, titulo, autor, ano)
+    def update(Long id, String titulo, String autor, Integer ano, long editorialId ) {
+        libroService.update(id, titulo, autor, ano, editorialId)
         redirect(action: "list")
     }
 

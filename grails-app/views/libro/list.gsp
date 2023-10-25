@@ -68,5 +68,28 @@
             </table>
             <g:link controller="libro" action="create" class="btn btn-primary">Agregar Libro</g:link>
         </div>
+        <button class="btn btn-primary" id="miboton" onclick="mifuncion()"> a </button>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+        <script>
+        function mifuncion(){
+                Swal.fire({
+                title: 'Estas Seguro?',
+                text: 'lol',
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: 'confirmar',
+                cancelButtonText: 'Cancelar',
+                closeOnConfirm: true,
+                closeOnCancel: true 
+			}).then((result) => {
+                if (result.isConfirmed){
+				    window.location.href = "${(createLink(action:'create'))}"
+                }
+			}
+            
+		)};
+        </script>
+
     </body>
 </html>
