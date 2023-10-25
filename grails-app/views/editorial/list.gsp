@@ -67,6 +67,8 @@
                 </tbody>                
             </table>
             <g:link controller="editorial" action="create" class="btn btn-primary">Agregar Editorial</g:link>
+            <g:link controller="libro" action="create" class="btn btn-primary">Agregar Libro</g:link>
+
         </div>
     </body>
 </html>

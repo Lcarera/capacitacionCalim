@@ -37,6 +37,7 @@ class EditorialController {
         redirect(action: "list")
     }
 
+    
     def ajaxGetEditoriales() {
         def editoriales = editorialService.listEditoriales()
         render editoriales as JSON

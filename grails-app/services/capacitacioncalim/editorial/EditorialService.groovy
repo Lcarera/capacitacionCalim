@@ -19,6 +19,7 @@ class EditorialService {
         return Editorial.get(id)
     }
 
+
     public Editorial update(Long id, String nombre, String direccion, Integer anoCreacion) {
         Editorial editorial = Editorial.get(id)
         editorial.nombre = nombre

@@ -33,8 +33,8 @@ class LibroController {
         [libro: libro, editorialId: libro.editorial.id]
     }
 
-    def update(Long id, String titulo, String autor, Integer ano) {
-        libroService.update(id, titulo, autor, ano)
+    def update(Long id, String titulo, String autor, Integer ano, Long editorialId) {
+        libroService.update(id, titulo, autor, ano, editorialId)
         redirect(action: "list")
     }
 
@@ -42,6 +42,7 @@ class LibroController {
         libroService.delete(id)
         redirect(action: "list")
     }
+
 
     def getLibrosEditorialMessi() {
         def libros = libroService.getLibrosByEditorial(10)

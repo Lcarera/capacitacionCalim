@@ -34,7 +34,7 @@
             comboId : "cbEditorial",
             ajaxLink : "${createLink(controller: 'editorial', action: 'ajaxGetEditoriales')}",
             idDefault : '${libro?.editorialId}',
-            atributo: "anoCreacion"
+            atributo: "nombre"
         });
     });
 </script>
