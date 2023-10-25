@@ -24,11 +24,13 @@ class LibroService {
         return Libro.get(id)
     }
 
-    public Libro update(Long id, String titulo, String autor, Integer ano) {
+    public Libro update(Long id, String titulo, String autor, Integer ano, Long editorialId) {
+        Editorial editorial = editorialService.getEditorial(editorialId)
         Libro libro = Libro.get(id)
         libro.titulo = titulo
         libro.autor = autor
         libro.ano = ano
+        libro.editorial = editorial
         libro.save(flush:true)
         return libro
     }

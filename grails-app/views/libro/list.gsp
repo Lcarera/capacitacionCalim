@@ -45,11 +45,11 @@
             </div>
             <table>
                 <thead>
-                    
                     <tr>
                         <th>Título</th>
                         <th>Autor</th>
                         <th>Año</th>
+                        <th>Editorial</th>
                         <th>Editar</th>
                     </tr>
                 </thead>
@@ -59,6 +59,7 @@
                             <td>${libro.titulo}</td>
                             <td>${libro.autor}</td>
                             <td>${libro.ano}</td>
+                            <td>${libro.editorial.nombre}</td>
                             <td>
                                 <g:link action="edit" class="btn btn-info" params='[id:"${libro.id}"]'>Editar</g:link>
                             </td>
