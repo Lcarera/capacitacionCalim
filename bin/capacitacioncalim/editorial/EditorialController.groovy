@@ -27,7 +27,7 @@ class EditorialController {
         [editorial: editorial]
     }
 
-    def update(Long id, String nombre, String direccion, Integer anoCreacion) {
+    def update(Long id, String nombre, String direccion, Integer anoCreacion, ) {
         editorialService.update(id, nombre, direccion, anoCreacion)
         redirect(action: "list")
     }
