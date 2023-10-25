@@ -39,6 +39,7 @@
         </style>
     </head>
     <body>
+        <script src="sweetalert2.all.min.js"></script>
         <div class="container col-8">
             <div class="container col-12 xd">
                 <h1 class="librotitulo">LIBROS</h1>
@@ -67,7 +68,28 @@
                     </g:each>
                 </tbody>                
             </table>
+            <br>
             <g:link controller="libro" action="create" class="btn btn-primary">Agregar Libro</g:link>
+            <a class="btn btn-primary" href='javascript:;' onclick="llamarswal()">Crear Libro</a>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+            console.log("${createLink(action:'create')}")
+            function llamarswal() {
+            Swal.fire({
+              title: 'Estas seguro?',
+              text: "Vas a crear un libro",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Si, vamos!'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location.href="${createLink(action:'create')}"
+              }
+            })
+            }
+            </script>
         </div>
     </body>
 </html>
