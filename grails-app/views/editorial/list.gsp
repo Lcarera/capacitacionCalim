@@ -40,6 +40,7 @@
         </style>
     </head>
     <body>
+        <script src="sweetalert2.all.min.js"></script>
         <div class="container col-8">
             <div class="container col-12 xd">
                 <h1 class="editorialtitulo">EDITORIALES</h1>

@@ -47,4 +47,9 @@ class LibroController {
         def libros = libroService.getLibrosByEditorial(10)
         render libros as JSON
     }
+    
+    def ajaxGetLibros() {
+        def libros = libroService.listLibros()
+        render libros as JSON
+    }
 }
