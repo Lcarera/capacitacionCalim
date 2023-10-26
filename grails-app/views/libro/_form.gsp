@@ -41,8 +41,6 @@
 
 <script>
     $(document).ready(function () {
-
-
         $("#cbEditorial").select2({
             placeholder: 'Seleccione la editorial',
             formatNoMatches: function() {

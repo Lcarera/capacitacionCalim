@@ -13,3 +13,9 @@
         </g:form>
     </body> 
 </html>
+
+<script>
+    $(document).ready(function () {
+        swal("Bienvenido a crear libros!", "sos re capo makinola");
+    });
+</script>
