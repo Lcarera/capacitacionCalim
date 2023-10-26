@@ -69,6 +69,28 @@
                 </tbody>                
             </table>
             <g:link controller="libro" action="create" class="btn btn-primary">Agregar Libro</g:link>
+            
+            <script>
+                function llamarswal() {
+                    swal({
+                        title: "Redireccion",
+                        text: "Estas seguro?",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonClass: "btn-danger",
+                        confirmButtonText: "Si, redirigeme",
+                        cancelButtonText: "No, quedarse",
+                        closeOnConfirm: true,
+                        closeOnCancel: true
+                    },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                window.location.href = "${createLink(action:'create')}"
+                            }
+                        });
+                }
+
+            </script>
         </div>
     </body>
 </html>
