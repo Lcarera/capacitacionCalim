@@ -12,7 +12,7 @@
         <g:render template="form" />
         <div class="center-content">
             <div class="container-box">
-                <a onclick="BorrarSwal()" id="${libro.id}" href="javascript:;" class="btn btn-danger ">Borrar</a>
+                <a onclick="borrarSwal()" id="${libro.id}" href="javascript:;" class="btn btn-danger ">Borrar</a>
                 <g:link controller="libro" class="btn btn-secondary" action="list">Volver</g:link>
                 <button class="btn btn-success" type="submit">Guardar</button>
             </div>
@@ -20,7 +20,7 @@
     </g:form>
 
     <script>
-        function BorrarSwal() {
+        function borrarSwal() {
             Swal.fire({
                 title: 'Borrar libro?',
                 showDenyButton: true,
