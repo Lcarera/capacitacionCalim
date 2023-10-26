@@ -108,7 +108,7 @@
                 // Row click
                  $(nRow).off('click').on('click', function() {
                     console.log(aData);
-                   // window.location.href = ('${createLink(controller:"editorial", action:"edit")}') + '/' + aData['id'];
+                    window.location.href = ('${createLink(controller:"editorial", action:"edit")}') + '/' + aData['id'];
                 }); 
             }
         });

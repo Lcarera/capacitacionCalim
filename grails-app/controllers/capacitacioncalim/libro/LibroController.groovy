@@ -43,8 +43,9 @@ class LibroController {
         redirect(action: "list")
     }
 
-    def getLibrosEditorialMessi() {
-        def libros = libroService.getLibrosByEditorial(10)
+    def ajaxGetLibros() {
+        def libros = libroService.listLibros()
         render libros as JSON
     }
+
 }
