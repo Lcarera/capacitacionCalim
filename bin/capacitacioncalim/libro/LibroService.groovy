@@ -27,6 +27,12 @@ class LibroService {
         return Libro.get(id)
     }
 
+    def GetEditorial(long id)
+    {
+        Editorial editorial = editorialService.getEditorial(editorialId)
+        return editorial
+    }
+
     public Libro update(Long id, String titulo, String autor, Integer ano, Long editorialId) {
         Libro libro = Libro.get(id)
         libro.titulo = titulo

@@ -9,9 +9,30 @@
             <g:render template="form"/>
             <div class="center-content">
                 <div class="container-box">
-                    <g:link controller="libro" action="delete" id="${libro.id}" class="btn btn-danger ">Borrar</g:link>
+                    <button type="button" onclick="eliminar_libro()" id="${libro.id}" class="btn btn-danger deleteButton">Borrar</button>
                 </div>
             </div>
         </g:form>
+
+        <script>
+            function eliminar_libro(){
+                swal({
+                    title: "¿Estás seguro?",
+                    text: "La condición se eliminará",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Si, eliminar",
+                    cancelButtonText: "No, cancelar",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                    window.location.href = "${createLink(action: 'delete')}/${libro.id}"
+                    }
+                    }
+                );
+            }
+        </script> 
     </body> 
 </html>

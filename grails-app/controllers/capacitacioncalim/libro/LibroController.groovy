@@ -10,7 +10,7 @@ class LibroController {
         render "Hola mundo"
     }
 
-    def listJson() {
+    def ajaxGetLibros() {
         def libros = libroService.listLibros()
         render libros as JSON
     }
@@ -43,8 +43,8 @@ class LibroController {
         redirect(action: "list")
     }
 
-    def getLibrosEditorialMessi() {
-        def libros = libroService.getLibrosByEditorial(10)
+    def getLibrosEditorial(long id) {
+        def libros = libroService.getLibrosByEditorial(id)
         render libros as JSON
     }
 }
