@@ -14,6 +14,9 @@
                         <g:link controller="libro" class="btn btn-secondary" action="list">Volver</g:link> 
                         <button class="btn btn-success" type="submit">Guardar</button>
                         -->
+                    <g:link controller="libro" action="delete" id="${libro.id}" class="btn btn-danger ">Borrar</g:link>
+                    <g:link controller="libro" class="btn btn-secondary" action="list">Volver</g:link>
+                    <button class="btn btn-success" type="submit">Guardar</button>
                 </div>
             </div>
         </g:form>
