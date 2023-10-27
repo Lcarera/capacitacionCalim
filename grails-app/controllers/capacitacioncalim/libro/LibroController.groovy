@@ -10,7 +10,7 @@ class LibroController {
         render "Hola mundo"
     }
 
-    def listJson() {
+    def ajaxGetLibros() {
         def libros = libroService.listLibros()
         render libros as JSON
     }
