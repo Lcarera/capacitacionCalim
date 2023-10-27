@@ -1,17 +1,45 @@
-<label for="titulo">Titulo:</label>
-<input type="text" class="form-control" name="titulo" id="titulo" value="${libro?.titulo}">
-<br>
-<label for="autor">Autor:</label>
-<input type="text" class="form-control" name="autor" id="autor" value="${libro?.autor}">
-<br>
-<label for="ano">Ano:</label>
-<input type="text" class="form-control" name="ano" id="ano" value="${libro?.ano}">
-<br>
-<label for="editorial">Editorial:</label>
-<select id="cbEditorial" class="form-control" name="editorialId"></select>
-<br>
-<button class="btn btn-success" type="submit">Guardar</button>
-<g:link class="btn btn-secondary" controller="libro" action="list">Volver</g:link>
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <style>
+            .center-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                
+            }
+            .container-box {
+                max-width: 400px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="center-content">
+            <div class="container-box">
+
+                <label for="titulo">Titulo:</label>
+                <input type="text" class="form-control" name="titulo" id="titulo" value="${libro?.titulo}">
+                <br>
+                <label for="autor">Autor:</label>
+                <input type="text" class="form-control" name="autor" id="autor" value="${libro?.autor}">
+                <br>
+                <label for="ano">Ano:</label>
+                <input type="text" class="form-control" name="ano" id="ano" value="${libro?.ano}">
+                <br>
+                <label for="editorial">Editorial:</label>
+                <select id="cbEditorial" class="form-control" name="editorialId"></select>
+                <br>
+                <br>
+                <button class="btn btn-success" type="submit">Guardar</button>
+                <g:link class="btn btn-secondary" controller="libro" action="list">Volver</g:link>
+
+            </div>
+        </div>
+    </body>
+</html>
+
 <script>
     $(document).ready(function () {
         $("#cbEditorial").select2({
@@ -32,7 +60,7 @@
             comboId : "cbEditorial",
             ajaxLink : "${createLink(controller: 'editorial', action: 'ajaxGetEditoriales')}",
             idDefault : '${libro?.editorialId}',
-            atributo: "anoCreacion"
+            atributo: "nombre"
         });
     });
 </script>

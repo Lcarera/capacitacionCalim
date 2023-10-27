@@ -26,7 +26,7 @@
             <input type="text" class="form-control" name="direccion" id="direccion" value="${editorial?.direccion}">
             <br>
             <label for="anoCreacion">Año de Creación</label>
-            <input type="text" class="form-control" name="anoCreacion" id="anoCreacion" value="${editorial?.anoCreacion}">
+            <input type="number" class="form-control" name="anoCreacion" id="anoCreacion" value="${editorial?.anoCreacion}">
             <br>
             
         </div>

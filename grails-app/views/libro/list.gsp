@@ -50,6 +50,7 @@
                         <th>Título</th>
                         <th>Autor</th>
                         <th>Año</th>
+                        <th>Editorial ID</th>
                         <th>Editar</th>
                     </tr>
                 </thead>
@@ -59,6 +60,7 @@
                             <td>${libro.titulo}</td>
                             <td>${libro.autor}</td>
                             <td>${libro.ano}</td>
+                            <td>${libro.editorialId}</td>
                             <td>
                                 <g:link action="edit" class="btn btn-info" params='[id:"${libro.id}"]'>Editar</g:link>
                             </td>
@@ -66,6 +68,7 @@
                     </g:each>
                 </tbody>                
             </table>
+            <br>
             <g:link controller="libro" action="create" class="btn btn-primary">Agregar Libro</g:link>
         </div>
     </body>
