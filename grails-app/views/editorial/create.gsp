@@ -11,13 +11,13 @@
                     <g:link controller="editorial" class="btn btn-secondary" action="list">Volver</g:link>
                     <button class="btn btn-success" type="submit">Guardar</button>
                 </div>
-            </div>
+            </div> 
         </g:form>
     </body> 
+    <script>
+        $(document).ready(function () {
+            swal("Bienvenido a crear editoriales!", "sos re capo makinola");
+        });
+    </script>
 </html>
 
-<script>
-    $(document).ready(function () {
-        swal("Bienvenido a crear editoriales!", "sos re capo makinola");
-    });
-</script>

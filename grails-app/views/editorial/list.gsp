@@ -66,6 +66,7 @@
                     </g:each>
                 </tbody>                
             </table>
+            <br>
             <g:link controller="editorial" action="create" class="btn btn-primary">Agregar Editorial</g:link>
         </div>
     </body>
