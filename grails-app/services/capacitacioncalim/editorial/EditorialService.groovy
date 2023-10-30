@@ -9,8 +9,8 @@ class EditorialService {
         Editorial.list()
     }
     
-    public Editorial save(String nombre, String direccion, Integer anoCreacion) {
-        Editorial editorial = new Editorial(nombre: nombre, direccion: direccion, anoCreacion: anoCreacion)
+    public Editorial save(EditorialCommand command) {
+        Editorial editorial = new Editorial(nombre: command.nombre, direccion: command.direccion, anoCreacion: command.anoCreacion)
         editorial.save(flush:true)
         return editorial
     }
@@ -19,11 +19,11 @@ class EditorialService {
         return Editorial.get(id)
     }
 
-    public Editorial update(Long id, String nombre, String direccion, Integer anoCreacion) {
+    public Editorial update(EditorialCommand command) {
         Editorial editorial = Editorial.get(id)
-        editorial.nombre = nombre
-        editorial.direccion = direccion
-        editorial.anoCreacion = anoCreacion
+        editorial.nombre = command.nombre
+        editorial.direccion = command.direccion
+        editorial.anoCreacion = command.anoCreacion
         editorial.save(flush:true)
         return editorial
     }
@@ -32,5 +32,14 @@ class EditorialService {
         Editorial editorial = Editorial.get(id)
         editorial.delete(flush:true)
         return editorial
+    }
+    def getEditorialCommand(Long id){
+        def editoral = getEditorial(id)
+        def command = new EditorialCommand()
+            command.id = editoral.id
+            command.titulo = editoral.nombre
+            command.autor = editoral.direccion
+            command.ano = editoral.anoCreacion
+        return command
     }
 }

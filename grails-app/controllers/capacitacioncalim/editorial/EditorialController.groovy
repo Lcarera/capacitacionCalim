@@ -14,8 +14,8 @@ class EditorialController {
         render editoriales as JSON
     }
 
-    def save(String nombre, String direccion, Integer anoCreacion) {
-        editorialService.save(nombre, direccion, anoCreacion)
+    def save(EditorialCommand command) {
+        editorialService.save(command)
         redirect(action: "list")
     }
     
@@ -23,12 +23,12 @@ class EditorialController {
     }
 
     def edit(Long id) {
-        def editorial = editorialService.getEditorial(id)
-        [editorial: editorial]
+        def editorial = editorialService.ge(id)
+        [editorialCommand: editorial]
     }
 
-    def update(Long id, String nombre, String direccion, Integer anoCreacion) {
-        editorialService.update(id, nombre, direccion, anoCreacion)
+    def update(EditorialCommand command) {
+        editorialService.update(command)
         redirect(action: "list")
     }
 
