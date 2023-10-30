@@ -2,6 +2,8 @@ package capacitacioncalim.libro
 
 import grails.converters.JSON
 
+import capacitacioncalim.Auxiliar
+
 class LibroController {
 
     def libroService
@@ -47,13 +49,40 @@ class LibroController {
     }
 
     def update(LibroCommand command) {
-        libroService.update(command)
-        redirect(action: "list")
+        try{
+            libroService.update(command)
+            redirect(action: "list")
+            flash.message = "Libro guardado correctamente"
+        }
+        catch(AssertionError e) {
+            Auxiliar.printearError e
+            flash.error = e.message.split("finerror")[0]
+            render (view: "edit", model: [libroCommand: command])
+        }
+        catch(Exception e){
+            flash.error = "Error al guardar el libro"
+            Auxiliar.printearError e
+            render (view: "edit", model: [libroCommand: command])
+        }
+    
     }
 
     def delete(Long id) {
-        libroService.delete(id)
-        redirect(action: "list")
+        try{
+            libroService.delete(id)
+            redirect(action: "list")
+            flash.message = "Libro guardado correctamente"
+        }
+        catch(AssertionError e) {
+            Auxiliar.printearError e
+            flash.error = e.message.split("finerror")[0]
+            render (view: "edit", model: [libroCommand: command])
+        }
+        catch(Exception e){
+            flash.error = "Error al guardar el libro"
+            Auxiliar.printearError e
+            render (view: "edit", model: [libroCommand: command])
+        }
     }
 
     def ajaxGetLibros() {
