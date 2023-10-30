@@ -20,13 +20,13 @@
     <div class="center-content">
         <div class="container-box">
             <label for="nombre">Nombre</label>
-            <input type="text" class="form-control" name="nombre" id="nombre" value="${editorial?.nombre}">
+            <input type="text" class="form-control" name="nombre" id="nombre" value="${editorialCommand?.nombre}">
             <br>
             <label for="direccion">Dirección</label>
-            <input type="text" class="form-control" name="direccion" id="direccion" value="${editorial?.direccion}">
+            <input type="text" class="form-control" name="direccion" id="direccion" value="${editorialCommand?.direccion}">
             <br>
             <label for="anoCreacion">Año de Creación</label>
-            <input type="text" class="form-control" name="anoCreacion" id="anoCreacion" value="${editorial?.anoCreacion}">
+            <input type="number" class="form-control" name="anoCreacion" id="anoCreacion" value="${editorialCommand?.anoCreacion}">
             <br>
             
         </div>

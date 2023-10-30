@@ -1,5 +1,6 @@
 package capacitacioncalim.libro
 
+import capacitacioncalim.Auxiliar
 import grails.converters.JSON
 
 class LibroController {
@@ -47,13 +48,39 @@ class LibroController {
     }
 
     def update(LibroCommand command) {
-        libroService.update(command)
-        redirect(action: "list")
+        try{
+            libroService.update(command)
+            flash.message = "Libro editado correctamente"
+            redirect(action: "list")
+        }
+        catch(AssertionError e) {
+            Auxiliar.printearError e
+            flash.error = e.message.split("finerror")[0]
+            render (view: "edit", model: [libroCommand: command])
+        }
+        catch(Exception e){
+            flash.error = "Error al editar el libro"
+            Auxiliar.printearError e
+            render (view: "edit", model: [libroCommand: command])
+        }
     }
 
     def delete(Long id) {
-        libroService.delete(id)
-        redirect(action: "list")
+        try {
+            libroService.delete(id)
+            flash.message = "Libro eliminado correctamente"
+            redirect(action: "list")
+        }
+        catch(AssertionError e) {
+            Auxiliar.printearError e
+            flash.error = e.message.split("finerror")[0]
+            redirect(action: "edit", params: ["id": id])
+        }
+        catch(Exception e) {
+            flash.error = "Error al eliminar el libro"
+            Auxiliar.printearError e
+            redirect(action: "edit", params: ["id": id])
+        }
     }
 
     def ajaxGetLibros() {
