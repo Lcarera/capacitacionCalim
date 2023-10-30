@@ -28,7 +28,7 @@ class LibroService {
         return Libro.get(id)
     }
 
-    public Libro update(command) {
+    public Libro update(LibroCommand command) {
         Editorial editorial = editorialService.getEditorial(command.editorialId)
         Libro libro = Libro.get(command.id)
         libro.titulo = command.titulo

@@ -1,5 +1,4 @@
 package capacitacioncalim.libro
-
 import grails.validation.Validateable
 
 class LibroCommand implements Validateable{

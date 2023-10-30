@@ -1,5 +1,4 @@
 package capacitacioncalim.editorial
-
 import grails.converters.JSON
 class EditorialController {
 
@@ -14,21 +13,34 @@ class EditorialController {
         render editoriales as JSON
     }
 
-    def save(String nombre, String direccion, Integer anoCreacion) {
-        editorialService.save(nombre, direccion, anoCreacion)
-        redirect(action: "list")
+    def save(EditorialCommand command) {
+        try{
+            editorialService.save(command)
+            flash.message = "Editorial guardada correctamente"
+            redirect(action: "list")
+        }
+        catch(AssertionError e) {
+            Auxiliar.printearError e
+            flash.error = e.message.split("finerror")[0]
+            render (view: "create", model: [editorialCommand: command])
+        }
+        catch(Exception e){
+            flash.error = "Error al guardar la editorial"
+            Auxiliar.printearError e
+            render (view: "create", model: [editorialCommand: command])
+        }
     }
     
     def create() {  
     }
 
     def edit(Long id) {
-        def editorial = editorialService.getEditorial(id)
+        def editorial = editorialService.getEditorialCommand(id)
         [editorial: editorial]
     }
 
-    def update(Long id, String nombre, String direccion, Integer anoCreacion) {
-        editorialService.update(id, nombre, direccion, anoCreacion)
+    def update(EditorialCommand command) {
+        editorialService.update(command)
         redirect(action: "list")
     }
 
@@ -41,5 +53,4 @@ class EditorialController {
         def editoriales = editorialService.listEditoriales()
         render editoriales as JSON
     }
-
 }

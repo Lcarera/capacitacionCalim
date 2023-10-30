@@ -12,9 +12,10 @@
         <g:render template="form" />
         <div class="center-content">
             <div class="container-box">
-                <a onclick="borrarSwal()" id="${libroCommand.id}" href="javascript:;" class="btn btn-danger ">Borrar</a>
-                <g:link controller="libro" class="btn btn-secondary" action="list">Volver</g:link>
+                <br>
                 <button class="btn btn-success" type="submit">Guardar</button>
+                <g:link controller="libro" class="btn btn-secondary" action="list">Volver</g:link>
+                <a onclick="borrarSwal()" id="${libroCommand.id}" href="javascript:;" class="btn btn-danger ">Borrar</a>
             </div>
         </div>
     </g:form>
