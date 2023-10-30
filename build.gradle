@@ -62,6 +62,8 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-chrome-driver:2.47.1"
     compile 'org.grails.plugins:postgresql-extensions:4.8.0'
 	compile 'org.postgresql:postgresql:9.4.1211.jre7'
+	compile 'org.grails.plugins:joda-time:2.1.0'
+
 }
 
 bootRun {
