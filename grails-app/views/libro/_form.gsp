@@ -21,7 +21,7 @@
                 return '<g:message code="default.no.elements" default="No hay elementos"/>';
             },
             formatSearching: function() {
-                return '<g:message code="default.searching" default="Buscando..."/>';
+                return 'editorial<g:message code="default.searching" default="Buscando..."/>';
             },
             minimumResultsForSearch: 1,
             formatSelection: function(item) {
