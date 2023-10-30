@@ -24,13 +24,26 @@ class LibroController {
     }
 
     def save(LibroCommand command) {
-        libroService.save(command)
-        redirect(action: "list")
+        try{
+            libroService.save(command)
+            flash.message = "Libro guardado correctamente"
+            redirect(action: "list")
+        }
+        catch(AssertionError e) {
+            Auxiliar.printearError e
+            flash.error = e.message.split("finerror")[0]
+            render (view: "create", model: [libroCommand: command])
+        }
+        catch(Exception e){
+            flash.error = "Error al guardar el libro"
+            Auxiliar.printearError e
+            render (view: "create", model: [libroCommand: command])
+        }
     }
 
     def edit(Long id) {
-        def libro = libroService.getLibroCommand(id)
-        [libro: libro, editorialId: libro.editorial.id]
+        def libroCommand = libroService.getLibroCommand(id)
+        [libroCommand: libroCommand]
     }
 
     def update(LibroCommand command) {
@@ -38,18 +51,14 @@ class LibroController {
         redirect(action: "list")
     }
 
-    def delete(Long id) {   
+    def delete(Long id) {
         libroService.delete(id)
         redirect(action: "list")
     }
 
-    def getLibrosEditorialMessi() {
-        def libros = libroService.getLibrosByEditorial(10)
-        render libros as JSON
-    }
-    
     def ajaxGetLibros() {
         def libros = libroService.listLibros()
         render libros as JSON
     }
+
 }
