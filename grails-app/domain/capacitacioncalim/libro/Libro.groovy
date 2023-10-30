@@ -1,5 +1,4 @@
 package capacitacioncalim.libro
-
 import capacitacioncalim.editorial.Editorial
 
 class Libro {
