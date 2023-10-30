@@ -24,7 +24,7 @@ class LibroController {
     }
 
     def save(LibroCommand command) {
-        libroService.save(command.titulo, command.autor, command.ano, command.editorialId)
+        libroService.save(command)
         redirect(action: "list")
     }
 

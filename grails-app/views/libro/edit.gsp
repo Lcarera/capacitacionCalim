@@ -10,13 +10,9 @@
             <div class="center-content">
                 <div class="container-box">
                     <button type="button" onclick="confirmarBorrar()" id="${libroCommand.id}" class="btn btn-danger ">Borrar</button>
-                        <!-- 
-                        <g:link controller="libro" class="btn btn-secondary" action="list">Volver</g:link> 
-                        <button class="btn btn-success" type="submit">Guardar</button>
-                        -->
-                    <g:link controller="libro" action="delete" id="${libroCommand.id}" class="btn btn-danger ">Borrar</g:link>
+                    <%-- <g:link controller="libro" action="delete" id="${libroCommand.id}" class="btn btn-danger ">Borrar</g:link>
                     <g:link controller="libro" class="btn btn-secondary" action="list">Volver</g:link>
-                    <button class="btn btn-success" type="submit">Guardar</button>
+                    <button class="btn btn-success" type="submit">Guardar</button> --%>
                 </div>
             </div>
         </g:form>
