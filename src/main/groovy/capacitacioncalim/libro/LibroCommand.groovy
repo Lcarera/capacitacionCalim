@@ -1,6 +1,8 @@
 package capacitacioncalim.libro
 
-class LibroCommand {
+import grails.validation.Validateable
+
+class LibroCommand implements Validateable{
     
     Long id
     Long version
