@@ -23,18 +23,18 @@ class LibroController {
     def create() {  
     }
 
-    def save(String titulo, String autor, Integer ano, Long editorialId) {
-        libroService.save(titulo, autor, ano, editorialId)
+    def save(LibroCommand command) {
+        libroService.save(command)
         redirect(action: "list")
     }
 
     def edit(Long id) {
-        def libro = libroService.getLibro(id)
-        [libro: libro, editorialId: libro.editorial.id]
+        def libroCommand = libroService.getLibroCommand(id)
+        [libroCommand: libroCommand]
     }
 
-    def update(Long id, String titulo, String autor, Integer ano) {
-        libroService.update(id, titulo, autor, ano)
+    def update(LibroCommand command) {
+        libroService.update(command)
         redirect(action: "list")
     }
 
@@ -43,8 +43,9 @@ class LibroController {
         redirect(action: "list")
     }
 
-    def getLibrosEditorialMessi() {
-        def libros = libroService.getLibrosByEditorial(10)
+    def ajaxGetLibros() {
+        def libros = libroService.listLibros()
         render libros as JSON
     }
+
 }
