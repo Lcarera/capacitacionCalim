@@ -32,7 +32,6 @@ class EditorialController {
             Auxiliar.printearError e
             render (view: "create", model: [editorialCommand: command])
         }
-
     }
     
     def create() {  

@@ -16,7 +16,7 @@ class EditorialService {
         editorial.nombre = command.nombre
         editorial.direccion = command.direccion
         editorial.anoCreacion = command.anoCreacion
-        editorial.save(flush:true)
+        editorial.save(flush:true, failOnError:true)
         return editorial
     }
 
@@ -31,13 +31,13 @@ class EditorialService {
         editorial.nombre = command.nombre
         editorial.direccion = command.direccion 
         editorial.anoCreacion = command.anoCreacion
-        editorial.save(flush:true)
+        editorial.save(flush:true,failOnError:true)
         return editorial
     }
 
     public Editorial delete(Long id) {
         Editorial editorial = Editorial.get(id)
-        editorial.delete(flush:true)
+        editorial.delete(flush:true, failOnError:true)
         return editorial
     }
 
