@@ -18,4 +18,4 @@ class LibroCommand {
         ano nullable: false
         editorialId nullable: true
     }
-}
+} 
