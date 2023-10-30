@@ -5,11 +5,11 @@
     </head>
     <body>
         <g:form controller="libro" action="update">
-            <g:hiddenField name="id" value="${libro.id}"/>
+            <g:hiddenField name="id" value="${libroCommand.id}"/>
             <g:render template="form"/>
             <div class="center-content">
                 <div class="container-box">
-                    <button type="button" onclick="eliminar_libro()" id="${libro.id}" class="btn btn-danger deleteButton">Borrar</button>
+                    <button type="button" onclick="eliminar_libro()" id="${libroCommand.id}" class="btn btn-danger deleteButton">Borrar</button>
                 </div>
             </div>
         </g:form>
@@ -28,7 +28,7 @@
                     closeOnCancel: true
                 }, function(isConfirm) {
                     if (isConfirm) {
-                    window.location.href = "${createLink(action: 'delete')}/${libro.id}"
+                    window.location.href = "${createLink(action: 'delete')}/${libroCommand.id}"
                     }
                     }
                 );
