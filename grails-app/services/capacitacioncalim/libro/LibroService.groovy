@@ -14,6 +14,7 @@ class LibroService {
     } 
 
     public Libro save(LibroCommand command) {
+        assert command.ano > 0:"El año del libro tiene que ser mayor a 0finerror"
         Editorial editorial = editorialService.getEditorial(command.editorialId)
         Libro libro = new Libro()
         libro.titulo = command.titulo
@@ -29,6 +30,7 @@ class LibroService {
     }
 
     public Libro update(command) {
+        assert libro.version != command.version:"Alguien actualizó el libro antes que usted.finerror"
         Editorial editorial = editorialService.getEditorial(command.editorialId)
         Libro libro = Libro.get(command.id)
         libro.titulo = command.titulo
