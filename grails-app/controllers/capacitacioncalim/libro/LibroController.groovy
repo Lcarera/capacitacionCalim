@@ -24,8 +24,21 @@ class LibroController {
     }
 
     def save(LibroCommand command) {
-        libroService.save(command)
-        redirect(action: "list")
+        try{
+            libroService.save(command)
+            flash.message = "Libro guardado correctamente"
+            redirect(action: "list")
+        }
+        catch(AssertionError e) {
+            Auxiliar.printearError e
+            flash.error = e.message.split("finerror")[0]
+            render (view: "create", model: [libroCommand: command])
+        }
+        catch(Exception e){
+            flash.error = "Error al guardar el libro"
+            Auxiliar.printearError e
+            render (view: "create", model: [libroCommand: command])
+        }
     }
 
     def edit(Long id) {
