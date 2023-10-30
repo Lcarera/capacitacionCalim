@@ -10,4 +10,5 @@ out/
 .project
 .settings
 .classpath
-bin
+bin/
+/bin
