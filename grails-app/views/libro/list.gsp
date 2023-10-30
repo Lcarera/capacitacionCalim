@@ -57,12 +57,12 @@
                 <tbody>
                     <g:each var="libro" in="${libros}">
                         <tr>
-                            <td>${libro.titulo}</td>
-                            <td>${libro.autor}</td>
-                            <td>${libro.ano}</td>
-                            <td>${libro.editorialId}</td>
+                            <td>${libroCommand.titulo}</td>
+                            <td>${libroCommand.autor}</td>
+                            <td>${libroCommand.ano}</td>
+                            <td>${libroCommand.editorialId}</td>
                             <td>
-                                <g:link action="edit" class="btn btn-info" params='[id:"${libro.id}"]'>Editar</g:link>
+                                <g:link action="edit" class="btn btn-info" params='[id:"${libroCommand.id}"]'>Editar</g:link>
                             </td>
                         </tr>
                     </g:each>
