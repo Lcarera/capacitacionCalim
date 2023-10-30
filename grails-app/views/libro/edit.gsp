@@ -8,7 +8,7 @@
 
 <body>
     <g:form controller="libro" action="update">
-        <g:hiddenField name="id" value="${libro.id}" />
+        <g:hiddenField name="id" value="${libroCommand.id}" />
         <g:render template="form" />
         <div class="center-content">
             <div class="container-box">
@@ -31,7 +31,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire('Libro Borrado!', '', 'success')
-                    window.location.href = "${createLink(action:'delete',)}/" + '${libro.id}'
+                    window.location.href = "${createLink(action:'delete',)}/" + '${libroCommand.id}'
                 } else if (result.isDenied) {
                     Swal.fire('Borrado cancelado', '', 'info')
                 }

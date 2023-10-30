@@ -30,7 +30,7 @@ class LibroController {
 
     def edit(Long id) {
         def libroCommand = libroService.getLibroCommand(id)
-        [LibroCommand: libroCommand]
+        [libroCommand: libroCommand]
     }
 
     def update(LibroCommand command) {
