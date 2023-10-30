@@ -1,6 +1,9 @@
 package capacitacioncalim.editorial
 
 import grails.converters.JSON
+
+import capacitacioncalim.Auxiliar
+
 class EditorialController {
 
     def editorialService
@@ -14,27 +17,70 @@ class EditorialController {
         render editoriales as JSON
     }
 
-    def save(String nombre, String direccion, Integer anoCreacion) {
-        editorialService.save(nombre, direccion, anoCreacion)
-        redirect(action: "list")
+    def save(EditorialCommand command) {
+        try{
+            editorialService.save(command)
+            flash.message = "Editorial guardada !"
+            redirect(action: "list")
+        }
+        catch(AssertionError e) {
+            Auxiliar.printearError e
+            flash.error = e.message.split("finerror")[0]
+            render (view: "create", model: [editorialCommand: command])
+        }
+
+        catch(Exception e){
+            flash.error = "Error al guardar la Editorial"
+            Auxiliar.printearError e
+            render (view: "create", model: [editorialCommand: command])
+        }
     }
     
     def create() {  
     }
 
     def edit(Long id) {
-        def editorial = editorialService.getEditorial(id)
-        [editorial: editorial]
+        def editorialCommand = editorialService.getEditorialCommand(id)
+        [editorialCommand: editorialCommand]
     }
 
-    def update(Long id, String nombre, String direccion, Integer anoCreacion) {
-        editorialService.update(id, nombre, direccion, anoCreacion)
-        redirect(action: "list")
-    }
+    def update(EditorialCommand command) {
+        try{
+            editorialService.update(command)
+            redirect(action: "list")
+            flash.message = "Editorial guardada!"
+        }
+        catch(AssertionError e) {
+            Auxiliar.printearError e
+            flash.error = e.message.split("finerror")[0]
+            render (view: "edit", model: [editorialCommand: command])
+        }
 
+        catch(Exception e){
+            flash.error = "Error al guardar la Editorial"
+            Auxiliar.printearError e
+            render (view: "edit", model: [editorialCommand: command])
+        }
+
+    }
     def delete(Long id) {
-        editorialService.delete(id)
-        redirect(action: "list")
+        try{
+            editorialService.delete(id)
+            redirect(action: "list")
+            flash.message = "Editorial eliminada!"
+
+        }
+        catch(AssertionError e) {
+            Auxiliar.printearError e
+            flash.error = e.message.split("finerror")[0]
+            render (view: "edit", model: [editorialCommand: command])
+        }
+        
+        catch(Exception e){
+            flash.error = "Error al guardar la Editorial"
+            Auxiliar.printearError e
+            render (view: "edit", model: [editorialCommand: command])
+        }
     }
 
     def ajaxGetEditoriales() {
