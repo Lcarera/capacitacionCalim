@@ -11,9 +11,15 @@ class JsonInicializacion {
 			def returnArray = [:]
             returnArray['id'] = it.id
             returnArray['titulo'] = it.titulo
+<<<<<<< HEAD
             returnArray['nombreAutor'] = it.autor
             returnArray['anocreacion'] = it.ano
             returnArray['idEditorial'] = it.editorial.nombre
+=======
+            returnArray['autor'] = it.autor
+            returnArray['ano'] = it.ano
+            returnArray['editorial'] = it.editorial
+>>>>>>> main
             
             return returnArray
         }

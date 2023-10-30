@@ -5,14 +5,21 @@
 <input type="text" class="form-control" name="autor" id="autor" value="${libroCommand?.autor}">
 <br>
 <label for="ano">Ano:</label>
+<<<<<<< HEAD
 <input type="text" class="form-control" name="ano" id="ano" value="${libroCommand?.ano}">
+=======
+<input type="number" class="form-control" name="ano" id="ano" value="${libroCommand?.ano}">
+>>>>>>> main
 <br>
 <label for="editorial">Editorial:</label>
 <select id="cbEditorial" class="form-control" name="editorialId"></select>
 <br>
 
+<<<<<<< HEAD
 <button class="btn btn-success" type="submit">Guardar</button>
 <g:link class="btn btn-secondary" controller="libro" action="list">Volver</g:link>
+=======
+>>>>>>> main
 <script>
 
     $(document).ready(function () {

@@ -20,4 +20,4 @@ class LibroCommand implements Validateable{
         ano nullable: false
         editorialId nullable: true
     }
-}
+} 
