@@ -39,6 +39,7 @@ class EditorialController {
     }
 
     def edit(Long id) {
+        println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB $id")
         def editorialCommand = editorialService.getEditorialCommand(id)
         [editorialCommand: editorialCommand]
     }
@@ -72,12 +73,12 @@ class EditorialController {
         catch(AssertionError e) {
             Auxiliar.printearError e
             flash.error = e.message.split("finerror")[0]
-            render (view: "edit", model: [editorialCommand: command])
-        }
+            redirect(action: "edit", params: ["id": id])
+            }
         catch(Exception e){
             flash.error = "Error al guardar la Editorial"
             Auxiliar.printearError e
-            render (view: "edit", model: [editorialCommand: command])
+            redirect(action: "edit", params: ["id": id])        
         }
     }
 

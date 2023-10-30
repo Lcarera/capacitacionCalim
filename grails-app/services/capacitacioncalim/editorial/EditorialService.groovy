@@ -1,10 +1,14 @@
 package capacitacioncalim.editorial
 
+import capacitacioncalim.libro.Libro
+import capacitacioncalim.libro.LibroService
+
 import grails.transaction.Transactional
 
 @Transactional
 class EditorialService {
-    
+    def libroService
+
     public List<Editorial> listEditoriales() {
         Editorial.list()
     }
@@ -35,6 +39,9 @@ class EditorialService {
 
     public Editorial delete(Long id) {
         Editorial editorial = Editorial.get(id)
+        List<Libro> libros = libroService.getLibrosByEditorial(id)
+        println(libros)
+        assert libros.size()==0 : "La editorial aun tiene libros bajo su nombrefinerror"
         editorial.delete(flush:true)
         return editorial
     }    
