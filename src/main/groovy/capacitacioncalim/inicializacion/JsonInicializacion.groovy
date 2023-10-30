@@ -12,8 +12,7 @@ class JsonInicializacion {
             returnArray['id'] = it.id
             returnArray['titulo'] = it.titulo
             returnArray['nombreAutor'] = it.autor
-            returnArray['ano'] = it.ano
-            returnArray['editorial'] = it.editorial.nombre
+            
             return returnArray
         }
 
