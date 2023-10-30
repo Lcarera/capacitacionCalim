@@ -13,9 +13,9 @@ class LibroService {
         return Libro.list()
     }
 
-    public Libro save(String titulo, String autor, Integer ano, Long editorialId) {
+    public Libro save(LibroCommand command) {
         Editorial editorial = editorialService.getEditorial(editorialId)
-        Libro libro = new Libro(titulo: titulo, autor: autor, ano: ano, editorial: editorial)
+        Libro libro = new Libro(titulo: command.titulo, autor: command.autor, ano: command.ano, editorial: command.editorial)
         libro.save(flush:true, failOnError:true)
         return libro
     }
@@ -24,13 +24,13 @@ class LibroService {
         return Libro.get(id)
     }
 
-    public Libro update(Long id, String titulo, String autor, Integer ano, Long editorialId) {
+    public Libro update(LibroCommand command) {
         Editorial editorial = editorialService.getEditorial(editorialId)
-        Libro libro = Libro.get(id)
-        libro.titulo = titulo
-        libro.autor = autor
-        libro.ano = ano
-        libro.editorial = editorial
+        Libro libro = Libro.get(command.id)
+        libro.titulo = command.titulo
+        libro.autor = command.autor
+        libro.ano = command.ano
+        libro.editorial = command.editorial
         libro.save(flush:true)
         return libro
     }
