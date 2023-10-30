@@ -50,13 +50,14 @@ class LibroService {
 
     def getLibroCommand(Long id){
         def libro = getLibro(id)
-        def command = new LibroCommand(
-            id = libro.id
-            titulo = libro.titulo
-            autor = libro.autor
-            ano = libro.ano
-            editorialId = libro.editorialId
-        )
+        println(libro.editorial)
+        def command = new LibroCommand()
+            command.id = libro.id
+            command.titulo = libro.titulo
+            command.autor = libro.autor
+            command.ano = libro.ano
+            command.editorialId = libro.editorial.id
+
         return command
     }
 }
