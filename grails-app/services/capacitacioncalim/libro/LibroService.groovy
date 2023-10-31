@@ -1,5 +1,4 @@
 package capacitacioncalim.libro
-
 import capacitacioncalim.editorial.Editorial
 import capacitacioncalim.editorial.EditorialService
 import grails.transaction.Transactional

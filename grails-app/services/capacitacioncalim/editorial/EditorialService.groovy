@@ -1,5 +1,4 @@
 package capacitacioncalim.editorial
-
 import grails.transaction.Transactional
 
 @Transactional
@@ -40,11 +39,11 @@ class EditorialService {
     def getEditorialCommand(Long id) {
         def editorial = Editorial.get(id)
         def editorialCommand = new EditorialCommand()
-        editorialCommand.id = libro.id
-        editorialCommand.version = libro.version
-        editorialCommand.nombre = libro.nombre 
-        editorialCommand.direccion = libro.direccion
-        editorialCommand.anoCreacion = libro.anoCreacion
+        editorialCommand.id = editorial.id
+        editorialCommand.version = editorial.version
+        editorialCommand.nombre = editorial.nombre 
+        editorialCommand.direccion = editorial.direccion
+        editorialCommand.anoCreacion = editorial.anoCreacion
         return editorialCommand
     }
 }
