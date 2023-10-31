@@ -1,6 +1,7 @@
 package capacitacioncalim.editorial
-package capacitacioncalim.libro
+import capacitacioncalim.libro.Libro
 import grails.converters.JSON
+import capacitacioncalim.Auxiliar
 
 class EditorialController {
 

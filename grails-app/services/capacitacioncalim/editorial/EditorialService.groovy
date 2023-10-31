@@ -9,7 +9,7 @@ class EditorialService {
     }
     
     public Editorial save(EditorialCommand command) {
-        Editorial editorial = Editorial.get(command.id)
+        Editorial editorial = new Editorial()
         editorial.nombre = command.nombre
         editorial.direccion = command.direccion
         editorial.anoCreacion = command.anoCreacion
