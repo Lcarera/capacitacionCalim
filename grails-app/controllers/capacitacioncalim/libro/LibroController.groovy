@@ -47,13 +47,33 @@ class LibroController {
     }
 
     def update(LibroCommand command) {
-        libroService.update(command)
-        redirect(action: "list")
+        //libroService.update(command)
+        //redirect(action: "list")
+        try{
+            libroService.update(command)
+            flash.message = "Libro actuelizado correctamente"
+            redirect(action: "list")
+        }
+        catch(Exception e){
+            flash.error = "Error al actualizar el libro"
+            Auxiliar.printearError e
+            render (view: "edit", model: [libroCommand: command])
+        }
     }
 
     def delete(Long id) {
-        libroService.delete(id)
-        redirect(action: "list")
+        //libroService.delete(id)
+        //redirect(action: "list")
+        try{
+            libroService.delate(id)
+            flash.message = "Libro eliminado correctamente"
+            redirect(action: "list")
+        }
+        catch(Exception e){
+            flash.error = "Error al eliminar el libro"
+            Auxiliar.printearError e
+            render (view: "list", model: [libroCommand: command])
+        }
     }
 
     def ajaxGetLibros() {

@@ -10,6 +10,7 @@ class EditorialService {
     }
     
     public Editorial save(EditorialCommand command) {
+        assert command.anoCreacion <= 2023 : "El ano de creacion no puede ser mayor al 2023"
         Editorial editorial = new Editorial(nombre: command.nombre, direccion: command.direccion, anoCreacion: command.anoCreacion)
         editorial.save(flush:true)
         return editorial
