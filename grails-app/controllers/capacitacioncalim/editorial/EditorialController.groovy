@@ -22,20 +22,25 @@ class EditorialController {
             flash.error = "El año de la editorial no puede ser menor que 0!"
             render(view: "create", model: [editorialCommand: command])
         } else {
-            try{
-                editorialService.save(command)
-                flash.message = "Editorial guardada correctamente"
-                redirect(action: "list")
-            }
-            catch(AssertionError e) {
-                Auxiliar.printearError e
-                flash.error = e.message.split("finerror")[0]
-                render (view: "create", model: [editorialCommand: command])
-            }
-            catch(Exception e){
-                flash.error = "Error al guardar la editorial"
-                Auxiliar.printearError e
-                render (view: "create", model: [editorialCommand: command])
+            if (command.anoCreacion > 2023) {
+                flash.error = "El año de la editorial no puede ser mayor que 2023!"
+                render(view: "create", model: [editorialCommand: command])
+            } else {
+                try{
+                    editorialService.save(command)
+                    flash.message = "Editorial guardada correctamente"
+                    redirect(action: "list")
+                }
+                catch(AssertionError e) {
+                    Auxiliar.printearError e
+                    flash.error = e.message.split("finerror")[0]
+                    render (view: "create", model: [editorialCommand: command])
+                }
+                catch(Exception e){
+                    flash.error = "Error al guardar la editorial"
+                    Auxiliar.printearError e
+                    render (view: "create", model: [editorialCommand: command])
+                }
             }
         }
     }
