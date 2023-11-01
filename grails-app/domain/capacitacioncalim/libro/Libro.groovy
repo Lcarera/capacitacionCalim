@@ -6,7 +6,6 @@ class Libro {
     String titulo
     String autor
     Integer ano
-
     static belongsTo = [editorial: Editorial]
 
     static constraints = {

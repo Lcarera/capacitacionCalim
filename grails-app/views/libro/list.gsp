@@ -53,8 +53,6 @@
         <div class="dt-responsive table-responsive">
             <g:link controller="libro" action="create" class="btn btn-primary" style="float: right; margin-left: 10px">
                 Agregar Libro</g:link>
-            <g:link controller="editorial" action="create" class="btn btn-primary" style="float: right; margin-left: 10px">Agregar Editorial</g:link>
-
             <table id="listLibro" class="table table-striped table-bordered nowrap" style="cursor:pointer">
                 <thead>
                     <tr>
@@ -111,7 +109,7 @@
                         "mData": "ano"
                     }, {
                         "aTargets": [3],
-                        "mData": "editorial.nombre"
+                        "mData": "editorial"
                     }],
                     buttons: [],
                     sPaginationType: 'simple',
