@@ -27,9 +27,10 @@
                 <br>
                 <label for="editorial">Editorial:</label>
                 <select id="cbEditorial" class="form-control" name="editorialId"></select>
-                <br>
-            </div>
+                
+            </div>            
         </div>
+        <br>
         <script>
             $(document).ready(function () {
 

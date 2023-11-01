@@ -59,7 +59,8 @@
                         <th>Título</th>
                         <th>Autor</th>
                         <th>Año</th>
-                        <th>Editorial</th>
+                        <th>Editorial_id</th>
+                        <th>Editorial_nombre</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -109,6 +110,9 @@
                         "mData": "ano"
                     }, {
                         "aTargets": [3],
+                        "mData": "editorial.id"
+                    },{
+                        "aTargets": [4],
                         "mData": "editorial.nombre"
                     }],
                     buttons: [],

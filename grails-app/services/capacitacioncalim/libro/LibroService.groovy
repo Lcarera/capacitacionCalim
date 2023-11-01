@@ -2,11 +2,40 @@ package capacitacioncalim.libro
 import capacitacioncalim.editorial.Editorial
 import capacitacioncalim.editorial.EditorialService
 import grails.transaction.Transactional
+import org.hibernate.transform.Transformers
+import java.util.LinkedHashMap
 
 @Transactional
 class LibroService {
 
     def editorialService
+    def sessionFactory
+
+    def metodo(){
+        // def dfquery = "Select id as iD, titulo as ti, autor as au, ano as an, editorial_id as edi from Libro;"
+        // def libros = sessionFactory.currentSession.createSQLquery(query).List().each{
+        //     def item = [:]
+        //     item.nombre = it[0]
+        //     item.autor = it[1]
+        // }
+        // return libros
+
+        // def libros = sessionFactory.currentSession.createSQLQuery(dfquery).setResultTransformer(Transformers.aliasToBean(Libro)).list()
+        
+        def dfquery = "Select Libro.id, Libro.titulo, Libro.autor, Libro.ano, Libro.editorial_id as edid, Editorial.nombre from Libro JOIN Editorial ON Libro.editorial_id = Editorial.id;"
+
+        def libros = sessionFactory.currentSession.createSQLQuery(dfquery).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
+            def item = [:]
+            item.id = it.id
+            item.titulo = it.nombre
+            item.autor = it.autor
+            item.ano = it.ano
+            item.editorialId = it.edid
+            item.editorialNombre = it.nombre 
+            return item
+        }
+        return libros
+    }
     
     public List<Libro> listLibros() {
         return Libro.list()

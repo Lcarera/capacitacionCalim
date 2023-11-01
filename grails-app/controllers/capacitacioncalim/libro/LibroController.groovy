@@ -5,6 +5,11 @@ class LibroController {
 
     def libroService
 
+    def imprimir(){
+        println(libroService.metodo())
+        render 'aa'
+    }
+
     def prueba() {
         render "Hola mundo"
     }
@@ -15,7 +20,9 @@ class LibroController {
     }
 
     def list() {
-        def libros = libroService.listLibros()
+        // def libros = libroService.listLibros()
+        def libros = libroService.metodo()
+        println(libroService.metodo())
         [libros: libros]
     }
 
