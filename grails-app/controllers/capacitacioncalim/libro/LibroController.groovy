@@ -83,7 +83,7 @@ class LibroController {
     }
 
     def ajaxGetLibros() {
-        def libros = libroService.listLibros()
+        def libros = libroService.getLibrosSQL()
         render libros as JSON
     }
 
