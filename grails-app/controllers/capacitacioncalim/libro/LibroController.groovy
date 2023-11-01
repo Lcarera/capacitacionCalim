@@ -57,7 +57,7 @@ class LibroController {
     }
 
     def ajaxGetLibros() {
-        def libros = libroService.listLibros()
+        def libros = libroService.ListLibrossql()
         render libros as JSON
     }
 

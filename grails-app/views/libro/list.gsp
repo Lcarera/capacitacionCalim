@@ -109,7 +109,7 @@
                         "mData": "ano"
                     }, {
                         "aTargets": [3],
-                        "mData": "editorial.nombre"
+                        "mData": "editorial"
                     }],
                     buttons: [],
                     sPaginationType: 'simple',
@@ -117,7 +117,6 @@
                     fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                         // Row click
                         $(nRow).off('click').on('click', function () {
-                            console.log(aData);
                              window.location.href = ('${createLink(controller:"libro", action:"edit")}') + '/' + aData['id'];
                         });
                     }
@@ -134,7 +133,6 @@
 
                     }
                 }).done(function (data) {
-                    console.log(data);
                     tabla.rows.add(data)
                     tabla.draw();
                 });
