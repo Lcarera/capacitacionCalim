@@ -109,7 +109,7 @@
                         "mData": "ano"
                     }, {
                         "aTargets": [3],
-                        "mData": "editorial.nombre"
+                        "mData": "editorial"
                     }],
                     buttons: [],
                     sPaginationType: 'simple',
