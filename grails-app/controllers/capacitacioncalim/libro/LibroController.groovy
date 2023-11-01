@@ -10,10 +10,6 @@ class LibroController {
         render 'aa'
     }
 
-    def prueba() {
-        render "Hola mundo"
-    }
-
     def listJson() {
         def libros = libroService.listLibros()
         render libros as JSON
