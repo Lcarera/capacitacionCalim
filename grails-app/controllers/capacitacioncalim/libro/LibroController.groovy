@@ -12,13 +12,9 @@ class LibroController {
     }
 
     def listJson() {
-        def libros = libroService.listLibros()
-        render libros as JSON
     }
 
     def list() {
-        def libros = libroService.listLibros()
-        [libros: libros]
     }
 
     def create() {  
@@ -84,7 +80,7 @@ class LibroController {
     }
 
     def ajaxGetLibros() {
-        def libros = libroService.listLibros()
+        def libros = libroService.listLibrosDB()
         render libros as JSON
     }
 

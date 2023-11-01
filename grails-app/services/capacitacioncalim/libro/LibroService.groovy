@@ -3,14 +3,37 @@ package capacitacioncalim.libro
 import capacitacioncalim.editorial.Editorial
 import capacitacioncalim.editorial.EditorialService
 import grails.transaction.Transactional
+import org.hibernate.transform.Transformers
+import java.util.LinkedHashMap
 
 @Transactional
 class LibroService {
 
     def editorialService
+    def sessionFactory
+
+    public def listLibrosDB(){
+        String query = """
+            SELECT id, titulo, autor, ano, editorial_id AS eid FROM Libro;
+        """
+
+        def libros = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(
+            Transformers.aliasToBean(LinkedHashMap)
+        ).list().collect {
+            def item = [:]
+            item.id = it.id
+            item.titulo = it.titulo
+            item.autor = it.autor
+            item.ano = it.ano
+            item.editorial = Editorial.get(it.eid)
+            return item
+        }
+
+        return libros
+    }
     
     public List<Libro> listLibros() {
-        return Libro.list()
+        println("No deberia ser llamada")
     } 
 
     public Libro save(LibroCommand command) {
