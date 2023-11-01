@@ -1,5 +1,6 @@
 package capacitacioncalim.libro
 
+import capacitacioncalim.Auxiliar
 import grails.converters.JSON
 
 class LibroController {
@@ -53,6 +54,11 @@ class LibroController {
             libroService.update(command)
             flash.message = "Libro actuelizado correctamente"
             redirect(action: "list")
+        }
+        catch(AssertionError e) {
+            Auxiliar.printearError e
+            flash.error = e.message.split("finerror")[0]
+            render (view: "edit", model: [libroCommand: command])
         }
         catch(Exception e){
             flash.error = "Error al actualizar el libro"

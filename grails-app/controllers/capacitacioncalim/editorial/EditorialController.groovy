@@ -1,5 +1,6 @@
 package capacitacioncalim.editorial
 
+import capacitacioncalim.Auxiliar
 import grails.converters.JSON
 class EditorialController {
 
@@ -50,6 +51,11 @@ class EditorialController {
             flash.message = "Editorial actualizada correctamente"
             redirect(action: "list")
         }
+        catch(AssertionError e) {
+            Auxiliar.printearError e
+            flash.error = e.message.split("finerror")[0]
+            render (view: "edit", model: [editorialCommand: command])
+        }
         catch(Exception e){
             flash.error = "Error al actualizar la editorial"
             render (view: "edit", model: [editorialCommand: command])
@@ -67,7 +73,7 @@ class EditorialController {
         catch(Exception e){
             flash.error = "Error al borrar la editorial"
             Auxiliar.printearError e
-            render (view: "list", model: [editorialCommand: command])
+            render (view: "edit", model: [editorialCommand: command])
         }
     }
 
