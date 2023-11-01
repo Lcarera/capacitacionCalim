@@ -11,17 +11,32 @@ class PersonajeController {
 
     def listJson() {
         def personajes = personajeService.listPersonajes()
-        renderlibro
-libro
-libro
-libro
-libro
-libro personajes as JSON
+        render personajes as JSON
     }
 
     def create() {
     }
-    def save(PersonajeCommmand command){
-
+    def save(PersonajeCommand command){
+        personajeService.save(command)
+        flash.message("Personaje Creado!")
+        redirect(action:"list")
+    }
+    def edit(Long id) {
+        def personajeCommand = personajeService.getPersonajeCommand(id)
+        [personajeCommand: personajeCommand]
+    }
+    def update(PersonajeCommand command){
+        personajeService.update(command)
+        flash.message("Personaje Actualizado!")
+        redirect(action:"list")
+    }
+    def delete(PersonajeCommand command){
+        personajeService.delete(command)
+        flash.message("Personaje Eliminado!")
+        redirect(action:"list")
+    }
+    def ajaxGetPersonajes(){
+        def personajes = personajeService.listPersonajes()
+        render personajes as JSON
     }
 }
