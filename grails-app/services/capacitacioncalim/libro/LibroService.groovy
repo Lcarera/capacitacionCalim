@@ -14,9 +14,10 @@ class LibroService {
     def editorialService
 
     public ListLibrossql() {
-        def q = "SELECT a.titulo, a.autor, a.ano, b.nombre  FROM libro a JOIN editorial b ON a.editorial_id = b.id;"
+        def q = "SELECT a.id, a.titulo, a.autor, a.ano, b.nombre  FROM libro a JOIN editorial b ON a.editorial_id = b.id;"
         def libros = sessionFactory.currentSession.createSQLQuery(q).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
+            item.id = it.id
             item.titulo = it.titulo
             item.autor = it.autor
             item.ano = it.ano
