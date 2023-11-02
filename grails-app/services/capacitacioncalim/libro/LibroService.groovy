@@ -66,12 +66,6 @@ class LibroService {
         return libro
     }
 
-    def getLibrosByEditorial(Long editorialId) {
-        def editorial = editorialService.getEditorial(editorialId)
-        def libros = Libro.findAllByEditorial(editorial)
-        return libros
-    }
-
     def getLibroCommand(Long id) {
         def libro = Libro.get(id)
         println libro
