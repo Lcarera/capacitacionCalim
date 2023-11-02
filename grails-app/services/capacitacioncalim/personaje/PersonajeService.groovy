@@ -3,7 +3,9 @@ package capacitacioncalim.personaje
 import grails.transaction.Transactional
 import org.hibernate.transform.Transformers
 import java.util.LinkedHashMap
+import org.joda.time.LocalDate
 
+import capacitacioncalim.arma.Arma
 
 @Transactional
 class PersonajeService {
@@ -13,44 +15,45 @@ class PersonajeService {
     public List<Personaje> listPersonajes() {
 
         def query= """SELECT 
-        pers.id as id
-        pers.nombre as nombrePersonaje
-        pers.puntosFuerza as puntosFuerza
-        pers.puntosSalud as puntosSalud
-        pers.fechaCreacion as fecha
-        pers.gritoGuerra as grito
-        ar.nombre as arma
-        (ar.puntosAtaque + puntosFuerza) as poderTotal
+        pers.id as id,
+        pers.nombre as nombrePersonaje,
+        pers.puntos_fuerza as puntosFuerza,
+        pers.puntos_salud as puntosSalud,
+        pers.fecha_creacion as fecha,
+        pers.grito_guerra as grito,
+        ar.nombre as arma,
+        (ar.puntos_ataque + puntos_fuerza) as poderTotal
 
         FROM personaje pers
-        join arma ar on pers.id_arma = ar.id;"""
+        join arma ar on pers.arma_id = ar.id;"""
 
         def personajes = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
             item["id"] = it.id
-            item["nombre"] = it.nombrePersonaje
-            item["puntosFuerza"] = it.puntosFuerza
-            item["puntosSalud"] = it.puntosSalud
+            item["nombre"] = it.nombrepersonaje
+            item["puntosFuerza"] = it.puntosfuerza
+            item["puntosSalud"] = it.puntossalud
             item["fecha"] = it.fecha
             item["gritoGuerra"] = it.grito
             item["arma"] = it.arma
-            item["poderTotal"] = it.poderTotal
+            item["poderTotal"] = it.podertotal
             return item
             }    
-        
+        println("_______________________________________________________________---$personajes")
         return personajes
     } 
 
     public Personaje save(PersonajeCommand command) {
         //assert command.ano > 0: "EL año debe ser mayor a 0finerror" 
-        //Arma arma = editorialService.getEditorial(command.editorialId)
+        Arma arma = getArma(command.armaId)
+        command.fechaCreacion = new LocalDate().format("yyyy-MM-dd")
         Personaje personaje = new Personaje()
         personaje.nombre = command.nombre
         personaje.puntosFuerza = command.puntosFuerza
         personaje.puntosSalud = command.puntosSalud
         personaje.fechaCreacion = command.fechaCreacion
         personaje.gritoGuerra = command.gritoGuerra
-        //personaje.arma = editorial
+        personaje.arma = arma
 
         personaje.save(flush:true, failOnError:true)
         return personaje
@@ -63,17 +66,22 @@ class PersonajeService {
     public Personaje update(PersonajeCommand command) {
         //assert command.ano > 0: "EL año debe ser mayor a 0finerror"
         //Editorial editorial = editorialService.getEditorial(command.editorialId)
+
         Personaje personaje = Personaje.get(command.id)
+        Arma arma = getArma(command.armaId)
+        println("Cambiar -----------------------------------------------_$command.nombre")
+        println("A Cambiar -----------------------------------------------_$personaje.nombre")
         personaje.nombre = command.nombre
         personaje.puntosFuerza = command.puntosFuerza
         personaje.puntosSalud = command.puntosSalud
         personaje.fechaCreacion = command.fechaCreacion
         personaje.gritoGuerra = command.gritoGuerra
-        //personaje.arma = editorial
+        personaje.arma = arma
+        println("CAMBIADO ---------------------------------------------------------- $personaje.nombre")
         personaje.save(flush:true)
         return personaje
     }
-
+    
     public Personaje delete(Long id) {
         Personaje personaje = Personaje.get(id)
         personaje.delete(flush:true)
@@ -81,19 +89,41 @@ class PersonajeService {
     }
 
     def getPersonajeCommand(Long id) {
-        def personaje = Personaje.get(id)
+        def personaje = getPersonaje(id)
         def personajeCommand = new PersonajeCommand()
-        personajeCommand.id = libro.id
-        personajeCommand.version = libro.version
-        personajeCommand.nombre= libro.nombre 
-        personajeCommand.puntosFuerza = libro.puntosFuerza
-        personajeCommand.puntosSalud = libro.puntosSalud
-        personajeCommand.fechaCreacion = libro.fechaCreacion
-        personajeCommand.gritoGuerra = libro.gritoGuerra
+        personajeCommand.id = personaje.id
+        personajeCommand.version = personaje.version
+        personajeCommand.nombre= personaje.nombre 
+        personajeCommand.puntosFuerza = personaje.puntosFuerza
+        personajeCommand.puntosSalud = personaje.puntosSalud
+        personajeCommand.fechaCreacion = personaje.fechaCreacion
+        personajeCommand.gritoGuerra = personaje.gritoGuerra
 
-        personajeCommand.armaId = libro.armaId
-
+        personajeCommand.armaId = personaje.armaId
+        println("----------------------------------------------------------$personajeCommand")
 
         return personajeCommand
     }
+    def listArmas(){
+        def query ="""select
+        ar.id,
+        ar.nombre as nombrearma,
+        ar.puntos_ataque as puntosataque
+        from arma ar;
+        """
+        def armas = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
+            def item = [:]
+            item["id"] = it.id
+            item["nombre"] = it.nombrearma
+            item["puntosAtaque"] = it.puntosataque
+            return item
+        }    
+        return armas
+    }
+    
+    def getArma(long id){
+        return Arma.get(id)
+        
+    }
+
 }

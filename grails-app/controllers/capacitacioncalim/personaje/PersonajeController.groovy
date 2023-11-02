@@ -29,6 +29,7 @@ class PersonajeController {
 
     def save(PersonajeCommand command) {
         try{
+
             personajeService.save(command)
             flash.message = "Personaje guardado correctamente"
             redirect(action: "list")
@@ -87,9 +88,15 @@ class PersonajeController {
         }
     }
 
-    def ajaxGetLibros() {
+    def ajaxGetPersonajes() {
         def personajes = personajeService.listPersonajes()
         render personajes as JSON
+    }
+
+    def ajaxGetArmas()
+    {
+        def armas = personajeService.listArmas()
+        render armas as JSON
     }
 
 }
