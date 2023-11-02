@@ -57,9 +57,10 @@
                 <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th>Autor</th>
-                        <th>Año</th>
-                        <th>Editorial</th>
+                        <th>Puntos De Fuerza</th>
+                        <th>Fecha De Creacion</th>
+                        <th>Grito De Guerra</th>
+                        <th>Arma</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -80,7 +81,7 @@
                         sProcessing: "Buscando...",
                         sSearch: "",
                         sLengthMenu: "_MENU_",
-                        sZeroRecords: "Buscando libro",
+                        sZeroRecords: "Buscando personaje",
                         sInfo: "_START_ - _END_ de _TOTAL_",
                         sInfoFiltered: "${message(code: 'default.datatable.infoFiltered', default: '(filtrado de MAX registros en total)')}",
                         sInfoPostFix: "",

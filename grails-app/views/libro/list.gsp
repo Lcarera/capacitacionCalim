@@ -67,7 +67,7 @@
             </table>
         </div>
 
-        <script>
+        <script> 
             var tabla;
             jQuery(document).ready(function () {
                 tabla = $('#listLibro').DataTable({

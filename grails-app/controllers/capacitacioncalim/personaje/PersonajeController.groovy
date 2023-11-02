@@ -7,6 +7,14 @@ class PersonajeController {
 
     def personajeService
 
+    def list() {
+        def personajes = personajeService.listPersonajes()
+        [personajes: personajes]
+    }
+
+    def create() {  
+    }
+
     def save(PersonajeCommand command) {
         try{
             personajeService.save(command)
