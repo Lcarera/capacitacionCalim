@@ -13,22 +13,23 @@ class PersonajeService {
 
     def sessionFactory
 
-    public List<Personaje> personajeSql(){
-        def q = "Select a.id, a.nombre, a.puntos_de_fuerza, a.fecha_creacion, a.grito_de_guerra, b.nombre from personaje a join arma b on a.arma_id = b.id;"
+    public List<Personaje> listPersonajes(){
+        def q = "Select a.id, a.nombre, a.puntos_de_fuerza, a.fecha_creacion, a.grito_de_guerra, b.nombre as arma from personaje a join arma b on a.arma_id = b.id;"
         def personajes = sessionFactory.currentSession.createSQLQuery(q).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
             item.id = it.id
-            item.titulo = it.titulo
-            item.autor = it.autor
-            item.ano = it.ano
-            item.editorial = it.nombre
+            item.titulo = it.nombre
+            item.puntosDeFuerza = it.puntos_de_fuerza
+            item.fechaCreacion = it.fecha_creacion
+            item.gritoDeGuerra = it.grito_de_guerra
+            item.arma = it.arma
             return item
         }
-        return libros
+        return personajes
     } 
 
     public Personaje save(PersonajeCommand command) {
-        assert command.ano > 0: "Campo de año invalidofinerror"
+        assert command.puntosDeFuerza > 0: "Campo de puntos de fuerza invalidofinerror"
         Arma arma = armaService.getArma(command.armaId)
         Personaje personaje = new Personaje()
         personaje.nombre = command.nombre

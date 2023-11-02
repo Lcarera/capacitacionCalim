@@ -7,11 +7,6 @@ class PersonajeController {
 
     def personajeService
 
-    // def list() {
-    //     def personajes = personajeService.listLibros()
-    //     [libros: libros]
-    // }
-
     def save(PersonajeCommand command) {
         try{
             personajeService.save(command)
@@ -67,8 +62,8 @@ class PersonajeController {
     }
 
     def ajaxGetPersonajes() {
-        def libros = libroService.libroSql()
-        render libros as JSON
+        def personajes = personajeService.listPersonajes()
+        render personajes as JSON
     }
 
 }

@@ -14,7 +14,7 @@ class Personaje {
     static constraints = {
         nombre nullable: false
         puntosDeFuerza nullable: false
-        fechaCreacion nullable: false
+        fechaCreacion nullable: true
         arma nullable: false
         gritoDeGuerra nullable: true
     }

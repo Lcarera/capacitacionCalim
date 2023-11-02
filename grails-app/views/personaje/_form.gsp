@@ -1,22 +1,22 @@
-<label for="titulo">Titulo:</label>
-<input type="text" class="form-control" name="titulo" id="titulo" value="${libroCommand?.titulo}">
+<label for="nombre">Nombre:</label>
+<input type="text" class="form-control" name="nombre" id="nombre" value="${personajeCommand?.nombre}">
 <br>
-<label for="autor">Autor:</label>
-<input type="text" class="form-control" name="autor" id="autor" value="${libroCommand?.autor}">
+<label for="puntosDeFuerza">Puntos De Fuerza:</label>
+<input type="number" class="form-control" name="puntosDeFuerza" id="puntosDeFuerza" value="${personajeCommand?.puntosDeFuerza}">
 <br>
-<label for="ano">Ano:</label>
-<input type="number" class="form-control" name="ano" id="ano" value="${libroCommand?.ano}">
+<label for="gritoDeGuerra">Grito De Guerra:</label>
+<input type="text" class="form-control" name="gritoDeGuerra" id="gritoDeGuerra" value="${personajeCommand?.gritoDeGuerra}">
 <br>
-<label for="editorial">Editorial:</label>
-<select id="cbEditorial" class="form-control" name="editorialId"></select>
+<label for="arma">Arma:</label>
+<select id="cbArma" class="form-control" name="armaId"></select>
 <br>
 
 <script>
     $(document).ready(function () {
 
 
-        $("#cbEditorial").select2({
-            placeholder: 'Seleccione la editorial',
+        $("#cbArma").select2({
+            placeholder: 'Seleccione el arma',
             formatNoMatches: function() {
                 return '<g:message code="default.no.elements" default="No hay elementos"/>';
             },
@@ -30,9 +30,9 @@
         });
 
         llenarCombo({
-            comboId : "cbEditorial",
-            ajaxLink : "${createLink(controller: 'editorial', action: 'ajaxGetEditoriales')}",
-            idDefault : '${libroCommand?.editorialId}',
+            comboId : "cbArma",
+            ajaxLink : "${createLink(controller: 'arma', action: 'ajaxGetArmas')}",
+            idDefault : '${personajeCommand?.armaId}',
             atributo: "nombre"
         });
     });
