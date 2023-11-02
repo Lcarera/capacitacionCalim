@@ -34,7 +34,7 @@
 
         }
 
-        h1.librotitulo {
+        h1.personajetitulo {
             text-align: center;
             color: white;
         }
@@ -48,18 +48,19 @@
 <body>
     <div class="container col-8">
         <div class="container col-12 xd">
-            <h1 class="librotitulo">LIBROS</h1>
+            <h1 class="personajetitulo">PERSONAJES</h1>
         </div>
         <div class="dt-responsive table-responsive">
-            <g:link controller="libro" action="create" class="btn btn-primary" style="float: right; margin-left: 10px">
-                Agregar Libro</g:link>
-            <table id="listLibro" class="table table-striped table-bordered nowrap" style="cursor:pointer">
+            <g:link controller="personaje" action="create" class="btn btn-primary" style="float: right; margin-left: 10px">
+                Agregar Personaje</g:link>
+            <table id="listPersonaje" class="table table-striped table-bordered nowrap" style="cursor:pointer">
                 <thead>
                     <tr>
-                        <th>Título</th>
-                        <th>Autor</th>
-                        <th>Año</th>
-                        <th>Editorial</th>
+                        <th>Nombre</th>
+                        <th>Puntos De Fuerza</th>
+                        <th>Fecha De Creacion</th>
+                        <th>Grito De Guerra</th>
+                        <th>Arma</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,10 +68,10 @@
             </table>
         </div>
 
-        <script> 
+        <script>
             var tabla;
             jQuery(document).ready(function () {
-                tabla = $('#listLibro').DataTable({
+                tabla = $('#listPersonaje').DataTable({
                     //bAutoWidth: false,
                     //bSortCellsTop: true,
                     //BProcessing: true,
@@ -80,7 +81,7 @@
                         sProcessing: "Buscando...",
                         sSearch: "",
                         sLengthMenu: "_MENU_",
-                        sZeroRecords: "Buscando libro",
+                        sZeroRecords: "Buscando personaje",
                         sInfo: "_START_ - _END_ de _TOTAL_",
                         sInfoFiltered: "${message(code: 'default.datatable.infoFiltered', default: '(filtrado de MAX registros en total)')}",
                         sInfoPostFix: "",
@@ -100,16 +101,19 @@
                     ],
                     aoColumnDefs: [{
                         "aTargets": [0],
-                        "mData": "titulo"
+                        "mData": "nombre"
                     }, {
                         "aTargets": [1],
-                        "mData": "autor",
+                        "mData": "puntosDeFuerza",
                     }, {
                         "aTargets": [2],
-                        "mData": "ano"
+                        "mData": "fechaCreacion"
                     }, {
                         "aTargets": [3],
-                        "mData": "editorial"
+                        "mData": "gritoDeGuerra"
+                    },{
+                        "aTargets": [4],
+                        "mData": "arma"
                     }],
                     buttons: [],
                     sPaginationType: 'simple',
@@ -118,17 +122,17 @@
                         // Row click
                         $(nRow).off('click').on('click', function () {
                             console.log(aData);
-                             window.location.href = ('${createLink(controller:"libro", action:"edit")}') + '/' + aData['id'];
+                             window.location.href = ('${createLink(controller:"personaje", action:"edit")}') + '/' + aData['id'];
                         });
                     }
                 });
 
-                llenarDatoslistLibro();
+                llenarDatoslistPersonaje();
             });
 
-            function llenarDatoslistLibro() {
+            function llenarDatoslistPersonaje() {
                 tabla.clear().draw();
-                $.ajax("${createLink(controller:'libro', action:'ajaxGetLibros')}", {
+                $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajes')}", {
                     dataType: "json",
                     data: {
 

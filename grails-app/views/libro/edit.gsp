@@ -14,10 +14,11 @@
             <div class="container-box">
                 <a onclick="borrarSwal()" id="${libroCommand.id}" href="javascript:;" class="btn btn-danger ">Borrar</a>
                 <g:link controller="libro" class="btn btn-secondary" action="list">Volver</g:link>
-                <button class="btn btn-success" type="submit">Guardar</button>
+                <button class="btn btn-success">Guardar</button>
             </div>
         </div>
     </g:form>
+
 
     <script>
         function borrarSwal() {
@@ -30,14 +31,16 @@
                 denyButtonText: `No Borrar`,
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire('Libro Borrado!', '', 'success')
-                    window.location.href = "${createLink(action:'delete',)}/" + '${libroCommand.id}'
+                    Swal.fire('Libro Borrado!', '', 'success').then((result) => {
+                        window.location.href = "${createLink(action: 'delete', id: libroCommand.id)}";
+                    });
                 } else if (result.isDenied) {
-                    Swal.fire('Borrado cancelado', '', 'info')
+                    Swal.fire('Borrado cancelado', '', 'info');
                 }
-            })
+            });
         }
-        /* function GuardarSwal() {
+
+        function guardarSwal() {
             Swal.fire({
                 title: 'Confirmar cambios?',
                 showDenyButton: true,
@@ -47,15 +50,17 @@
                 denyButtonText: `No Guardado`,
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire('Guardado!', '', 'success')
+                    Swal.fire('Cambios Guardados!', '', 'success').then((result) => {
+                        window.location.href = "${createLink(action: 'update', id: libroCommand.id)}";
+                    });
                 } else if (result.isDenied) {
-                    Swal.fire('Guardado Cancelado', '', 'info')
+                    Swal.fire('Guardado cancelado', '', 'info');
                 }
-            })
-        } */
+            });
+        }
 
     </script>
-    <script src="sweetalert2.all.min.js"></script>
+
 </body>
 
 </html>
