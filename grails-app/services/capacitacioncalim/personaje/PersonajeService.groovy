@@ -59,8 +59,6 @@ class PersonajeService {
     }
 
     public Personaje update(command) {
-        assert command.ano > 0: "Campo de año invalidofinerror"
-        assert command.ano <= 2023: "Campo de año invalidofinerror"
         Arma arma = armaService.getArma(command.armaId)
         Personaje personaje = Personaje.get(command.id)
         personaje.nombre = command.nombre

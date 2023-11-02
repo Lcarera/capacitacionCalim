@@ -40,9 +40,27 @@
             });
         }
 
+        /* function guardarSwal() {
+            Swal.fire({
+                title: 'Confirmar cambios?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Guardado',
+                cancelButtonText: 'Cancelar',
+                denyButtonText: `No Guardado`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire('Cambios Guardados!', '', 'success').then((result) => {
+                        window.location.href = "${createLink(action: 'update', id: personajeCommand.id)}";
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire('Guardado cancelado', '', 'info');
+                }
+            });
+        } */
 
     </script>
-
+    <script src="sweetalert2.all.min.js"></script>
 </body>
 
 </html>
