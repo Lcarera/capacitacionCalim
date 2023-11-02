@@ -11,19 +11,19 @@ import java.util.LinkedHashMap
 class PersonajeService {
 
     def sessionFactory
-    def editorialService
+    def armaService
     
-    public List<Personaje> listLibros() {
+    public List<Personaje> listPersonajes() {
         //return Libro.list()
 
-        def query= """SELECT 
-        lib.id as id,
-        lib.titulo as t,
-        lib.autor as a,
-        lib.ano as an,
-        edi.nombre as nombre
-        FROM libro lib
-        join editorial edi on edi.id = lib.editorial_id;"""
+        // def query= """SELECT 
+        // lib.id as id,
+        // lib.titulo as t,
+        // lib.autor as a,
+        // lib.ano as an,
+        // edi.nombre as nombre
+        // FROM libro lib
+        // join editorial edi on edi.id = lib.editorial_id;"""
 
         def query= """ SELECT 
         personaje.id as id,
@@ -35,73 +35,79 @@ class PersonajeService {
         arma.nombre
         FROM personaje personaje
         join arma arma
-        on 
+        on arma.id = personaje.arma_id;"""
 
 
-        def libros = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
+        def personajes = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
             item["id"] = it.id
-            item["titulo"] = it.t
-            item["autor"] = it.a
-            item["ano"] = it.an
-            item["editorial"] = it.nombre
+            item["nombre"] = it.nombre
+            item["puntosSalud"] = it.puntosSalud
+            item["puntosFuerza"] = it.puntosFuerza
+            item["fechaCreacion"] = it.fechaCreacion
+            item["gritoGuerra"] = it.gritoGuerra
             
             return item
             }    
         
-        return libros
+        return personajes
     } 
 
-    public Libro save(LibroCommand command) {
-        assert command.ano > 0: "EL año debe ser mayor a 0finerror" 
-        Editorial editorial = editorialService.getEditorial(command.editorialId)
-        Libro libro = new Libro()
-        libro.titulo = command.titulo
-        libro.autor = command.autor
-        libro.ano = command.ano
-        libro.editorial = editorial
-        libro.save(flush:true, failOnError:true)
-        return libro
+    public Personaje save(PersonajeCommand command) {
+        assert command.puntosSalud > 0: "Los puntos de salud deben ser mayores a 0finerror" 
+        assert command.puntosFuerza > 0: "Los puntos de fuerza deben ser mayores a 0finerror" 
+
+        Arma arma = armaService.getArma(command.armaId)
+        Personaje personaje = new Personaje()
+        personaje.nombre = command.nombre
+        personaje.puntosSalud = command.puntosSalud
+        personaje.puntosFuerza = command.puntosFuerza
+        personaje.arma = arma
+        personaje.save(flush:true, failOnError:true)
+        return personaje
     }
 
-    public Libro getLibro(Long id) {
-        return Libro.get(id)
+    public Personaje getPersonaje(Long id) {
+        return Personaje.get(id)
     }
 
-    public Libro update(LibroCommand command) {
-        assert command.ano > 0: "EL año debe ser mayor a 0finerror"
-        Editorial editorial = editorialService.getEditorial(command.editorialId)
-        Libro libro = Libro.get(command.id)
-        libro.titulo = command.titulo
-        libro.autor = command.autor
-        libro.ano = command.ano
-        libro.editorial = editorial
-        libro.save(flush:true)
-        return libro
+    public Personaje update(PersonajeCommand command) {
+        assert command.puntosSalud > 0: "Los puntos de salud deben ser mayores a 0finerror" 
+        assert command.puntosFuerza > 0: "Los puntos de fuerza deben ser mayores a 0finerror"
+        Arma arma = armaService.getArma(command.armaId)
+        Personaje personaje = Personaje.get(command.id)
+        personaje.nombre = command.nombre
+        personaje.puntosSalud = command.puntosSalud
+        personaje.puntosFuerza = command.puntosFuerza
+        personaje.arma = arma
+        personaje.save(flush:true)
+        return personaje
     }
 
-    public Libro delete(Long id) {
-        Libro libro = Libro.get(id)
-        libro.delete(flush:true)
-        return libro
+    public Personaje delete(Long id) {
+        Personaje personaje = Personaje.get(id)
+        personaje.delete(flush:true)
+        return personaje
     }
 
-    def getLibrosByEditorial(Long editorialId) {
-        def editorial = editorialService.getEditorial(editorialId)
-        def libros = Libro.findAllByEditorial(editorial)
-        return libros
-    }
+    // def getLibrosByEditorial(Long editorialId) {
+    //     def editorial = editorialService.getEditorial(editorialId)
+    //     def libros = Libro.findAllByEditorial(editorial)
+    //     return libros
+    // }
 
-    def getLibroCommand(Long id) {
-        def libro = Libro.get(id)
-        def libroCommand = new LibroCommand()
-        libroCommand.id = libro.id
-        libroCommand.version = libro.version
-        libroCommand.titulo = libro.titulo 
-        libroCommand.autor = libro.autor
-        libroCommand.ano = libro.ano
-        libroCommand.editorialId = libro.editorialId
+    def getPersonajeCommand(Long id) {
+        def personaje = Personaje.get(id)
+        def personajeCommand = new PersonajeCommand()
+        personajeCommand.id = personaje.id
+        personajeCommand.version = personaje.version
+        personajeCommand.nombre = personaje.titulo 
+        personajeCommand.puntosSalud = personaje.puntosSalud
+        personajeCommand.puntosFuerza = personaje.puntosFuerza
+        personajeCommand.fechaCreacion = personaje.fechaCreacion
+        personajeCommand.gritoGuerra = personaje.gritoGuerra
+        personajeCommand.armaId = personaje.armaId
 
-        return libroCommand
+        return personajeCommand
     }
 }
