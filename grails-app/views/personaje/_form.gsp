@@ -34,8 +34,38 @@
             <label for="anoCreacion">Grito de guerra</label>
             <input type="text" class="form-control" name="gritoGuerra" id="gritoGuerra" value="${personaje?.gritoGuerra}">
             <br>
+            <label for="arma">Arma:</label>
+            <select id="cbArma" class="form-control" name="armaId"></select>
+            <br>
             
         </div>
     </div>
+
+    <script>
+    $(document).ready(function () {
+
+
+        $("#cbArma").select2({
+            placeholder: 'Seleccione el arma',
+            formatNoMatches: function() {
+                return '<g:message code="default.no.elements" default="No hay elementos"/>';
+            },
+            formatSearching: function() {
+                return 'arma<g:message code="default.searching" default="Buscando..."/>';
+            },
+            minimumResultsForSearch: 1,
+            formatSelection: function(item) {
+                return item.text;
+            }
+        });
+
+        llenarCombo({
+            comboId : "cbArma",
+            ajaxLink : "${createLink(controller: 'personaje', action: 'ajaxGetArmas')}",
+            idDefault : '${personajeCommand?.armaId}',
+            atributo: "nombre"
+        });
+    });
+</script>
 </body>
 </html>

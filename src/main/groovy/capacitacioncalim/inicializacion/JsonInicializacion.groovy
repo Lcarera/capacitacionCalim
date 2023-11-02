@@ -4,6 +4,8 @@ import grails.converters.JSON
 
 import capacitacioncalim.libro.Libro
 import capacitacioncalim.editorial.Editorial
+import capacitacioncalim.personaje.Personaje
+import capacitacioncalim.arma.Arma
 
 class JsonInicializacion {
     static def inicializar(){
@@ -35,6 +37,15 @@ class JsonInicializacion {
             returnArray['puntosFuerza'] = it.puntosFuerza
             returnArray['fechaCreacion'] = it.fechaCreacion
             returnArray['gritoGuerra'] = it.gritoGuerra
+            returnArray['armaNombre'] = it.armaNombre
+
+            return returnArray
+        }
+        JSON.registerObjectMarshaller(Arma){
+			def returnArray = [:]
+            returnArray['id'] = it.id
+            returnArray['nombre'] = it.nombre
+            returnArray['puntosAtaque'] = it.puntosAtaque
 
             return returnArray
         }
