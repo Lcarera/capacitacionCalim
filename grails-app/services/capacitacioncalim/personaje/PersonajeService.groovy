@@ -1,8 +1,13 @@
 package capacitacioncalim.personaje
 import grails.transaction.Transactional
+import capacitacioncalim.arma.Arma
+import org.joda.time.LocalDate
 
 @Transactional
 class PersonajeService{
+    public List<Arma> listArmas(){
+        return Arma.list()
+    }
     public List<Personaje> listPersonajes(){
         return Personaje.list()
     }
@@ -10,9 +15,10 @@ class PersonajeService{
         Personaje personaje = new Personaje()
         personaje.nombre = command.nombre
         personaje.puntosFuerza = command.puntosFuerza
-        personaje.puntosSalud = command.ano
-        personaje.fechaCreacion = fechaCreacion
-        personaje.gritoGuerra = gritoGuerra
+        personaje.puntosSalud = command.puntosSalud
+        personaje.fechaCreacion = LocalDate.now()
+        personaje.gritoGuerra = command.gritoGuerra
+        personaje.arma = command.armaId
         personaje.save(flush:true, failOnError:true)
         return personaje
     }
@@ -25,9 +31,9 @@ class PersonajeService{
         Personaje personaje = Personaje.get(command.id)
         personaje.nombre = command.nombre
         personaje.puntosFuerza = command.puntosFuerza
-        personaje.puntosSalud = command.ano
-        personaje.fechaCreacion = fechaCreacion
-        personaje.gritoGuerra = gritoGuerra
+        personaje.puntosSalud = command.puntosSalud
+        personaje.gritoGuerra = command.gritoGuerra
+        personaje.arma = command.armaId
         personaje.save(flush:true)
         return personaje
     }
@@ -43,10 +49,11 @@ class PersonajeService{
         def personajeCommand = new PersonajeCommand()
         personajeCommand.id = personaje.id
         personajeCommand.version = personaje.version
-        personajeCommand.titulo = personaje.titulo 
-        personajeCommand.autor = personaje.autor
-        personajeCommand.ano = personaje.ano
-        personajeCommand.editorialId = personaje.editorialId
+        personajeCommand.nombre = personaje.nombre 
+        personajeCommand.puntosFuerza = personaje.puntosFuerza
+        personajeCommand.puntosSalud = personaje.puntosSalud
+        personajeCommand.gritoGuerra = personaje.gritoGuerra
+        personajeCommand.armaId = personaje.armaId
 
         return personajeCommand
     }

@@ -1,4 +1,4 @@
-package capacitacioncalim.libro
+package capacitacioncalim.personaje
 import grails.converters.JSON
 import capacitacioncalim.Auxiliar
 import org.hibernate.transform.Transformers
@@ -9,6 +9,11 @@ class PersonajeController {
     def sessionFactory
     def personajeService
 
+    def list() {
+        def personajes = personajeService.listPersonajes()
+        [personajes: personajes]
+    }
+    
     def listJson() {
         def personajes = personajeService.listPersonajes()
         render personajes as JSON
@@ -28,12 +33,12 @@ class PersonajeController {
         personajeService.update(command)
         redirect(action:"list")
     }
-    def delete(PersonajeCommand command){
-        personajeService.delete(command)
+    def delete(Long id){
+        personajeService.delete(id)
         redirect(action:"list")
     }
-    def ajaxGetPersonajes(){
-        def personajes = personajeService.listPersonajes()
-        render personajes as JSON
+    def ajaxGetArmas(){
+        def armas = personajeService.listArmas()
+        render armas as JSON
     }
 }
