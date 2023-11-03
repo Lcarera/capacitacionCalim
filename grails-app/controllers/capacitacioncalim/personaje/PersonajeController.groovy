@@ -18,7 +18,6 @@ class PersonajeController {
     }
     def save(PersonajeCommand command){
         personajeService.save(command)
-        flash.message("Personaje Creado!")
         redirect(action:"list")
     }
     def edit(Long id) {
@@ -27,12 +26,10 @@ class PersonajeController {
     }
     def update(PersonajeCommand command){
         personajeService.update(command)
-        flash.message("Personaje Actualizado!")
         redirect(action:"list")
     }
     def delete(PersonajeCommand command){
         personajeService.delete(command)
-        flash.message("Personaje Eliminado!")
         redirect(action:"list")
     }
     def ajaxGetPersonajes(){
