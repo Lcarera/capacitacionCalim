@@ -3,6 +3,7 @@
 
 <head>
     <meta name="layout" content="main">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         h1,
         h2 {
@@ -53,6 +54,8 @@
         <div class="dt-responsive table-responsive">
             <g:link controller="personaje" action="create" class="btn btn-primary" style="float: right; margin-left: 10px">
                 Agregar Personaje</g:link>
+            <a onclick="masPoderosoSwal()" href="javascript:;" class="btn btn-danger ">Borrar</a>
+
             <table id="listPersonaje" class="table table-striped table-bordered nowrap" style="cursor:pointer">
                 <thead>
                     <tr>
@@ -131,15 +134,15 @@
                         // Row click
                         $(nRow).off('click').on('click', function () {
                             console.log(aData);
-                             window.location.href = ('${createLink(controller:"personaje", action:"edit")}') + '/' + aData['id'];
+                            window.location.href = ('${createLink(controller:"personaje", action:"edit")}') + '/' + aData['id'];
                         });
                     }
                 });
 
-                llenarDatoslistLibro();
+                llenarDatoslistersonaje();
             });
 
-            function llenarDatoslistLibro() {
+            function llenarDatoslistersonaje() {
                 tabla.clear().draw();
                 $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajes')}", {
                     dataType: "json",
@@ -152,6 +155,21 @@
                     tabla.draw();
                 });
             }
+
+            function masPoderosoSwal() {
+                $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajePoderoso')}", {
+                    dataType: "json",
+                    data: {
+                        nombre: nombre
+                    }
+                }).done(function (data) {
+                Swal.fire({
+                    title: 'Personaje mas Poderoso?',
+                    text: 'nombre:' + nombre,
+                    confirmButtonText: 'ok',
+                })
+                })
+                }
 
         </script>
     </div>

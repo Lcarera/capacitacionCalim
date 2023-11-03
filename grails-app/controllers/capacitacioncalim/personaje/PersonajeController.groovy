@@ -99,4 +99,12 @@ class PersonajeController {
         render armas as JSON
     }
 
+    def ajaxGetPersonajePoderoso()
+    {
+        def personaje = personajeService.getMasPoderoso()
+        println(personaje.nombre)
+        render personaje as JSON
+
+    }
+
 }

@@ -74,11 +74,11 @@ class PersonajeService {
         personaje.nombre = command.nombre
         personaje.puntosFuerza = command.puntosFuerza
         personaje.puntosSalud = command.puntosSalud
-        personaje.fechaCreacion = command.fechaCreacion
+        personaje.fechaCreacion = personaje.fechaCreacion
         personaje.gritoGuerra = command.gritoGuerra
         personaje.arma = arma
         println("CAMBIADO ---------------------------------------------------------- $personaje.nombre")
-        personaje.save(flush:true)
+        personaje.save(flush:true, failOnError: true)
         return personaje
     }
     
@@ -124,6 +124,29 @@ class PersonajeService {
     def getArma(long id){
         return Arma.get(id)
         
+    }
+
+    def getMasPoderoso()
+    {
+        def query= """SELECT 
+        pers.nombre as nombrePersonaje,
+        pers.puntos_fuerza as puntosFuerza,
+        ar.nombre as arma,
+        (ar.puntos_ataque + puntos_fuerza) as poderTotal
+
+        FROM personaje pers
+        join arma ar on pers.arma_id = ar.id order by poderTotal limit 1;"""
+
+        def personaje = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
+            def item = [:]
+            item["nombre"] = it.nombrepersonaje
+            item["puntosFuerza"] = it.puntosfuerza
+            item["arma"] = it.arma
+            item["poderTotal"] = it.podertotal
+            return item
+            }
+
+        return personaje
     }
 
 }

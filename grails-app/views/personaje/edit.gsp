@@ -21,6 +21,7 @@
 
     <script>
         function borrarSwal() {
+            
             Swal.fire({
                 title: 'Borrar Personaje?',
                 showDenyButton: true,
