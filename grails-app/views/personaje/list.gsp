@@ -53,6 +53,8 @@
         <div class="dt-responsive table-responsive">
             <g:link controller="personaje" action="create" class="btn btn-primary" style="float: right; margin-left: 10px">
                 Agregar Personaje</g:link>
+            <g:link controller="personaje" action="agregarArmas" class="btn btn-primary" style="float: right; margin-left: 10px">
+            Agregar Armas</g:link>
             <table id="listPersonaje" class="table table-striped table-bordered nowrap" style="cursor:pointer">
                 <thead>
                     <tr>
@@ -143,7 +145,6 @@
                 });
             }
         </script>
-        <button controller="personaje" action="create">Agregar Armas</button> 
     </div>
 </body>
 

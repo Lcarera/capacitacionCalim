@@ -25,8 +25,31 @@ class PersonajeController{
         render armas as JSON
     }
 
+    def agregarArmas() {
+        def listaArmas = [
+            ["nombre": "Espada", "puntosAtaque": 20],
+            ["nombre": "Arco", "puntosAtaque": 12],
+            ["nombre": "Martillo", "puntosAtaque": 24]
+        ] 
+
+        listaArmas.each { arma ->
+            def armaExistente = Arma.findByNombre(arma.nombre)
+
+            if (!armaExistente) {
+                def nuevaArma = new Arma(nombre: arma.nombre, puntosAtaque: arma.puntosAtaque)
+                nuevaArma.save(flush: true)
+                println "Arma ${arma.nombre} agregada a la base de datos."
+            } else {
+                println "Arma ${arma.nombre} ya existe en la base de datos."
+                
+            }
+        }
+
+        redirect(action: "list") 
+    }
+    
     def agrearArco(){
-        def arma = new Arma()
+        def arma = new Arma()   
         arma.nombre = "Arco"
         arma.puntosAtaque = 12
         personajeService.saveArma(arma)
