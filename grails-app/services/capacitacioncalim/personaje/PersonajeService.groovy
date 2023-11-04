@@ -28,11 +28,11 @@ class PersonajeService {
         def query= """ SELECT 
         personaje.id as id,
         personaje.nombre as nombre,
-        personaje.puntosSalud as puntosSalud,
-        personaje.puntosFuerza as puntosFuerza,
-        personaje.fechaCreacion as fechaCreacion,
-        personaje.gritoGuerra as gritoGuerra,
-        arma.nombre
+        personaje.puntos_salud as puntosSalud,
+        personaje.puntos_fuerza as puntosFuerza,
+        personaje.fecha_creacion as fechaCreacion,
+        personaje.grito_guerra as gritoGuerra,
+        arma.nombre as arma
         FROM personaje personaje
         join arma arma
         on arma.id = personaje.arma_id;"""
