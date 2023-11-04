@@ -4,6 +4,9 @@
 <label for="puntosDeFuerza">Puntos De Fuerza:</label>
 <input type="number" class="form-control" name="puntosDeFuerza" id="puntosDeFuerza" value="${personajeCommand?.puntosDeFuerza}">
 <br>
+<label for="puntosDeSalud">Puntos De Salud:</label>
+<input type="number" class="form-control" name="puntosDeSalud" id="puntosDeSalud" value="${personajeCommand?.puntosDeSalud}">
+<br>
 <label for="gritoDeGuerra">Grito De Guerra:</label>
 <input type="text" class="form-control" name="gritoDeGuerra" id="gritoDeGuerra" value="${personajeCommand?.gritoDeGuerra}">
 <br>

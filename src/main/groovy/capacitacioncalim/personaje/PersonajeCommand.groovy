@@ -1,7 +1,6 @@
 package capacitacioncalim.personaje
 
 import grails.validation.Validateable
-import org.joda.time.LocalDate
 
 class PersonajeCommand implements Validateable{
     
@@ -10,7 +9,8 @@ class PersonajeCommand implements Validateable{
     
     String nombre
     Integer puntosDeFuerza
-    LocalDate fechaCreacion
+    Integer puntosDeSalud
+    String fechaCreacion
     String gritoDeGuerra
     Long armaId
 
@@ -19,6 +19,7 @@ class PersonajeCommand implements Validateable{
         version nullable: true
         nombre nullable: false
         puntosDeFuerza nullable: false
+        puntosDeSalud nullable: false
         fechaCreacion nullable: false
         gritoDeGuerra nullable: true
         armaId nullable: true
