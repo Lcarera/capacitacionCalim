@@ -1,5 +1,5 @@
 package capacitacioncalim.personaje
-
+import org.joda.time.LocalDate
 import capacitacioncalim.arma.Arma
 import capacitacioncalim.arma.ArmaService
 import grails.transaction.Transactional
@@ -14,16 +14,6 @@ class PersonajeService {
     def armaService
     
     public List<Personaje> listPersonajes() {
-        //return Libro.list()
-
-        // def query= """SELECT 
-        // lib.id as id,
-        // lib.titulo as t,
-        // lib.autor as a,
-        // lib.ano as an,
-        // edi.nombre as nombre
-        // FROM libro lib
-        // join editorial edi on edi.id = lib.editorial_id;"""
 
         def query= """ SELECT 
         personaje.id as id,
@@ -42,27 +32,57 @@ class PersonajeService {
             def item = [:]
             item["id"] = it.id
             item["nombre"] = it.nombre
-            item["puntosSalud"] = it.puntosSalud
-            item["puntosFuerza"] = it.puntosFuerza
-            item["fechaCreacion"] = it.fechaCreacion
-            item["gritoGuerra"] = it.gritoGuerra
-            
+            item["puntosSalud"] = it.puntossalud
+            item["puntosFuerza"] = it.puntosfuerza
+            item["fechaCreacion"] = it.fechacreacion
+            item["gritoGuerra"] = it.gritoguerra
+            item["arma"] = it.arma
+            //println(item)
             return item
             }    
         
         return personajes
     } 
 
+    def getPersonajeMasPoderoso()
+    {
+        def query= """SELECT 
+        personaje.nombre as nombre,
+        personaje.puntos_fuerza as puntosFuerza,
+        arma.nombre as arma,
+        (personaje.puntos_fuerza + arma.puntos_ataque) as poderTotal
+        FROM personaje personaje
+        join arma arma
+        on arma.id = personaje.arma_id
+        order by poderTotal desc limit 1;"""
+
+        def personaje = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
+            def item = [:]
+            item["nombre"] = it.nombre
+            item["puntosFuerza"] = it.puntosfuerza
+            item["arma"] = it.arma
+            item["poderTotal"] = it.podertotal
+            //println(item)
+            return item
+            }
+
+        return personaje
+    }
+
+=[]
     public Personaje save(PersonajeCommand command) {
-        assert command.puntosSalud > 0: "Los puntos de salud deben ser mayores a 0finerror" 
         assert command.puntosFuerza > 0: "Los puntos de fuerza deben ser mayores a 0finerror" 
+        assert command.puntosSalud > 0: "Los puntos de salud deben ser mayores a 0finerror" 
 
         Arma arma = armaService.getArma(command.armaId)
+        command.fechaCreacion = new LocalDate().format("yyyy-MM-dd")
         Personaje personaje = new Personaje()
         personaje.nombre = command.nombre
         personaje.puntosSalud = command.puntosSalud
         personaje.puntosFuerza = command.puntosFuerza
         personaje.arma = arma
+        personaje.gritoGuerra = command.gritoGuerra
+        personaje.fechaCreacion = command.fechaCreacion
         personaje.save(flush:true, failOnError:true)
         return personaje
     }
@@ -90,18 +110,12 @@ class PersonajeService {
         return personaje
     }
 
-    // def getLibrosByEditorial(Long editorialId) {
-    //     def editorial = editorialService.getEditorial(editorialId)
-    //     def libros = Libro.findAllByEditorial(editorial)
-    //     return libros
-    // }
-
     def getPersonajeCommand(Long id) {
         def personaje = Personaje.get(id)
         def personajeCommand = new PersonajeCommand()
         personajeCommand.id = personaje.id
         personajeCommand.version = personaje.version
-        personajeCommand.nombre = personaje.titulo 
+        personajeCommand.nombre = personaje.nombre 
         personajeCommand.puntosSalud = personaje.puntosSalud
         personajeCommand.puntosFuerza = personaje.puntosFuerza
         personajeCommand.fechaCreacion = personaje.fechaCreacion

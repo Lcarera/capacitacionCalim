@@ -7,7 +7,7 @@ class Personaje {
     String nombre
     Integer puntosSalud
     Integer puntosFuerza
-    LocalDate fechaCreacion
+    String fechaCreacion
     String gritoGuerra
     static belongsTo = [arma: Arma]
 
@@ -17,5 +17,7 @@ class Personaje {
         puntosFuerza nullable: false
         fechaCreacion nullable: false
         gritoGuerra nullable: true
+        arma nullable: true
+
     }
 }

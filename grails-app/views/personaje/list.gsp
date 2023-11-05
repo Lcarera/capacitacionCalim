@@ -29,7 +29,7 @@
         }
 
         th {
-            background-color: #4CAF50;
+            background-color: #40b9cc;
             color: white;
 
         }
@@ -40,7 +40,7 @@
         }
 
         div.xd {
-            background-color: #39813C;
+            background-color: #169cb1;
         }
     </style>
 </head>
@@ -48,18 +48,21 @@
 <body>
     <div class="container col-8">
         <div class="container col-12 xd">
-            <h1 class="personajeTitulo">Personaje</h1>
+            <h1 class="personajeTitulo">Personajes</h1>
+            
         </div>
+        <br>
         <div class="dt-responsive table-responsive">
-            <g:link controller="personaje" action="create" class="btn btn-primary" style="float: right; margin-left: 10px">
+            <g:link controller="personaje" action="create" class="btn btn-primary" style="background-color: #40cc99; float: right; margin-left: 10px">
                 Agregar Personaje</g:link>
             <table id="listPersonaje" class="table table-striped table-bordered nowrap" style="cursor:pointer">
                 <thead>
                     <tr>
-                        <th>Título</th>
-                        <th>Autor</th>
-                        <th>Año</th>
-                        <th>Editorial</th>
+                        <th>Nombre</th>
+                        <th>Puntos de Salud</th>
+                        <th>Puntos de Fuerza</th>
+                        <th>Grito de Guerra</th>
+                        <th>Arma</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -110,6 +113,10 @@
                     }, {
                         "aTargets": [3],
                         "mData": "gritoGuerra"
+                    },
+                    {
+                        "aTargets": [4],
+                        "mData": "arma"
                     }],
                     buttons: [],
                     sPaginationType: 'simple',

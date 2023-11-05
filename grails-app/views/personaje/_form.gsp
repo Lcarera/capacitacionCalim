@@ -5,10 +5,15 @@
 <input type="text" class="form-control" name="puntosSalud" id="puntosSalud" value="${personajeCommand?.puntosSalud}">
 <br>
 <label for="puntosFuerza">Puntos de Fuerza:</label>
-<input type="number" class="form-control" name="ano" id="ano" value="${personajeCommand?.puntosFuerza}">
+<input type="number" class="form-control" name="puntosFuerza" id="puntosFuerza" value="${personajeCommand?.puntosFuerza}">
+<br>
+<label for="puntosFuerza">Grito de Guerra</label>
+<input type="text" class="form-control" name="gritoGuerra" id="gritoGuerra" value="${personajeCommand?.gritoGuerra}">
 <br>
 <label for="arma">Arma:</label>
 <select id="cbArma" class="form-control" name="armaId"></select>
+<br>
+<br>
 <br>
 
 <script>
@@ -31,7 +36,7 @@
 
         llenarCombo({
             comboId : "cbArma",
-            ajaxLink : "${createLink(controller: 'arma', action: 'ajaxGetArmas')}",
+            ajaxLink : "${createLink(controller: 'personaje', action: 'ajaxGetArmas')}",
             idDefault : '${personajeCommand?.armaId}',
             atributo: "nombre"
         });
