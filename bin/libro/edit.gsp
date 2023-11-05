@@ -3,7 +3,6 @@
 
     <head>
         <meta name="layout" content="main">
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
 
     <body>
@@ -56,7 +55,7 @@
             } */
 
         </script>
-        <script src="sweetalert2.all.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </body>
 
 </html>

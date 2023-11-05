@@ -59,12 +59,14 @@
                             <th>Puntos de Salud</th>
                             <th>Puntos de Fuerza</th>
                             <th>Grito de Guerra</th>
+                            <th>Arma</th>
                             <th>Fecha de Creacion</th>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
+                <a onclick="personajeMasFuerte()" href="javascript:;" class="btn btn-danger ">Personaje Mas Fuerte</a>
             </div>
 
             <script>
@@ -112,7 +114,7 @@
                             "mData": "gritoGuerra"
                         },{
                             "aTargets": [4],
-                            "mData": "arma.nombre"
+                            "mData": "arma"
                         }, {
                             "aTargets": [5],
                             "mData": "fechaCreacion"
@@ -146,7 +148,40 @@
                     });
                 }
 
+            
             </script>
+            <script>
+            function personajeMasFuerte() {
+                $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajeMasFuerte')}", {
+                    dataType: "json",
+                    data: {
+
+                    }
+                }).done(function (data) {
+                    console.log(data);
+                    if (data) {
+                        mostrarModalPersonajeMasFuerte(data);
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'No se pudo obtener el personaje más fuerte.',
+                        });
+                    }
+                });
+            }
+
+            function mostrarModalPersonajeMasFuerte(data) {
+                const MasFuerte = data[0]; 
+                Swal.fire({
+                    title: '<span style="text-transform:uppercase">EL MÁS FUERTE</span>',
+                    html: 'El personaje más fuerte es <b>' + MasFuerte.nombre + '</b> <br>' +
+                    'Tiene una fuerza de <b>' + MasFuerte.puntosFuerza + '</b><br>' +
+                    'Su arma es <b>' + MasFuerte.arma + '</b>',
+                });
+            } 
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         </div>
     </body>
 </html>

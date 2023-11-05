@@ -9,7 +9,7 @@ class Personaje {
     LocalDate fechaCreacion
     String gritoGuerra
 
-    static belongsTo = [armas: Arma]
+    static belongsTo = [arma: Arma]
 
     static constraints = {
         nombre nullable: false
@@ -17,6 +17,6 @@ class Personaje {
         puntosFuerza nullable: false
         fechaCreacion nullable: false
         gritoGuerra nullable: true
-        editorial nullable: false
+        arma nullable: false
     }
 }
