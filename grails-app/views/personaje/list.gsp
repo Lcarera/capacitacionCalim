@@ -160,12 +160,12 @@
                 $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajePoderoso')}", {
                     dataType: "json",
                     data: {
-                        nombre: nombre
-                    }
+
+                        }
                 }).done(function (data) {
                 Swal.fire({
                     title: 'Personaje mas Poderoso?',
-                    text: 'nombre:' + nombre,
+                    text: 'nombre:' + data[0].nombre,
                     confirmButtonText: 'ok',
                 })
                 })

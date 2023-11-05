@@ -69,15 +69,12 @@ class PersonajeService {
 
         Personaje personaje = Personaje.get(command.id)
         Arma arma = getArma(command.armaId)
-        println("Cambiar -----------------------------------------------_$command.nombre")
-        println("A Cambiar -----------------------------------------------_$personaje.nombre")
         personaje.nombre = command.nombre
         personaje.puntosFuerza = command.puntosFuerza
         personaje.puntosSalud = command.puntosSalud
         personaje.fechaCreacion = personaje.fechaCreacion
         personaje.gritoGuerra = command.gritoGuerra
         personaje.arma = arma
-        println("CAMBIADO ---------------------------------------------------------- $personaje.nombre")
         personaje.save(flush:true, failOnError: true)
         return personaje
     }
@@ -100,7 +97,6 @@ class PersonajeService {
         personajeCommand.gritoGuerra = personaje.gritoGuerra
 
         personajeCommand.armaId = personaje.armaId
-        println("----------------------------------------------------------$personajeCommand")
 
         return personajeCommand
     }
@@ -135,7 +131,7 @@ class PersonajeService {
         (ar.puntos_ataque + puntos_fuerza) as poderTotal
 
         FROM personaje pers
-        join arma ar on pers.arma_id = ar.id order by poderTotal limit 1;"""
+        join arma ar on pers.arma_id = ar.id order by poderTotal desc limit 1;"""
 
         def personaje = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
