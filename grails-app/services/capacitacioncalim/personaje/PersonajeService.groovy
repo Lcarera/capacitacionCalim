@@ -54,7 +54,6 @@ class PersonajeService{
         personajeCommand.puntosSalud = personaje.puntosSalud
         personajeCommand.gritoGuerra = personaje.gritoGuerra
         personajeCommand.armaId = personaje.armaId
-
         return personajeCommand
     }
 }
