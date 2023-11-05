@@ -44,7 +44,16 @@ class PersonajeService {
     } 
 
     public Personaje save(PersonajeCommand command) {
-        //assert command.ano > 0: "EL año debe ser mayor a 0finerror" 
+        println(command.nombre)
+        assert command.nombre == "": "El Nombre no puede estar vaciofinerror" 
+        println(command.puntosFuerza)
+        assert command.puntosFuerza <= 0: "Los puntos de fuerza no pueden ser menor a 0finerror" 
+        println(command.puntosSalud)
+        assert command.puntosSalud <= 0: "Los puntos de fuerza no pueden ser menor a 0finerror" 
+        println(command.armaId)
+        assert command.armaId == 0: "El Nombre no puede estar vaciofinerror" 
+
+
         Arma arma = getArma(command.armaId)
         command.fechaCreacion = new LocalDate().format("yyyy-MM-dd")
         Personaje personaje = new Personaje()
