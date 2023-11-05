@@ -8,7 +8,7 @@ class PersonajeController{
     def PersonajeService
 
     def ajaxGetPersonajes() {
-        def personajes = personajeService.listPersonajes() 
+        def personajes = personajeService.getPersonajesSQL()
         render personajes as JSON
     }
 
@@ -48,24 +48,33 @@ class PersonajeController{
         redirect(action: "list") 
     }
     
-    def agrearArco(){
-        def arma = new Arma()   
-        arma.nombre = "Arco"
-        arma.puntosAtaque = 12
-        personajeService.saveArma(arma)
+    def calcularMasPoderoso() {
+        def todosLosPersonajes = Personaje.list()
+        def personajeMasPoderoso = null
+        def maxPuntos = 0
+
+        todosLosPersonajes.each { personaje ->
+            def puntosDeFuerza = personaje.puntosFuerza
+            def puntosDeAtaque = personaje.arma.puntosAtaque
+            def totalPuntos = puntosDeFuerza + puntosDeAtaque
+
+            if (totalPuntos > maxPuntos) {
+                maxPuntos = totalPuntos
+                personajeMasPoderoso = personaje
+            }
+        }
+
+        if (personajeMasPoderoso) {
+            def mensaje = "El personaje más poderoso es ${personajeMasPoderoso.nombre} con ${maxPuntos} puntos de fuerza y ataque combinados."
+            flash.message = mensaje
+            println mensaje
+        } else {
+            flash.message = "No hay personajes creados."
+        }
+
+        redirect(action: "list") 
     }
-    def agrearEspada(){
-        def arma = new Arma()
-        arma.nombre = "Espada"
-        arma.puntosAtaque = 20
-        personajeService.saveArma(arma)
-    }
-    def agrearMartillo(){
-        def arma = new Arma()
-        arma.nombre = "Martillo"
-        arma.puntosAtaque = 24
-        personajeService.saveArma(arma)
-    }
+
 
 
     def save(PersonajeCommand command) {
@@ -84,6 +93,8 @@ class PersonajeController{
             Auxiliar.printearError e
             render (view: "create", model: [personajeCommand: command])
         }
+
+        println command.fechaCreacion
     }
 
     def edit(Long id) {
@@ -121,5 +132,6 @@ class PersonajeController{
             render (view: "list", model: [personajeCommand: command])
         }
     }
+
 
 }

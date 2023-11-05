@@ -20,19 +20,19 @@
     <div class="center-content">
         <div class="container-box">
             <label for="nombre">Nombre</label>
-            <input type="text" class="form-control" name="nombre" id="nombre" value="${personaje?.nombre}">
+            <input type="text" class="form-control" name="nombre" id="nombre" value="${personajeCommand?.nombre}">
             <br>
             <label for="direccion">Puntos de salud</label>
-            <input type="number" class="form-control" name="puntosSalud" id="puntosSalud" value="${personaje?.puntosSalud}">
+            <input type="number" class="form-control" name="puntosSalud" id="puntosSalud" value="${personajeCommand?.puntosSalud}">
             <br>
             <label for="anoCreacion">Puntos de fuerza</label>
-            <input type="number" class="form-control" name="puntosFuerza" id="puntosFuerza" value="${personaje?.puntosFuerza}">
+            <input type="number" class="form-control" name="puntosFuerza" id="puntosFuerza" value="${personajeCommand?.puntosFuerza}">
             <br>
             <label for="anoCreacion">Fecha de creacion</label>
-            <input type="date" class="form-control" name="fechaCreacion" id="fechaCreacion" value="${personaje?.fechaCreacion}">
+            <input type="date" class="form-control" name="fechaCreacion" id="fechaCreacion" value="${personajeCommand?.fechaCreacion}">
             <br>
             <label for="anoCreacion">Grito de guerra</label>
-            <input type="text" class="form-control" name="gritoGuerra" id="gritoGuerra" value="${personaje?.gritoGuerra}">
+            <input type="text" class="form-control" name="gritoGuerra" id="gritoGuerra" value="${personajeCommand?.gritoGuerra}">
             <br>
             <label for="arma">Arma:</label>
             <select id="cbArma" class="form-control" name="armaId"></select>

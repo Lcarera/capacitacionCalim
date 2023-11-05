@@ -72,4 +72,20 @@ class PersonajeService{
 
         return personajeCommand
     }
+
+    public getPersonajesSQL(){
+        def query = "select p.id, p.nombre, p.puntos_salud, p.puntos_fuerza,p.fecha_creacion,p.grito_guerra, a.nombre from personaje as p join arma as a on p.arma_id = a.id;"
+        def personajes = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
+            def item = [:]
+            item.id = it.id
+            item.nombre = it.nombre
+            item.puntosSalud = it.puntos_salud
+            item.puntosFuerza = it.puntos_fuerza
+            item.fechaCreacion = it.fecha_creacion
+            item.gritoGuerra = it.grito_guerra
+            item.armaNombre = it.nombre
+            return item
+        }
+        return personajes
+    }
 }

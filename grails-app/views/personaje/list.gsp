@@ -34,7 +34,7 @@
 
         }
 
-        h1.librotitulo {
+        h1.personajetitulo {
             text-align: center;
             color: white;
         }
@@ -48,7 +48,7 @@
 <body>
     <div class="container col-8">
         <div class="container col-12 xd">
-            <h1 class="librotitulo">PERSONAJES</h1>
+            <h1 class="personajetitulo">PERSONAJES</h1>
         </div>
         <div class="dt-responsive table-responsive">
             <g:link controller="personaje" action="create" class="btn btn-primary" style="float: right; margin-left: 10px">
@@ -145,6 +145,8 @@
                 });
             }
         </script>
+        <g:link controller="personaje" action="calcularMasPoderoso" class="btn btn-primary" style="float: right; margin-left: 10px">
+            Personaje mas poderoso</g:link>
     </div>
 </body>
 
