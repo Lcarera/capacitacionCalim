@@ -68,7 +68,6 @@ class LibroService {
 
     def getLibroCommand(Long id) {
         def libro = Libro.get(id)
-        println libro
         def libroCommand = new LibroCommand()
         libroCommand.id = libro.id
         libroCommand.version = libro.version

@@ -15,7 +15,20 @@ class PersonajeService {
     def sessionFactory
 
     public List<Personaje> listPersonajes(){
-        def q = "Select a.id, a.nombre, a.puntos_de_fuerza, a.puntos_de_salud, to_char(a.fecha_creacion, 'DD/MM/YYYY') as fecha_creacion, a.grito_de_guerra, b.nombre as arma from personaje a join arma b on a.arma_id = b.id;"
+        def q = """
+                    SELECT
+                        a.id,
+                        a.nombre,
+                        a.puntos_de_fuerza,
+                        a.puntos_de_salud,
+                        TO_CHAR(a.fecha_creacion, 'DD/MM/YYYY') AS fecha_creacion,
+                        a.grito_de_guerra,
+                        b.nombre AS arma
+                    FROM
+                        personaje a
+                    JOIN
+                        arma b ON a.arma_id = b.id;
+                """
         def personajes = sessionFactory.currentSession.createSQLQuery(q).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
             item.id = it.id
@@ -31,15 +44,21 @@ class PersonajeService {
     } 
 
     public Personaje save(PersonajeCommand command) {
+        assert command.nombre != null: "Campo de nombre vacíofinerror"
         assert command.puntosDeFuerza > 0: "Campo de puntos de fuerza invalidofinerror"
         assert command.puntosDeSalud > 0: "Campo de puntos de salud invalidofinerror"
+        assert command.armaId != null: "Selecciona un armafinerror"
         Arma arma = armaService.getArma(command.armaId)
         Personaje personaje = new Personaje()
         personaje.nombre = command.nombre
         personaje.puntosDeFuerza = command.puntosDeFuerza
         personaje.puntosDeSalud = command.puntosDeSalud
         personaje.fechaCreacion = LocalDate.now()
+        if (command.gritoDeGuerra != null) {
         personaje.gritoDeGuerra = command.gritoDeGuerra
+        } else {
+            personaje.gritoDeGuerra = '-'
+        }
         personaje.arma = arma
         personaje.save(flush:true, failOnError:true)
         return personaje
@@ -85,7 +104,21 @@ class PersonajeService {
     }
 
     def getPersonajeMasFuerte(){
-        def q = "select a.nombre, (a.puntos_de_fuerza + b.puntos_de_ataque) as daño from personaje a, arma b where a.arma_id = b.id group by a.nombre, a.puntos_de_fuerza, b.puntos_de_ataque order by daño desc limit 1;"
+        def q = """
+                SELECT 
+                    a.nombre,
+                    (a.puntos_de_fuerza + b.puntos_de_ataque) AS daño
+                FROM 
+                    personaje a,
+                    arma b
+                WHERE
+                    a.arma_id = b.id
+                GROUP BY 
+                    a.nombre,
+                    a.puntos_de_fuerza,
+                    b.puntos_de_ataque
+                ORDER BY daño DESC LIMIT 1;
+                """
         def personaje = sessionFactory.currentSession.createSQLQuery(q).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
             item.nombre = it.nombre

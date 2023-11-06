@@ -10,7 +10,7 @@ class Personaje {
     LocalDate fechaCreacion
     String gritoDeGuerra
 
-    static belongsTo = [arma: Arma]
+    static hasOne = [arma: Arma]
 
     static constraints = {
         nombre nullable: false

@@ -51,6 +51,11 @@
         <div class="container col-12 xd">
             <h1 class="personajetitulo">PERSONAJES</h1>
         </div>
+        <div class="d-flex justify-content-between" style="margin-top: 10px;">
+            <g:link controller="personaje" action="create" class="btn btn-primary" style="margin-right: 10px;">Agregar Personaje</g:link>
+            <button onclick="obtenerPersonajeMasFuerte()" class="btn" style="background-color: #4caf50; color: white;">Personaje Mas Fuerte</button>   
+        </div>
+
         <div class="dt-responsive table-responsive" style="margin-top: 10px;">
             <table id="listPersonaje" class="table table-striped table-bordered nowrap" style="cursor:pointer">
                 <thead>
@@ -120,26 +125,13 @@
                     "mData": "arma"
                 }],
                 buttons: [{
-                    text: 'Agregar Personaje',
-                    action: function () {
-                        window.location.href = ('${createLink(controller:"personaje", action:"create")}');
-                    },
-                    className: 'btn btn-primary',
-                },
-                {
-                    text: 'Personaje Más Fuerte',
-                    action: function () {
-                        obtenerPersonajeMasFuerte();
-                    },
-                    className: 'btn btn-primary',
 
                 },],
                 sPaginationType: 'simple',
-                sDom: '<"row"<"col-4"l><"col-8"Bf>>t<"row"<"col-6"i><"col-6"p>>',
+                sDom: '<"row"<"col-4"l><"col-8"f>>t<"row"<"col-6"i><"col-6"p>>',
                 fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     // Row click
                     $(nRow).off('click').on('click', function () {
-                        console.log(aData);
                         window.location.href = ('${createLink(controller:"personaje", action:"edit")}') + '/' + aData['id'];
                     });
                 }
@@ -156,7 +148,6 @@
 
                 }
             }).done(function (data) {
-                console.log(data);
                 tabla.rows.add(data)
                 tabla.draw();
             });
@@ -189,7 +180,6 @@
 
                 }
             }).done(function (data) {
-                console.log(data);
                 personajeMasFuerteSwal(data);
             });
         }

@@ -30,9 +30,7 @@
             Swal.fire({
                 title: 'Borrar personaje?',
                 showDenyButton: true,
-                showCancelButton: true,
                 confirmButtonText: 'Borrar',
-                cancelButtonText: 'Cancelar',
                 denyButtonText: `No Borrar`,
             }).then((result) => {
                 if (result.isConfirmed) {
