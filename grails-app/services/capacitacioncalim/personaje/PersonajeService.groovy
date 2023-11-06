@@ -20,7 +20,7 @@ class PersonajeService{
             item.nombre = it.nombre
             item.puntosFuerza = it.puntos_fuerza
             item.puntosSalud = it.puntos_salud
-            item.fechaCreacion = deserializeLocalDate(it.fecha_creacion)
+            item.fechaCreacion = it.fecha_creacion
             item.gritoGuerra = it.grito_guerra
             item.arma = it.arma
             return item
@@ -28,9 +28,10 @@ class PersonajeService{
         return personajes   
     }   
     def getPersonajeMasFuerte(){
-        def q = "SELECT p.nombre AS personaje_nombre, p.puntos_fuerza AS puntos_personaje, a.nombre as arma_nombre, a.puntos_fuerza AS puntos_arma, (p.puntos_fuerza + a.puntos_fuerza) AS total_puntos FROM personaje p JOIN arma a ON p.arma_id = a.id ORDER BY total_puntos DESC LIMIT 1;"
+        def q = "SELECT p.id as id, p.nombre AS personaje_nombre, p.puntos_fuerza AS puntos_personaje, a.nombre as arma_nombre, a.puntos_fuerza AS puntos_arma, (p.puntos_fuerza + a.puntos_fuerza) AS total_puntos FROM personaje p JOIN arma a ON p.arma_id = a.id ORDER BY total_puntos DESC LIMIT 1;"
         def personaje = sessionFactory.currentSession.createSQLQuery(q).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
+            item.id = it.id
             item.nombre = it.personaje_nombre
             item.puntosFuerza = it.total_puntos
             item.arma = it.arma_nombre

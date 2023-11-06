@@ -28,7 +28,7 @@
             }
 
             th {
-                background-color: #4CAF50;
+                background-color: #39813C;
                 color: white;
 
             }
@@ -41,6 +41,10 @@
             div.xd {
                 background-color: #39813C;
             }
+            .btn.btn-primary {
+                height: 2.4em;
+            }
+</style>
         </style>
     </head>
 
@@ -50,9 +54,8 @@
                 <h1 class="personajetitulo">PERSONAJES</h1>
             </div>
             <div class="dt-responsive table-responsive">
-                <g:link controller="personaje" action="create" class="btn btn-primary" style="float: right">
-                    Agregar Personaje</g:link>
-                <table id="listPersonaje" class="table table-striped table-bordered nowrap" style="cursor:pointer">
+                    <g:link controller="personaje" action="create" class="btn btn-primary" style="float: right">+</g:link>
+                <table id="listPersonaje" class="table table-striped table-hover table-bordered nowrap" style="cursor:pointer">
                     <thead>
                         <tr>
                             <th>Nombre</th>
@@ -66,7 +69,7 @@
                     <tbody>
                     </tbody>
                 </table>
-                <a onclick="personajeMasFuerte()" href="javascript:;" class="btn btn-danger ">Personaje Mas Fuerte</a>
+                <button onclick="personajeMasFuerte()" href="javascript:;" class="btn btn-secondary">Personaje Mas Fuerte</button>
             </div>
 
             <script>
@@ -77,6 +80,7 @@
                         //bSortCellsTop: true,
                         //BProcessing: true,
                         "ordering": true,
+                        "searching": true,
                         "searching": true,
                         oLanguage: {
                             sProcessing: "Buscando...",
@@ -158,8 +162,18 @@
 
                     }
                 }).done(function (data) {
-                    console.log(data);
+                    console.log(data);                  
                     if (data) {
+                        const MasFuerte = data[0];
+                        const rows = tabla.rows().nodes();
+                        for (let i = 0; i < rows.length; i++) {
+                            const rowData = tabla.row(i).data();
+                            if (rowData.id === MasFuerte.id) {
+                                $(rows[i]).addClass("table-info");
+                            } else {
+                                $(rows[i]).removeClass("table-info");
+                            }
+                        }
                         mostrarModalPersonajeMasFuerte(data);
                     } else {
                         Swal.fire({
@@ -182,6 +196,7 @@
             } 
         </script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         </div>
     </body>
 </html>
