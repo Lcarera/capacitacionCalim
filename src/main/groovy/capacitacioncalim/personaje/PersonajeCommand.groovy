@@ -9,8 +9,9 @@ class PersonajeCommand implements Validateable{
     String nombre
     Integer puntosSalud
     Integer puntosFuerza
-    String fechaCreacion
+    LocalDate fechaCreacion
     String gritoGuerra
+    Long armaId
 
     static constraints = {
         id nullable: true
@@ -20,5 +21,6 @@ class PersonajeCommand implements Validateable{
         puntosFuerza nullable: false
         fechaCreacion nullable: false
         gritoGuerra nullable: true
+        armaId nullable: true
     }
 } 

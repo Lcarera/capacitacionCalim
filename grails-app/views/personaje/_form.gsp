@@ -16,27 +16,29 @@
     <body>
         <div class="center-content">
             <div class="container-box">
-                <label for="titulo">Titulo:</label>
-                <input type="text" class="form-control" name="titulo" id="titulo" value="${libroCommand?.titulo}">
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="form-control" name="nombre" id="nombre" value="${personajeCommand?.nombre}">
                 <br>
-                <label for="autor">Autor:</label>
-                <input type="text" class="form-control" name="autor" id="autor" value="${libroCommand?.autor}">
+                <label for="puntosSalud">Puntos de Salud:</label>
+                <input type="number" class="form-control" name="puntosSalud" id="puntosSalud" value="${personajeCommand?.puntosSalud}">
                 <br>
-                <label for="ano">Ano:</label>
-                <input type="number" class="form-control" name="ano" id="ano" value="${libroCommand?.ano}">
+                <label for="puntosFuerza">Puntos de Fuerza:</label>
+                <input type="number" class="form-control" name="puntosFuerza" id="puntosFuerza" value="${personajeCommand?.puntosFuerza}">
                 <br>
-                <label for="editorial">Editorial:</label>
-                <select id="cbEditorial" class="form-control" name="editorialId"></select>
-                
+                <label for="gritoGuerra">Grito de Guerra:</label>
+                <input type="text" class="form-control" name="gritoGuerra" id="gritoGuerra" value="${personajeCommand?.gritoGuerra}">
+                <br>
+                <label for="arma">Arma:</label>
+                <select id="cbArma" class="form-control" name="armaId"></select>
+                <br>
             </div>            
         </div>
         <br>
         <script>
             $(document).ready(function () {
 
-
-                $("#cbEditorial").select2({
-                    placeholder: 'Seleccione la editorial',
+                $("#cbArma").select2({
+                    placeholder: 'Seleccione la arma',
                     formatNoMatches: function() {
                         return '<g:message code="default.no.elements" default="No hay elementos"/>';
                     },
@@ -50,9 +52,9 @@
                 });
 
                 llenarCombo({
-                    comboId : "cbEditorial",
-                    ajaxLink : "${createLink(controller: 'editorial', action: 'ajaxGetEditoriales')}",
-                    idDefault : '${libroCommand?.editorialId}',
+                    comboId : "cbArma",
+                    ajaxLink : "${createLink(controller: 'personaje', action: 'ajaxGetArmas')}",
+                    idDefault : '${personajeCommand?.armaId}',
                     atributo: "nombre"
                 });
             });

@@ -1,19 +1,11 @@
-package capacitacioncalim.Personaje
+package capacitacioncalim.arma
 
-class Personaje {
+class Arma {
     String nombre
-    Integer puntosSalud
-    Integer puntosFuerza
-    String fechaCreacion
-    String gritoGuerra
-
-    // static belongsTo = [editorial: Editorial]
-
+    Integer puntosAtaque
+    
     static constraints = {
         nombre nullable: false
-        puntosSalud nullable: false
-        puntosFuerza nullable: false
-        fechaCreacion nullable: false
-        gritoGuerra nullable: true
+        puntosAtaque nullable: false
     }
 }

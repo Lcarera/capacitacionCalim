@@ -1,13 +1,14 @@
-package capacitacioncalim.Personaje
+package capacitacioncalim.personaje
+import capacitacioncalim.arma.Arma
 
 class Personaje {
     String nombre
     Integer puntosSalud
     Integer puntosFuerza
-    String fechaCreacion
+    LocalDate fechaCreacion
     String gritoGuerra
 
-    // static belongsTo = [editorial: Editorial]
+    static belongsTo = [arma: Arma]
 
     static constraints = {
         nombre nullable: false
@@ -15,5 +16,6 @@ class Personaje {
         puntosFuerza nullable: false
         fechaCreacion nullable: false
         gritoGuerra nullable: true
+        arma nullable: true
     }
 }

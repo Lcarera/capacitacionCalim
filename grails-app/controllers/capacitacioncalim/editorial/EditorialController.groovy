@@ -97,6 +97,7 @@ class EditorialController {
 
     def ajaxGetEditoriales() {
         def editoriales = editorialService.listEditoriales()
+        println("Editoriales: " + editoriales)
         render editoriales as JSON
     }
 }

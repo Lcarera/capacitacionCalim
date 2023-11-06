@@ -15,7 +15,8 @@
                 <br>
                 <button class="btn btn-success" type="submit">Guardar</button>
                 <g:link controller="libro" class="btn btn-secondary" action="list">Volver</g:link>
-                <a onclick="borrarSwal()" id="${libroCommand.id}" href="javascript:;" class="btn btn-danger ">Borrar</a>
+                <!-- <a onclick="borrarSwal()" id="${libroCommand.id}" href="javascript:;" class="btn btn-danger ">Borrar</a> -->
+                <button class="btn btn-danger" onclick="borrarSwal()" id="${libroCommand.id}">Borrar</button>
             </div>
         </div>
     </g:form>
