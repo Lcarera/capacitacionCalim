@@ -20,21 +20,11 @@ class PersonajeService {
             item.puntosSalud = it.puntos_salud
             item.puntosFuerza = it.puntos_fuerza
             item.gritoGuerra = it.grito_guerra
-            item.fechaCreacion = deserializeLocalDate(it.fecha_creacion)
+            item.fechaCreacion = it.fecha_creacion
             item.arma = it.arma
             return item
         }
         return personajes
-    }
-
-    private LocalDate deserializeLocalDate(byte[] bytes) {
-        try {
-            ByteArrayInputStream bis = new ByteArrayInputStream(bytes)
-            ObjectInputStream ois = new ObjectInputStream(bis)
-            return (LocalDate) ois.readObject()
-        } catch (Exception e) {
-            return null
-        }
     }
 
     public List<Arma> listArmas() {
@@ -93,6 +83,7 @@ class PersonajeService {
         personajeCommand.nombre = personaje.nombre
         personajeCommand.puntosSalud = personaje.puntosSalud
         personajeCommand.puntosFuerza = personaje.puntosFuerza
+        personajeCommand.gritoGuerra = personaje.gritoGuerra
         personajeCommand.armaId = personaje.armaId
         return personajeCommand
     }
