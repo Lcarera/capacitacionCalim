@@ -1,5 +1,6 @@
 package capacitacioncalim.personaje
 import capacitacioncalim.arma.Arma
+import org.joda.time.LocalDate
 
 class Personaje {
     String nombre
