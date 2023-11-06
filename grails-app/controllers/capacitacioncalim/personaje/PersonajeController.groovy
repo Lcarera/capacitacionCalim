@@ -81,6 +81,7 @@ class PersonajeController{
             personajeService.save(command)
             flash.message = "Personaje guardado correctamente"
             redirect(action: "list")
+            println command.fechaCreacion
         }
         catch(AssertionError e) {
             Auxiliar.printearError e

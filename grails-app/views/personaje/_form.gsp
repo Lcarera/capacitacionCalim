@@ -28,9 +28,6 @@
             <label for="anoCreacion">Puntos de fuerza</label>
             <input type="number" class="form-control" name="puntosFuerza" id="puntosFuerza" value="${personajeCommand?.puntosFuerza}">
             <br>
-            <label for="anoCreacion">Fecha de creacion</label>
-            <input type="date" class="form-control" name="fechaCreacion" id="fechaCreacion" value="${personajeCommand?.fechaCreacion}">
-            <br>
             <label for="anoCreacion">Grito de guerra</label>
             <input type="text" class="form-control" name="gritoGuerra" id="gritoGuerra" value="${personajeCommand?.gritoGuerra}">
             <br>
