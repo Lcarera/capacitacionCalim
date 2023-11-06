@@ -54,7 +54,7 @@
         <div class="dt-responsive table-responsive">
             <g:link controller="personaje" action="create" class="btn btn-primary" style="float: right; margin-left: 10px">
                 Agregar Personaje</g:link>
-            <a onclick="masPoderosoSwal()" href="javascript:;" class="btn btn-danger ">Borrar</a>
+            <a onclick="masPoderosoSwal()" href="javascript:;" class="btn btn-danger ">Quien es el Mas Poderoso</a>
 
             <table id="listPersonaje" class="table table-striped table-bordered nowrap" style="cursor:pointer">
                 <thead>
@@ -165,7 +165,7 @@
                 }).done(function (data) {
                 Swal.fire({
                     title: 'Personaje mas Poderoso?',
-                    text: 'nombre:' + data[0].nombre,
+                    text: 'nombre:' + data[0].nombre + '   Poder Total:' + data[0].poderTotal + '   Arma eelgida:' + data[0].arma, 
                     confirmButtonText: 'ok',
                 })
                 })

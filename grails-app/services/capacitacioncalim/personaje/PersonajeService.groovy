@@ -44,14 +44,10 @@ class PersonajeService {
     } 
 
     public Personaje save(PersonajeCommand command) {
-        println(command.nombre)
-        assert command.nombre == "": "El Nombre no puede estar vaciofinerror" 
-        println(command.puntosFuerza)
-        assert command.puntosFuerza <= 0: "Los puntos de fuerza no pueden ser menor a 0finerror" 
-        println(command.puntosSalud)
-        assert command.puntosSalud <= 0: "Los puntos de fuerza no pueden ser menor a 0finerror" 
-        println(command.armaId)
-        assert command.armaId == 0: "El Nombre no puede estar vaciofinerror" 
+        assert command.nombre != "": "El Nombre no puede estar vaciofinerror" 
+        assert command.puntosFuerza > 0 || command.puntosFuerza != null: "Los puntos de fuerza deben ser un numero y ser mayor a 0finerror" 
+        assert command.puntosSalud > 0 || command.puntosSalud != null: "Los puntos de salud deben ser un numero y ser mayor a 0finerror" 
+        assert command.armaId != null: "El arma debe ser elegida ahorafinerror" 
 
 
         Arma arma = getArma(command.armaId)
@@ -75,6 +71,10 @@ class PersonajeService {
     public Personaje update(PersonajeCommand command) {
         //assert command.ano > 0: "EL año debe ser mayor a 0finerror"
         //Editorial editorial = editorialService.getEditorial(command.editorialId)
+        assert command.nombre != "": "El Nombre no puede estar vaciofinerror" 
+        assert command.puntosFuerza > 0 || command.puntosFuerza != null: "Los puntos de fuerza no pueden ser menor a 0finerror" 
+        assert command.puntosSalud > 0 || command.puntosSalud != null: "Los puntos de salud no pueden ser menor a 0finerror" 
+        assert command.armaId != null: "El arma debe ser elegida ahorafinerror" 
 
         Personaje personaje = Personaje.get(command.id)
         Arma arma = getArma(command.armaId)
