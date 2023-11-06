@@ -16,8 +16,7 @@
             <div class="container-box">
                 <a onclick="borrarSwal()" id="${personajeCommand.id}" href="javascript:;" class="btn btn-danger ">Borrar</a>
                 <g:link controller="personaje" class="btn btn-secondary" action="list">Volver</g:link>
-                <button class="btn btn-success" type="submit">Guardar</button>
-            </div>
+                <button class="btn btn-success" onclick="guardarSwal()" type="button" style="background-color: #16b179;">Guardar</button>             </div>
         </div>
     </g:form>
 
@@ -40,33 +39,25 @@
                 }
             })
         }
-        
-        function GuardarSwalAndSubmit() {
-            Swal.fire({
+            
+        async function guardarSwal() {
+            const result = await Swal.fire({
                 title: 'Confirmar cambios?',
                 showDenyButton: true,
                 showCancelButton: true,
-                confirmButtonText: 'Guardado',
+                confirmButtonText: 'Guardar',
                 cancelButtonText: 'Cancelar',
-                denyButtonText: `No Guardado`,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire('Guardado!', '', 'success');
-                    // Si se confirma, envía el formulario
-                    $("#personajeForm").submit();
-                } else if (result.isDenied) {
-                    Swal.fire('Guardado Cancelado', '', 'info');
-                }
             });
-        }
 
-        $(document).ready(function() {
-            // Captura el evento de clic en el botón "Guardar"
-            $('.btn-success').on('click', function(event) {
-                event.preventDefault(); // Evita que se envíe el formulario de inmediato
-                GuardarSwalAndSubmit(); // Muestra el GuardarSwal y envía el formulario si es confirmado
-            });
-        });
+            if (result.isConfirmed) {
+                Swal.fire('Guardado!', '', 'success');
+                // Proceed with your action after user confirmation.
+                document.getElementById('personajeForm').submit(); // Submit the form
+            } else if (result.isDenied) {
+                Swal.fire('Guardado Cancelado', '', 'info');
+                // Handle the case when the user denies the action.
+            }
+        }
     </script>
     <script src="sweetalert2.all.min.js"></script>
 </body>
