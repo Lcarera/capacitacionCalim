@@ -10,22 +10,18 @@ class BootStrap {
 
     def init = { servletContext ->
 
-        def existingRecords = Arma.findAll()
+        def registrosCreados = Arma.findAll()
 
-        if (!existingRecords) {
-            createSampleRecords()
+        if (!registrosCreados) {
+            def arco = new Arma(nombre: 'Arco', puntosDeAtaque: 12)
+            def espada = new Arma(nombre: 'Espada',  puntosDeAtaque: 20)
+            def martillo = new Arma(nombre: 'Martillo',  puntosDeAtaque: 24)
+            arco.save(failOnError: true)
+            espada.save(failOnError: true)
+            martillo.save(failOnError: true)
         }
         JsonInicializacion.inicializar()
     }
     def destroy = {
-    }
-
-    private void createSampleRecords() {
-        def arco = new Arma(nombre: 'Arco', puntosDeAtaque: 12)
-        def espada = new Arma(nombre: 'Espada',  puntosDeAtaque: 20)
-        def martillo = new Arma(nombre: 'Martillo',  puntosDeAtaque: 24)
-        arco.save(failOnError: true)
-        espada.save(failOnError: true)
-        martillo.save(failOnError: true)
     }
 }
