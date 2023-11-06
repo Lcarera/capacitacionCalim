@@ -60,6 +60,8 @@
             ajaxLink : "${createLink(controller: 'editorial', action: 'ajaxGetEditoriales')}",
             idDefault : '${libroCommand?.editorialId}',
             atributo: "nombre"
+            idDefault : '${libroCommand?.editorialId}',
+            atributo: "nombre"
         });
     });
 </script>

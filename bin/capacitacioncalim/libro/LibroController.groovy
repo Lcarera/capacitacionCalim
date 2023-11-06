@@ -45,6 +45,8 @@ class LibroController {
     def edit(Long id) {
         def libroCommand = libroService.getLibroCommand(id)
         [libroCommand: libroCommand]
+        def libroCommand = libroService.getLibroCommand(id)
+        [libroCommand: libroCommand]
     }
 
     def update(LibroCommand command) {
@@ -80,7 +82,10 @@ class LibroController {
 
     def ajaxGetLibros() {
         def libros = libroService.listLibros()
+    def ajaxGetLibros() {
+        def libros = libroService.listLibros()
         render libros as JSON
     }
+
 
 }

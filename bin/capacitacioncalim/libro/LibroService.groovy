@@ -12,6 +12,7 @@ class LibroService {
     public List<Libro> listLibros() {
         return Libro.list()
     } 
+    } 
 
     public Libro save(LibroCommand command) {
         assert command.ano > 0:"El año del libro tiene que ser mayor a 0finerror"
@@ -51,6 +52,19 @@ class LibroService {
         def editorial = editorialService.getEditorial(editorialId)
         def libros = Libro.findAllByEditorial(editorial)
         return libros
+    }
+
+    def getLibroCommand(Long id) {
+        def libro = Libro.get(id)
+        def libroCommand = new LibroCommand()
+        libroCommand.id = libro.id
+        libroCommand.version = libro.version
+        libroCommand.titulo = libro.titulo 
+        libroCommand.autor = libro.autor
+        libroCommand.ano = libro.ano
+        libroCommand.editorialId = libro.editorialId
+
+        return libroCommand
     }
 
     def getLibroCommand(Long id) {

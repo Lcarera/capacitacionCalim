@@ -2,6 +2,8 @@ package capacitacioncalim.libro
 
 import capacitacioncalim.editorial.Editorial
 
+import capacitacioncalim.editorial.Editorial
+
 class Libro {
     String titulo
     String autor
@@ -9,6 +11,8 @@ class Libro {
 
     static belongsTo = [editorial: Editorial]
 
+    static belongsTo = [editorial: Editorial]
+    static hasMany = [libroPrecios: LibroPrecio]
     static constraints = {
         titulo nullable: false
         autor nullable: false
