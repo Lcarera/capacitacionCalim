@@ -51,7 +51,7 @@ class PersonajeService {
 
 
         Arma arma = getArma(command.armaId)
-        command.fechaCreacion = new LocalDate().format("yyyy-MM-dd")
+        command.fechaCreacion = new LocalDate()
         Personaje personaje = new Personaje()
         personaje.nombre = command.nombre
         personaje.puntosFuerza = command.puntosFuerza

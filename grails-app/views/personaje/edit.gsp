@@ -7,14 +7,14 @@
 </head>
 
 <body>
-    <g:form controller="personaje" action="update">
+    <g:form>
         <g:hiddenField name="id" value="${personajeCommand.id}" />
         <g:render template="form" />
         <div class="center-content">
             <div class="container-box">
                 <a onclick="borrarSwal()" id="${personajeCommand.id}" href="javascript:;" class="btn btn-danger ">Borrar</a>
                 <g:link controller="personaje" class="btn btn-secondary" action="list">Volver</g:link>
-                <button class="btn btn-success" type="submit">Guardar</button>
+                <button class="btn btn-success" onclick="GuardarSwal()" >Guardar</button>
             </div>
         </div>
     </g:form>
@@ -38,7 +38,7 @@
                 }
             })
         }
-        /* function GuardarSwal() {
+        function GuardarSwal() {
             Swal.fire({
                 title: 'Confirmar cambios?',
                 showDenyButton: true,
@@ -48,13 +48,14 @@
                 denyButtonText: `No Guardado`,
             }).then((result) => {
                 if (result.isConfirmed) {
+                    
                     Swal.fire('Guardado!', '', 'success')
+                    
                 } else if (result.isDenied) {
                     Swal.fire('Guardado Cancelado', '', 'info')
                 }
             })
         } */
-        consoleLog(personajeCommand);
     </script>
     <script src="sweetalert2.all.min.js"></script>
 </body>

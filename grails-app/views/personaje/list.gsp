@@ -41,37 +41,37 @@
         }
 
         div.xd {
-            background-color: #39813C;
+            background-color: #61b1b5;
         }
     </style>
 </head>
 
 <body>
     <div class="container col-12">
-        <div class="container col-12 xd">
-            <h1 class="personajes-titulo">Personajes</h1>
+        <div class="container col-12">
+            <h1 class="personajes-titulo"> <strong>Personajes</strong></h1>
         </div>
         <div class="dt-responsive table-responsive">
-            <g:link controller="personaje" action="create" class="btn btn-primary" style="float: right; margin-left: 10px">
-                Agregar Personaje</g:link>
-            <a onclick="masPoderosoSwal()" href="javascript:;" class="btn btn-danger ">Quien es el Mas Poderoso</a>
+            <g:link controller="personaje" action="create" class="btn btn-success" style="float: right; margin-left: 10px,">
+                <b>+</b></g:link>
 
             <table id="listPersonaje" class="table table-striped table-bordered nowrap" style="cursor:pointer">
                 <thead>
                     <tr>
-                        <th>nombre</th>
+                        <th>Nombre</th>
                         <th>Puntos de Fuerza</th>
                         <th>Puntos de Salud</th>
                         <th>Fecha de Creacion</th>
-                        <th>grito de Guerra</th>
+                        <th>Grito de Guerra</th>
                         <th>Arma</th>
                         <th>Poder Total</th>
-
                     </tr>
                 </thead>
                 <tbody>
                 </tbody>
             </table>
+        <button onclick="masPoderosoSwal()" class="btn btn-secondary ">Quien es el Mas Poderoso</button>
+
         </div>
 
         <script>
@@ -165,8 +165,8 @@
                 }).done(function (data) {
                 Swal.fire({
                     title: 'Personaje mas Poderoso?',
-                    text: 'nombre:' + data[0].nombre + '   Poder Total:' + data[0].poderTotal + '   Arma eelgida:' + data[0].arma, 
-                    confirmButtonText: 'ok',
+                    html: `<strong> Nombre: </strong>` + data[0].nombre + `<br> <strong> Poder Total: </strong>` + data[0].poderTotal + `<br> <strong> Arma Elegida: </strong>` + data[0].arma, 
+                    confirmButtonText: 'Cerrar',
                 })
                 })
                 }
