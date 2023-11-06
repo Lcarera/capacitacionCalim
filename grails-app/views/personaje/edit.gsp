@@ -19,17 +19,18 @@
             <div class="container-box container-right">
                 <a onclick="borrarSwal()" id="${personajeCommand.id}" href="javascript:;" class="btn btn-danger ">Borrar</a>
                 <g:link controller="personaje" class="btn btn-secondary" action="list">Volver</g:link>
-                <button class="btn btn-success" type="submit" style="background-color: #40cc99;">Guardar</button> 
+                <button class="btn btn-success" onclick="guardarSwal()" type="button" style="background-color: #16b179;">Guardar</button> 
            </div>
         </div>
     </g:form>
 
     <script>
+
+    
         function borrarSwal() {
             Swal.fire({
                 title: 'Borrar personaje',
-                text: 'Estas seguro que queres borrar el personaje?',
-                showDenyButton: true,
+                text: 'Esta seguro que desea borrar el personaje?',
                 showCancelButton: true,
                 confirmButtonText: 'Borrar',
                 cancelButtonText: 'Cancelar',
@@ -42,21 +43,23 @@
                 }
             })
         }
-         /* function guardarSwal() {
-            Swal.fire({
-                title: 'Confirmar cambios?',
-                showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: 'Guardar',
-                cancelButtonText: 'Cancelar',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire('Guardado!', '', 'success')
-                } else if (result.isDenied) {
-                    Swal.fire('Guardado Cancelado', '', 'info')
-                }
-            })
-        } */
+          async function guardarSwal() {
+    const result = await Swal.fire({
+        title: 'Confirmar cambios?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Guardar',
+        cancelButtonText: 'Cancelar',
+    });
+
+    if (result.isConfirmed) {
+        Swal.fire('Guardado!', '', 'success');
+        // Proceed with your action after user confirmation.
+    } else if (result.isDenied) {
+        Swal.fire('Guardado Cancelado', '', 'info');
+        // Handle the case when the user denies the action.
+    }
+}
 
     </script>
     <script src="sweetalert2.all.min.js"></script>

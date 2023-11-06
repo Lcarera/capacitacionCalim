@@ -7,7 +7,7 @@ class Personaje {
     String nombre
     Integer puntosSalud
     Integer puntosFuerza
-    String fechaCreacion
+    LocalDate fechaCreacion
     String gritoGuerra
     static belongsTo = [arma: Arma]
 

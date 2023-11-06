@@ -3,7 +3,9 @@
 
 <head>
     <meta name="layout" content="main">
-    <style>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <style>
         h1,
         h2 {
             display: inline-block;
@@ -48,19 +50,18 @@
 <body>
     <div class="container col-8">
         <div class="container col-12 xd">
-            <h1 class="personajeTitulo">Personajes</h1>
-            
+            <h1 class="personajeTitulo">Personajes</h1>           
         </div>
         <br>
         <div class="dt-responsive table-responsive">
-            <g:link controller="personaje" action="create" class="btn btn-primary" style="background-color: #40cc99; float: right; margin-left: 10px">
-                Agregar Personaje</g:link>
+                
             <table id="listPersonaje" class="table table-striped table-bordered nowrap" style="cursor:pointer">
                 <thead>
                     <tr>
                         <th>Nombre</th>
                         <th>Puntos de Salud</th>
                         <th>Puntos de Fuerza</th>
+                        <th>Fecha de Creacion</th>
                         <th>Grito de Guerra</th>
                         <th>Arma</th>
                     </tr>
@@ -68,6 +69,10 @@
                 <tbody>
                 </tbody>
             </table>
+            <br>
+            <button class="btn btn-success" onclick="personajeMasPoderosoSwal()" type="submit" style="background-color: #16b179;">Mas Poderoso</button> 
+             <g:link controller="personaje" action="create" class="btn btn-primary" style="background-color: #16b179; float: right; margin-left: 10px">
+                Agregar Personaje</g:link>
         </div>
 
         <script>
@@ -110,12 +115,15 @@
                     }, {
                         "aTargets": [2],
                         "mData": "puntosFuerza"
-                    }, {
+                    },{
                         "aTargets": [3],
+                        "mData": "fechaCreacion"
+                    }, {
+                        "aTargets": [4],
                         "mData": "gritoGuerra"
                     },
                     {
-                        "aTargets": [4],
+                        "aTargets": [5],
                         "mData": "arma"
                     }],
                     buttons: [],
@@ -132,6 +140,37 @@
 
                 llenarDatosListPersonaje();
             });
+
+
+
+
+
+
+           
+            var testVar = "TestVariable";
+            function pessrsonajeMasPoderosoSwal() {
+            swal({
+            title: "Personaje mas poderoso",
+            text: "Here's my " + testVar,
+            type: "info",
+            confirmButtonText: "Cool" 
+            });}
+            
+             function personajeMasPoderosoSwal() {
+                $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajeMasPoderoso')}", {
+                    dataType: "json",
+                    data: {
+
+                        }
+                }).done(function (data) {
+                Swal.fire({
+                    title: 'Personaje mas Poderoso',
+                    icon: "info",
+                    text: 'El personaje mas poderoso es: ' + data[0].nombre + ' con un poder total de ' + data[0].poderTotal, 
+                    confirmButtonText: 'OK',
+                })
+                })
+                }
 
             function llenarDatosListPersonaje() {
                 tabla.clear().draw();

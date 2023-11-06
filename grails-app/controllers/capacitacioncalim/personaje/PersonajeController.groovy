@@ -72,7 +72,7 @@ class PersonajeController {
         try{
             personajeService.delete(id)
             redirect(action: "list")
-            flash.message = "Personaje guardado"
+            flash.message = "Personaje borrado"
         }
         catch(AssertionError e) {
             Auxiliar.printearError e
@@ -91,6 +91,10 @@ class PersonajeController {
         render personajes as JSON
     }
 
+    def ajaxGetPersonajeMasPoderoso() {
+        def personaje = personajeService.getPersonajeMasPoderoso()
+        render personaje as JSON
+    }
 
     def ajaxGetArmas() {
         def armas = armaService.listArmas()

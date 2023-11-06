@@ -37,7 +37,7 @@
                 }
             })
         }
-        /* function GuardarSwal() {
+         function GuardarSwal() {
             Swal.fire({
                 title: 'Confirmar cambios?',
                 showDenyButton: true,
@@ -52,7 +52,7 @@
                     Swal.fire('Guardado Cancelado', '', 'info')
                 }
             })
-        } */
+        } 
 
     </script>
     <script src="sweetalert2.all.min.js"></script>

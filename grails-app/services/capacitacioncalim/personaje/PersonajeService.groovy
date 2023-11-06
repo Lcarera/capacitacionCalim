@@ -69,20 +69,19 @@ class PersonajeService {
         return personaje
     }
 
-=[]
+
     public Personaje save(PersonajeCommand command) {
         assert command.puntosFuerza > 0: "Los puntos de fuerza deben ser mayores a 0finerror" 
         assert command.puntosSalud > 0: "Los puntos de salud deben ser mayores a 0finerror" 
 
         Arma arma = armaService.getArma(command.armaId)
-        command.fechaCreacion = new LocalDate().format("yyyy-MM-dd")
         Personaje personaje = new Personaje()
         personaje.nombre = command.nombre
         personaje.puntosSalud = command.puntosSalud
         personaje.puntosFuerza = command.puntosFuerza
         personaje.arma = arma
-        personaje.gritoGuerra = command.gritoGuerra
-        personaje.fechaCreacion = command.fechaCreacion
+        personaje.gritoGuerra = command.gritoGuerra ?: " "
+        personaje.fechaCreacion = LocalDate.now() 
         personaje.save(flush:true, failOnError:true)
         return personaje
     }
@@ -99,6 +98,7 @@ class PersonajeService {
         personaje.nombre = command.nombre
         personaje.puntosSalud = command.puntosSalud
         personaje.puntosFuerza = command.puntosFuerza
+        personaje.gritoGuerra = command.gritoGuerra ?: ""
         personaje.arma = arma
         personaje.save(flush:true)
         return personaje
