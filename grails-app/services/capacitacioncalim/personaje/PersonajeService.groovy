@@ -27,15 +27,6 @@ class PersonajeService{
         }
         return personajes   
     }   
-    private LocalDate deserializeLocalDate(byte[] bytes) {
-        try {
-            ByteArrayInputStream bis = new ByteArrayInputStream(bytes)
-            ObjectInputStream ois = new ObjectInputStream(bis)
-            return (LocalDate) ois.readObject()
-        } catch (Exception e) {
-            return null
-        }
-    }
     def getPersonajeMasFuerte(){
         def q = "SELECT p.nombre AS personaje_nombre, p.puntos_fuerza AS puntos_personaje, a.nombre as arma_nombre, a.puntos_fuerza AS puntos_arma, (p.puntos_fuerza + a.puntos_fuerza) AS total_puntos FROM personaje p JOIN arma a ON p.arma_id = a.id ORDER BY total_puntos DESC LIMIT 1;"
         def personaje = sessionFactory.currentSession.createSQLQuery(q).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
