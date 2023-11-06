@@ -8,7 +8,7 @@ class Libro {
     Integer ano
 
     static belongsTo = [editorial: Editorial]
-
+    static hasMany = [libroPrecios: LibroPrecio]
     static constraints = {
         titulo nullable: false
         autor nullable: false
