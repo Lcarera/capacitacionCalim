@@ -54,7 +54,7 @@ def sessionFactory
         personaje.fechaCreacion = command.fechaCreacion
         personaje.gritoGuerra = command.gritoGuerra
         personaje.arma = arma
-        personaje.save(flush:true)
+        personaje.save(flush:true, failOnError: true)
         return personaje
     }
 
@@ -66,30 +66,30 @@ def sessionFactory
 
     def getPersonajeCommand(Long id) {
         def personaje = Personaje.get(id)
-        def libroCommand = new PersonajeCommand()
-        personajeCommand.id = libro.id
-        personajeCommand.version = libro.version
-        personajeCommand.nombre = libro.nombre 
-        personajeCommand.puntosSalud = libro.puntosSalud
-        personajeCommand.puntosFuerza = libro.puntosFuerza
-        personajeCommand.fechaCreacion = libro.fechaCreacion
-        personajeCommand.gritoGuerra = libro.gritoGuerra
-        personajeCommand.armaId = libro.amraId
+        def personajeCommand = new PersonajeCommand()
+        personajeCommand.id = personaje.id
+        personajeCommand.version = personaje.version
+        personajeCommand.nombre = personaje.nombre 
+        personajeCommand.puntosSalud = personaje.puntosSalud
+        personajeCommand.puntosFuerza = personaje.puntosFuerza
+        personajeCommand.fechaCreacion = personaje.fechaCreacion
+        personajeCommand.gritoGuerra = personaje.gritoGuerra
+        personajeCommand.armaId = personaje.armaId
 
         return personajeCommand
     }
 
     public getPersonajesSQL(){
-        def query = "select p.id, p.nombre , p.puntos_salud, p.puntos_fuerza,p.fecha_creacion,p.grito_guerra, a.nombre from personaje as p join arma as a on p.arma_id = a.id;"
+        def query = "select p.id, p.nombre as nombre_personaje, p.puntos_salud, p.puntos_fuerza,p.fecha_creacion,p.grito_guerra, a.nombre as nombre_arma from personaje as p join arma as a on p.arma_id = a.id;"
         def personajes = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
             item.id = it.id
-            item.nombre = it.nombre
+            item.nombre = it.nombre_personaje
             item.puntosSalud = it.puntos_salud
             item.puntosFuerza = it.puntos_fuerza
             item.fechaCreacion = it.fecha_creacion
             item.gritoGuerra = it.grito_guerra
-            item.armaNombre = it.nombre
+            item.armaNombre = it.nombre_arma
             return item
         }
         return personajes

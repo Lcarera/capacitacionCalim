@@ -9,6 +9,7 @@ class PersonajeController{
 
     def ajaxGetPersonajes() {
         def personajes = personajeService.getPersonajesSQL()
+        println personajes
         render personajes as JSON
     }
 
@@ -98,7 +99,7 @@ class PersonajeController{
     }
 
     def edit(Long id) {
-        def personajeCommand = personajeCommand.getPersonajeCommand(id)
+        def personajeCommand = personajeService.getPersonajeCommand(id)
         [personajeCommand: personajeCommand]
     }
 

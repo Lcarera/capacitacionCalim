@@ -99,7 +99,7 @@
                     ],
                     aoColumnDefs: [{
                         "aTargets": [0],
-                        "mDatanoa": "nombre"
+                        "mData": "nombre"
                     }, {
                         "aTargets": [1],
                         "mData": "puntosSalud",

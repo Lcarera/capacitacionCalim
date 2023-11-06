@@ -1,6 +1,5 @@
 package capacitacioncalim.personaje
 import org.joda.time.LocalDate
-import org.joda.time.LocalDateTime
 import capacitacioncalim.arma.Arma
 import grails.validation.Validateable
 
