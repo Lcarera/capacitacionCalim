@@ -11,7 +11,7 @@ class PersonajeService {
     def sessionFactory
 
     public List<Personaje> listPersonajes() {
-        def q = "SELECT a.id, a.version, a.nombre, a.puntos_salud, a.puntos_fuerza, a.grito_guerra, a.fecha_creacion, b.nombre AS arma FROM personaje a JOIN arma b ON a.arma_id = b.id;"
+        def q = "SELECT a.id, a.version, a.nombre, a.puntos_salud, a.puntos_fuerza, a.grito_guerra, TO_CHAR(a.fecha_creacion, 'DD/MM/YYYY') as fecha_creacion, b.nombre AS arma FROM personaje a JOIN arma b ON a.arma_id = b.id;"
         def personajes = sessionFactory.currentSession.createSQLQuery(q).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
             item.id = it.id
@@ -41,6 +41,10 @@ class PersonajeService {
     }
 
     public Personaje save(PersonajeCommand command) {
+        assert command.nombre != null: "Campo de nombre vacíofinerror"
+        assert command.puntosFuerza > 0: "Campo de puntos de fuerza invalidofinerror"
+        assert command.puntosSalud > 0: "Campo de puntos de salud invalidofinerror"
+        assert command.armaId != null: "Selecciona un armafinerror"
         Personaje personaje = new Personaje()
         Arma arma = Arma.get(command.armaId)
         personaje.nombre = command.nombre
@@ -58,6 +62,8 @@ class PersonajeService {
     }
 
     public Personaje update(command) {
+        assert command.puntosFuerza > 0: "Campo de puntos de fuerza invalidofinerror"
+        assert command.puntosSalud > 0: "Campo de puntos de salud invalidofinerror"
         Personaje personaje = Personaje.get(command.id)
         Arma arma = Arma.get(command.armaId)
         personaje.nombre = command.nombre

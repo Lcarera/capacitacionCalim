@@ -28,6 +28,11 @@ class PersonajeController {
             flash.message = "Personaje guardado correctamente"
             redirect(action: "list")
         }
+        catch(AssertionError e) {
+            Auxiliar.printearError e
+            flash.error = e.message.split("finerror")[0]
+            render (view: "create", model: [personajeCommand: command])
+        }
         catch(Exception e) {
             flash.error = "Error al guardar el personaje"
             Auxiliar.printearError e
@@ -41,8 +46,21 @@ class PersonajeController {
     }
 
     def update(PersonajeCommand command) {
-        personajeService.update(command)
-        redirect(action:"list")
+        try{
+            personajeService.update(command)
+            flash.message = "Personaje actualizado correctamente"
+            redirect(action: "list")
+        }
+        catch(AssertionError e) {
+            Auxiliar.printearError e
+            flash.error = e.message.split("finerror")[0]
+            render (view: "create", model: [personajeCommand: command])
+        }
+        catch(Exception e) {
+            flash.error = "Error al actualizar el personaje"
+            Auxiliar.printearError e
+            render(view: "create", model : [personajeCommand: command])
+        }
     }
 
     def delete(Long id) {

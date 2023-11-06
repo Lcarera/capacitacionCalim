@@ -29,8 +29,8 @@
         }
 
         th {
-            background-color: #4CAF50;
-            color: white;
+            background-color: #FFFAFA;
+            color: #1c1c1c;
 
         }
 
@@ -40,7 +40,18 @@
         }
 
         div.xd {
-            background-color: #39813C;
+            background-color: #2D6730;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        div.lol {
+            background-color: #e7ebda;
+            padding-top: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 10px;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -50,9 +61,9 @@
         <div class="container col-12 xd">
             <h1 class="personaje">Personajes</h1>
         </div>
-        <div class="dt-responsive table-responsive">
-            <g:link controller="personaje" action="create" class="btn btn-primary" style="float: right; margin-left: 10px">
-                Agregar Personaje</g:link>
+        <div class="dt-responsive table-responsive lol">
+            <g:link controller="personaje" action="create" class="btn btn-outline-success" style="float: right; margin-left: 10px">
+                Agregar personaje</g:link>
             <table id="listPersonaje" class="table table-striped table-bordered nowrap" style="cursor:pointer">
                 <thead>
                     <tr>
@@ -67,7 +78,7 @@
                 <tbody>
                 </tbody>
             </table>
-            <a onclick="personajeMasFuerte()" href="javascript:;" class="btn btn-danger ">Personaje Mas Fuerte</a>
+            <button onclick="personajeMasFuerte()" class="btn btn-primary btn-lg btn-block">Personaje Mas Fuerte</button>
         </div>
 
         <script>
@@ -157,11 +168,9 @@
                         if (data) {
                             Swal.fire({
                                 title: '<span style="text-transform: uppercase"><b>EL MÁS FUERTE</b></span>',
-                                html: '<b>Nombre:</b> ' + data.nombre + '<br>' +
-                                    '<b>Puntos de Fuerza:</b> ' + data.puntosFuerza + '<br>' +
-                                    '<b>Grito de Guerra:</b> ' + data.gritoGuerra + '<br>' +
-                                    '<b>Fecha de Creación:</b> ' + data.fechaCreacion + '<br>' +
-                                    '<b>Arma:</b> ' + data.arma,
+                                html: data.nombre + '<br>' +
+                                    'Puntos de Fuerza: ' + data.puntosFuerza + '<br>'
+                                    ,
                                 confirmButtonText: 'OK'
                             });
                         } else {
