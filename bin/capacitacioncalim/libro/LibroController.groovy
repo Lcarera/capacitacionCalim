@@ -23,18 +23,31 @@ class LibroController {
     def create() {  
     }
 
-    def save(String titulo, String autor, Integer ano, Long editorialId) {
-        libroService.save(titulo, autor, ano, editorialId)
-        redirect(action: "list")
+    def save(LibroCommand command) {
+        try{
+            libroService.save(command)
+            flash.message = "Libro guardado correctamente"
+            redirect(action: "list")
+        }
+        catch(AssertionError e) {
+            Auxiliar.printearError e
+            flash.error = e.message.split("finerror")[0]
+            render (view: "create", model: [libroCommand: command])
+        }
+        catch(Exception e){
+            flash.error = "Error al guardar el libro"
+            Auxiliar.printearError e
+            render (view: "create", model: [libroCommand: command])
+        }
     }
 
     def edit(Long id) {
-        def libro = libroService.getLibro(id)
-        [libro: libro, editorialId: libro.editorial.id]
+        def libroCommand = libroService.getLibroCommand(id)
+        [libroCommand: libroCommand]
     }
 
-    def update(Long id, String titulo, String autor, Integer ano) {
-        libroService.update(id, titulo, autor, ano)
+    def update(LibroCommand command) {
+        libroService.update(command)
         redirect(action: "list")
     }
 
@@ -43,8 +56,9 @@ class LibroController {
         redirect(action: "list")
     }
 
-    def getLibrosEditorialMessi() {
-        def libros = libroService.getLibrosByEditorial(10)
+    def ajaxGetLibros() {
+        def libros = libroService.listLibros()
         render libros as JSON
     }
+
 }
