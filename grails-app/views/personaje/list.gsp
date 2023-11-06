@@ -9,52 +9,43 @@
                 margin: 0.5em;
             }
 
-            table {
-                border-collapse: collapse;
-
-                width: 100%;
-            }
-
-            th,
-            td {
-                border-bottom: 1px solid #ddd;
-                padding: 8px;
-                text-align: center;
-
-            }
-
-            tr:nth-child(even) {
-                background-color: #f2f2f2;
-            }
-
-            th {
-                background-color: #39813C;
-                color: white;
-
-            }
-
             h1.personajetitulo {
                 text-align: center;
+                color: black;
+            }
+            .BotonCalimVerde {
+                background-color: #c1d64a;
+                font-size: 30px;
+                font-weight: bold;
+                height: 35.5px;
+                color: white;
+                text-align: justify;   
+                margin-left: 10px;
+                padding-top: 0px;
+                font-family: "Lucida Console", "Courier New", monospace;              
+            }
+            .BotonCalimCeleste{
+                background-color: #2091a2;
                 color: white;
             }
-
-            div.xd {
-                background-color: #39813C;
+            .FondoBlancoPersonajes{
+                box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+                padding: 20px;
+                border-radius: 10px;
             }
-            .btn.btn-primary {
-                height: 2.4em;
-            }
-</style>
         </style>
     </head>
 
     <body>
-        <div class="container col-8">
+        <div class="container col-10">
             <div class="container col-12 xd">
                 <h1 class="personajetitulo">PERSONAJES</h1>
             </div>
-            <div class="dt-responsive table-responsive">
-                    <g:link controller="personaje" action="create" class="btn btn-primary" style="float: right">+</g:link>
+            <br>
+            <div class="dt-responsive table-responsive FondoBlancoPersonajes">
+                <div class="paraprobar">
+                <g:link controller="personaje" action="create" class="btn BotonCalimVerde" style="float: right">+</g:link>
+                </div>
                 <table id="listPersonaje" class="table table-striped table-hover table-bordered nowrap" style="cursor:pointer">
                     <thead>
                         <tr>
@@ -69,7 +60,7 @@
                     <tbody>
                     </tbody>
                 </table>
-                <button onclick="personajeMasFuerte()" href="javascript:;" class="btn btn-secondary">Personaje Mas Fuerte</button>
+                <button onclick="personajeMasFuerte()" href="javascript:;" class="btn BotonCalimCeleste">Personaje Mas Fuerte</button>
             </div>
 
             <script>
@@ -158,22 +149,10 @@
             function personajeMasFuerte() {
                 $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajeMasFuerte')}", {
                     dataType: "json",
-                    data: {
-
-                    }
+                    data: {}
                 }).done(function (data) {
-                    console.log(data);                  
+                    console.log(data);
                     if (data) {
-                        const MasFuerte = data[0];
-                        const rows = tabla.rows().nodes();
-                        for (let i = 0; i < rows.length; i++) {
-                            const rowData = tabla.row(i).data();
-                            if (rowData.id === MasFuerte.id) {
-                                $(rows[i]).addClass("table-info");
-                            } else {
-                                $(rows[i]).removeClass("table-info");
-                            }
-                        }
                         mostrarModalPersonajeMasFuerte(data);
                     } else {
                         Swal.fire({
@@ -184,6 +163,7 @@
                     }
                 });
             }
+
 
             function mostrarModalPersonajeMasFuerte(data) {
                 const MasFuerte = data[0]; 

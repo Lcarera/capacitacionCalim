@@ -13,7 +13,7 @@ class PersonajeService{
         return Arma.list()
     }
     public List<Personaje> listPersonajes(){
-        def query = "Select a.id, a.nombre, a.puntos_fuerza, a.puntos_salud, a.fecha_creacion, a.grito_guerra, b.nombre as arma from personaje a join arma b on a.arma_id = b.id;"
+        def query = "Select a.id, a.nombre, a.puntos_fuerza, a.puntos_salud, TO_CHAR(a.fecha_creacion, 'DD/MM/YYYY') as fecha_creacion, a.grito_guerra, b.nombre as arma from personaje a join arma b on a.arma_id = b.id;"
         def personajes = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
             item.id = it.id
