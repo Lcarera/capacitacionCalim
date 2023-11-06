@@ -38,7 +38,7 @@
                 }
             })
         }
-         function GuardarSwal() {
+        function GuardarSwal() {
             Swal.fire({
                 title: 'Confirmar cambios?',
                 showDenyButton: true,
@@ -47,7 +47,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire('Personaje Guardado!', '', 'success')
-                    
+                    document.querySelector("form").submit()
                     // window.location.href = "${createLink(action:'update',)}/" + '${personajeCommand?.id}'
                 } else if (result.isDenied) {
                     Swal.fire('Guardado Cancelado', '', 'info')

@@ -63,6 +63,7 @@
                         <th>Grito de Guerra</th>
                         <th>Arma Id</th>
                         <th>Arma Nombre</th>
+                        <th>Nivel de Poder</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -122,6 +123,9 @@
                     },{
                         "aTargets": [6],
                         "mData": "armaNombre"
+                    },{
+                        "aTargets": [7],
+                        "mData": "personajePoder"
                     }],
                     buttons: [],
                     sPaginationType: 'simple',

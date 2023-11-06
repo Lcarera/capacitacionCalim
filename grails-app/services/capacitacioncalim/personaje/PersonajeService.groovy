@@ -30,7 +30,8 @@ class PersonajeService {
         Personaje.fecha_creacion,
         Personaje.grito_guerra,
         Arma.id as armaid,
-        Arma.nombre as armanombre 
+        Arma.nombre as armanombre,
+        Arma.puntos_ataque 
         from Personaje 
         JOIN Arma ON Personaje.arma_id = Arma.id;
         """
@@ -45,6 +46,7 @@ class PersonajeService {
             item.gritoGuerra = it.grito_guerra
             item.armaId = it.armaid
             item.armaNombre = it.armanombre
+            item.personajePoder = (it.puntos_ataque + it.puntos_fuerza)
 
             println("Items: " + item) 
             return item
