@@ -15,7 +15,7 @@ class PersonajeService {
     def sessionFactory
 
     public List<Personaje> listPersonajes(){
-        def q = "Select a.id, a.nombre, a.puntos_de_fuerza, a.puntos_de_salud, a.fecha_creacion, a.grito_de_guerra, b.nombre as arma from personaje a join arma b on a.arma_id = b.id;"
+        def q = "Select a.id, a.nombre, a.puntos_de_fuerza, a.puntos_de_salud, to_char(a.fecha_creacion, 'DD/MM/YYYY') as fecha_creacion, a.grito_de_guerra, b.nombre as arma from personaje a join arma b on a.arma_id = b.id;"
         def personajes = sessionFactory.currentSession.createSQLQuery(q).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
             item.id = it.id
@@ -38,7 +38,6 @@ class PersonajeService {
         personaje.nombre = command.nombre
         personaje.puntosDeFuerza = command.puntosDeFuerza
         personaje.puntosDeSalud = command.puntosDeSalud
-        // personaje.fechaCreacion = (LocalDate.now()).toString('yyyy-MM-dd')
         personaje.fechaCreacion = LocalDate.now()
         personaje.gritoDeGuerra = command.gritoDeGuerra
         personaje.arma = arma
