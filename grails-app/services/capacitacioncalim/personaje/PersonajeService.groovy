@@ -38,7 +38,8 @@ class PersonajeService {
         personaje.nombre = command.nombre
         personaje.puntosDeFuerza = command.puntosDeFuerza
         personaje.puntosDeSalud = command.puntosDeSalud
-        personaje.fechaCreacion = (LocalDate.now()).toString('yyyy-MM-dd')
+        // personaje.fechaCreacion = (LocalDate.now()).toString('yyyy-MM-dd')
+        personaje.fechaCreacion = LocalDate.now()
         personaje.gritoDeGuerra = command.gritoDeGuerra
         personaje.arma = arma
         personaje.save(flush:true, failOnError:true)
