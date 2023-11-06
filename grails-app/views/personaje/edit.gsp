@@ -25,8 +25,6 @@
     </g:form>
 
     <script>
-
-    
         function borrarSwal() {
             Swal.fire({
                 title: 'Borrar personaje',
@@ -43,11 +41,35 @@
                 }
             })
         }
-          async function guardarSwal() {
+
+
+    function guardar() {
+      Swal.fire({
+  title: 'Confirmation',
+  text: 'Do you want to perform this action?',
+  icon: 'question',
+  showCancelButton: true,
+  confirmButtonText: 'OK',
+  cancelButtonText: 'Cancel'
+}).then((result) => {
+  if (result.isConfirmed) {
+    // User clicked the "OK" button, perform your action here
+    // For example, you can make an AJAX request, update the DOM, etc.
+    // You can place your action code here.
+    Swal.fire('Action performed', '', 'success');
+  } else if (result.isDismissed) {
+    // User clicked the "Cancel" button or closed the alert, handle it here if needed
+    Swal.fire('Action canceled', '', 'info');
+  }
+});
+    }
+    
+    async function guardarSwal() {
     const result = await Swal.fire({
         title: 'Confirmar cambios?',
         showDenyButton: true,
         showCancelButton: true,
+        closeOnClickOutside: false,
         confirmButtonText: 'Guardar',
         cancelButtonText: 'Cancelar',
     });

@@ -7,7 +7,6 @@ import capacitacioncalim.Auxiliar
 class PersonajeController {
 
     def personajeService
-    def armaService
 
     def prueba() {
         render "Hola mundo"
@@ -97,7 +96,7 @@ class PersonajeController {
     }
 
     def ajaxGetArmas() {
-        def armas = armaService.listArmas()
+        def armas = personajeService.listArmas()
         render armas as JSON
     }
 

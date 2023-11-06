@@ -1,7 +1,6 @@
 package capacitacioncalim.personaje
-import org.joda.time.LocalDate
+import org.joda.time.LocalDateTime
 import capacitacioncalim.arma.Arma
-import capacitacioncalim.arma.ArmaService
 import grails.transaction.Transactional
 import org.hibernate.transform.Transformers
 import java.util.LinkedHashMap
@@ -11,8 +10,7 @@ import java.util.LinkedHashMap
 class PersonajeService {
 
     def sessionFactory
-    def armaService
-    
+
     public List<Personaje> listPersonajes() {
 
         def query= """ SELECT 
@@ -62,7 +60,7 @@ class PersonajeService {
             item["puntosFuerza"] = it.puntosfuerza
             item["arma"] = it.arma
             item["poderTotal"] = it.podertotal
-            //println(item)
+            //println(item)z
             return item
             }
 
@@ -74,14 +72,15 @@ class PersonajeService {
         assert command.puntosFuerza > 0: "Los puntos de fuerza deben ser mayores a 0finerror" 
         assert command.puntosSalud > 0: "Los puntos de salud deben ser mayores a 0finerror" 
 
-        Arma arma = armaService.getArma(command.armaId)
+        Arma arma = getArma(command.armaId)
+        command.fechaCreacion = new LocalDateTime()
         Personaje personaje = new Personaje()
         personaje.nombre = command.nombre
         personaje.puntosSalud = command.puntosSalud
         personaje.puntosFuerza = command.puntosFuerza
         personaje.arma = arma
         personaje.gritoGuerra = command.gritoGuerra ?: " "
-        personaje.fechaCreacion = LocalDate.now() 
+        personaje.fechaCreacion = command.fechaCreacion
         personaje.save(flush:true, failOnError:true)
         return personaje
     }
@@ -93,7 +92,7 @@ class PersonajeService {
     public Personaje update(PersonajeCommand command) {
         assert command.puntosSalud > 0: "Los puntos de salud deben ser mayores a 0finerror" 
         assert command.puntosFuerza > 0: "Los puntos de fuerza deben ser mayores a 0finerror"
-        Arma arma = armaService.getArma(command.armaId)
+        Arma arma = getArma(command.armaId)
         Personaje personaje = Personaje.get(command.id)
         personaje.nombre = command.nombre
         personaje.puntosSalud = command.puntosSalud
@@ -124,4 +123,14 @@ class PersonajeService {
 
         return personajeCommand
     }
+
+     public List<Arma> listArmas() {
+        Arma.list()
+    }
+    
+
+    public Arma getArma(Long id) {
+        return Arma.get(id)
+    }
+
 }

@@ -70,9 +70,11 @@
                 </tbody>
             </table>
             <br>
-            <button class="btn btn-success" onclick="personajeMasPoderosoSwal()" type="submit" style="background-color: #16b179;">Mas Poderoso</button> 
-             <g:link controller="personaje" action="create" class="btn btn-primary" style="background-color: #16b179; float: right; margin-left: 10px">
-                Agregar Personaje</g:link>
+         <div style="display: flex; justify-content: flex-end;">
+    <button class="btn btn-success" onclick="personajeMasPoderosoSwal()" type="submit" style="background-color: #16b179; margin-right: 10px;"> Personaje Mas Poderoso</button>
+    <g:link controller="personaje" action="create" class="btn btn-primary" style="background-color: #16b179;">Agregar Personaje</g:link>
+</div>
+
         </div>
 
         <script>
@@ -140,44 +142,25 @@
 
                 llenarDatosListPersonaje();
             });
-
-
-
-
-
-
-           
-            var testVar = "TestVariable";
-            function pessrsonajeMasPoderosoSwal() {
-            swal({
-            title: "Personaje mas poderoso",
-            text: "Here's my " + testVar,
-            type: "info",
-            confirmButtonText: "Cool" 
-            });}
-            
+   
              function personajeMasPoderosoSwal() {
                 $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajeMasPoderoso')}", {
                     dataType: "json",
-                    data: {
-
-                        }
+                    data: { }
                 }).done(function (data) {
                 Swal.fire({
                     title: 'Personaje mas Poderoso',
                     icon: "info",
-                    text: 'El personaje mas poderoso es: ' + data[0].nombre + ' con un poder total de ' + data[0].poderTotal, 
+                    text: 'El personaje mas poderoso es ' + data[0].nombre + ' con un poder total de ' + data[0].poderTotal, 
                     confirmButtonText: 'OK',
                 })
-                })
-                }
+                })}
 
             function llenarDatosListPersonaje() {
                 tabla.clear().draw();
                 $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajes')}", {
                     dataType: "json",
                     data: {
-
                     }
                 }).done(function (data) {
                     console.log(data);
