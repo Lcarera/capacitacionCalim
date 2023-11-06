@@ -67,7 +67,6 @@ class PersonajeController{
         if (personajeMasPoderoso) {
             def mensaje = "El personaje más poderoso es ${personajeMasPoderoso.nombre} con ${maxPuntos} puntos de fuerza y ataque combinados."
             flash.message = mensaje
-            println mensaje
         } else {
             flash.message = "No hay personajes creados."
         }
