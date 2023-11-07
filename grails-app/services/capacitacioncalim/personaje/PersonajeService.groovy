@@ -39,7 +39,6 @@ class PersonajeService {
             item["poderTotal"] = it.podertotal
             return item
             }    
-        println("_______________________________________________________________---$personajes")
         return personajes
     } 
 
@@ -49,15 +48,20 @@ class PersonajeService {
         assert command.puntosSalud > 0 || command.puntosSalud != null: "Los puntos de salud deben ser un numero y ser mayor a 0finerror" 
         assert command.armaId != null: "El arma debe ser elegida ahorafinerror" 
 
-
         Arma arma = getArma(command.armaId)
-        command.fechaCreacion = new LocalDate()
         Personaje personaje = new Personaje()
         personaje.nombre = command.nombre
         personaje.puntosFuerza = command.puntosFuerza
         personaje.puntosSalud = command.puntosSalud
-        personaje.fechaCreacion = command.fechaCreacion
-        personaje.gritoGuerra = command.gritoGuerra
+        personaje.fechaCreacion = new LocalDate()
+        if (command.gritoGuerra == "")
+        {
+            personaje.gritoGuerra = "-"
+        }
+        else{
+            personaje.gritoGuerra = command.gritoGuerra 
+        }
+            
         personaje.arma = arma
 
         personaje.save(flush:true, failOnError:true)
@@ -153,5 +157,25 @@ class PersonajeService {
 
         return personaje
     }
+
+    def crearArmas()
+    {
+        //def query
+        Arma armaArco = new Arma()  
+        armaArco.nombre = "Arco"
+        armaArco.puntosataque = 12
+        armaArco.save(flush:true, failOnError:true)
+        
+        Arma armaEspada = new Arma()  
+        armaEspada.nombre = "Espada"
+        armaEspada.puntosataque = 20
+        armaEspada.save(flush:true, failOnError:true)
+
+        Arma armaMartillo = new Arma()  
+        armaMartillo.nombre = "Martillo"
+        armaMartillo.puntosataque = 24
+        armaMartillo.save(flush:true, failOnError:true)
+    }
+    
 
 }

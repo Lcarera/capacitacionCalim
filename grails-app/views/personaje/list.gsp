@@ -155,22 +155,29 @@
                     tabla.draw();
                 });
             }
-
             function masPoderosoSwal() {
-                $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajePoderoso')}", {
-                    dataType: "json",
-                    data: {
+                    $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajePoderoso')}", {
+                        dataType: "json",
+                        data: {
 
                         }
-                }).done(function (data) {
-                Swal.fire({
-                    title: 'Personaje mas Poderoso?',
-                    html: `<strong> Nombre: </strong>` + data[0].nombre + `<br> <strong> Poder Total: </strong>` + data[0].poderTotal + `<br> <strong> Arma Elegida: </strong>` + data[0].arma, 
-                    confirmButtonText: 'Cerrar',
-                })
-                })
+                    }).done(function (data) {
+                        if (data[0] != null) {
+                            Swal.fire({
+                                title: 'Personaje mas Poderoso?',
+                                html: `<strong> Nombre: </strong>` + data[0].nombre + `<br> <strong> Poder Total: </strong>` + data[0].poderTotal + `<br> <strong> Arma Elegida: </strong>` + data[0].arma, 
+                                confirmButtonText: 'Cerrar',
+                            });
+                        }
+                        else {
+                        Swal.fire({
+                            title: 'Sin datos',
+                            text: 'No hay datos en la tabla para mostrar.',
+                            confirmButtonText: 'Cerrar',
+                        });
+                        }
+                    });
                 }
-
         </script>
     </div>
 </body>

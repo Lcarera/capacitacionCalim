@@ -10,15 +10,6 @@ class PersonajeController {
 
     def personajeService
 
-    def prueba() {
-        render "Hola mundo"
-    }
-
-    def listJson() {
-        def personajes = personajeService.listPersonajes()
-        render personajes as JSON
-    }
-
     def list() {
         def personajes = personajeService.listPersonajes()
         [personajes: personajes]
@@ -102,9 +93,13 @@ class PersonajeController {
     def ajaxGetPersonajePoderoso()
     {
         def personaje = personajeService.getMasPoderoso()
-        println(personaje.nombre)
         render personaje as JSON
 
+    }
+
+    def crearArmas()
+    {
+        personajeService.crearArmas()
     }
 
 }

@@ -16,7 +16,8 @@
             <div class="container-box">
                 <a onclick="borrarSwal()" id="${personajeCommand.id}" href="javascript:;" class="btn btn-danger ">Borrar</a>
                 <g:link controller="personaje" class="btn btn-secondary" action="list">Volver</g:link>
-                <button class="btn btn-success" id="guardarButton" type="button" style="background-color: #16b179;">Guardar</button>             </div>
+                <button class="btn btn-success" id="guardarButton" type="button">Guardar</button>             
+            </div>
         </div>
     </g:form>
 
@@ -28,14 +29,13 @@
                 showDenyButton: true,
                 showCancelButton: true,
                 confirmButtonText: 'Borrar',
-                cancelButtonText: 'Cancelar',
                 denyButtonText: `No Borrar`,
             }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire('Personaje Borrado!', '', 'success')
                     window.location.href = "${createLink(action:'delete',)}/" + '${personajeCommand.id}'
                 } else if (result.isDenied) {
-                    Swal.fire('Borrado cancelado', '', 'info')
+                    await Swal.fire('Borrado cancelado', '', 'info')
                 }
             })
         }
