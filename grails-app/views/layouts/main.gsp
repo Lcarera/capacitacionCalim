@@ -203,8 +203,8 @@
                         <a class="mobile-search morphsearch-search" href="#">
                             <i class="ti-search"></i>
                         </a>
-                        <g:link controller="start" action="index">
-                            <img class="img-fluid" src="${resource(dir: 'assets/guru/assets/images', file: 'logo-dark.png')}" alt="Theme-Logo" style="height: 50px;" />
+                        <g:link controller="personaje" action="list">
+                            <img class="img-fluid" src="${resource(dir: 'assets/guru/assets/images', file: 'DnD-Symbol.png')}" alt="Theme-Logo" style="height: 50px;" />
                         </g:link>
                     </div>
 

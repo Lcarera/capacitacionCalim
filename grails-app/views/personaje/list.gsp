@@ -29,7 +29,7 @@
         }
 
         th {
-            background-color: #4CAF50;
+            background-color: #dd3838;
             color: white;
 
         }
@@ -40,8 +40,35 @@
         }
 
         div.xd {
-            background-color: #39813C;
+            background-color: #8f3131;
         }
+
+        .btn-circle {
+            width: 40px; /* Ancho del círculo */
+            height: 40px; /* Alto del círculo */
+            border-radius: 50%; /* Borde redondeado para hacer un círculo */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            color: #fff; /* Color del texto */
+            font-size: 24px; /* Tamaño de la fuente del símbolo "+" */
+        }
+
+        /* Estilo del círculo de color verde */
+        .btn-success {
+            background-color: #31c340; /* Cambia esto al color verde deseado */
+        }
+
+        .btn-info {
+            background-color: #eb9d4b; /* Cambia esto al color verde deseado */
+        }
+
+        /* Estilo del símbolo "+" en el centro */
+        .plus-symbol {
+            font-weight: bold;
+        }
+
     </style>
 </head>
 
@@ -50,15 +77,14 @@
         <div class="container col-12 xd">
             <h1 class="personajeTitulo">Personajes</h1>
         </div>
+        <br>
         <div class="dt-responsive table-responsive">
-            <g:link controller="personaje" action="create" class="btn btn-primary" style="float: right; margin-left: 10px">
-                Agregar Personaje</g:link>
-            
-                <button id="masPolentaButton" class="btn btn-info" type="button" onclick="mostrarMasFuerte()" style="float: right; margin-left: 10px">
-                EL MAS POLENTA</button>
+            <g:link controller="personaje" action="create" class="btn btn-circle btn-success" style="float: right; margin-left: 10px">
+                <span class="plus-symbol">+</span>
+            </g:link>
 
             <table id="listPersonaje" class="table table-striped table-bordered nowrap" style="cursor:pointer">
-                <thead>
+                <thead class="red">
                     <tr>
                         <th>Nombre</th>
                         <th>Puntos de Salud</th>
@@ -74,6 +100,8 @@
                 </tbody>
             </table>
         </div>
+        <button id="masPolentaButton" class="btn btn-info" type="button" onclick="mostrarMasFuerte()" style="float: left; margin-right: 10px">
+            EL MAS POLENTA</button>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             var tabla;
