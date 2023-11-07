@@ -120,7 +120,6 @@
                         fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                             // Row click
                             $(nRow).off('click').on('click', function () {
-                                console.log(aData);
                                 window.location.href = ('${createLink(controller:"personaje", action:"edit")}') + '/' + aData['id'];
                             });
                         }
@@ -137,7 +136,6 @@
 
                         }
                     }).done(function (data) {
-                        console.log(data);
                         tabla.rows.add(data)
                         tabla.draw();
                     });
@@ -151,15 +149,8 @@
                     dataType: "json",
                     data: {}
                 }).done(function (data) {
-                    console.log(data);
                     if (data) {
                         mostrarModalPersonajeMasFuerte(data);
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'No se pudo obtener el personaje más fuerte.',
-                        });
                     }
                 });
             }

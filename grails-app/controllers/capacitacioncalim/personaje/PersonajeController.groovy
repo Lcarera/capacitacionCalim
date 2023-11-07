@@ -19,8 +19,6 @@ class PersonajeController {
         render personajes as JSON
     }
 
-    def create() {
-    }
     def save(PersonajeCommand command){
         try{
         personajeService.save(command)

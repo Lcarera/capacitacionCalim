@@ -7,9 +7,6 @@ class LibroController {
 
     def libroService
 
-    def prueba() {
-        render "Hola mundo"
-    }
 
     def listJson() {
         def libros = libroService.listLibros()
