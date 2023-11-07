@@ -76,7 +76,7 @@
                     if (result.isConfirmed) {
                         Swal.fire('Guardado!', '', 'success');
                         // Proceed with the form submission.
-                        $("#personajeForm").submit();
+                        document.querySelector("form").submit();                    
                     } else if (result.isDenied) {
                         Swal.fire('Guardado Cancelado', '', 'info');
                     }
@@ -85,7 +85,6 @@
         });
 
     </script>
-    <script src="sweetalert2.all.min.js"></script>
 </body>
 
 </html>

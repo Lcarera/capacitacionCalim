@@ -4,7 +4,7 @@ import grails.transaction.Transactional
 import org.hibernate.transform.Transformers
 import java.util.LinkedHashMap
 import org.joda.time.LocalDate
-
+import java.util.Date
 import capacitacioncalim.arma.Arma
 
 @Transactional
@@ -54,13 +54,7 @@ class PersonajeService {
         personaje.puntosFuerza = command.puntosFuerza
         personaje.puntosSalud = command.puntosSalud
         personaje.fechaCreacion = new LocalDate()
-        if (command.gritoGuerra == "")
-        {
-            personaje.gritoGuerra = "-"
-        }
-        else{
-            personaje.gritoGuerra = command.gritoGuerra 
-        }
+        personaje.gritoGuerra = command.gritoGuerra ?:""
             
         personaje.arma = arma
 
@@ -113,6 +107,7 @@ class PersonajeService {
 
         return personajeCommand
     }
+
     def listArmas(){
         def query ="""select
         ar.id,
@@ -160,21 +155,21 @@ class PersonajeService {
 
     def crearArmas()
     {
-        //def query
-        Arma armaArco = new Arma()  
-        armaArco.nombre = "Arco"
-        armaArco.puntosataque = 12
-        armaArco.save(flush:true, failOnError:true)
+        armas = listArmas()
+        if (armas.size() == null)
+        {
+            def queryCrear= """
+            INSERT INTO arma(id, version, nombre, puntos_ataque) values (1, 0, 'Arco', 12);
+            INSERT INTO arma(id, version, nombre, puntos_ataque) values (1, 0, 'Espada', 20);
+            INSERT INTO arma(id, version, nombre, puntos_ataque) values (1, 0, 'Martillo', 24);
+            """
         
-        Arma armaEspada = new Arma()  
-        armaEspada.nombre = "Espada"
-        armaEspada.puntosataque = 20
-        armaEspada.save(flush:true, failOnError:true)
-
-        Arma armaMartillo = new Arma()  
-        armaMartillo.nombre = "Martillo"
-        armaMartillo.puntosataque = 24
-        armaMartillo.save(flush:true, failOnError:true)
+            sessionFactory.currentSession.beginTransaction()
+            sessionFactory.currentSession.createSQLQuery(queryCrear)
+            sessionFactory.currentSession.getTransaction().commit()
+        }
+            
+        
     }
     
 
