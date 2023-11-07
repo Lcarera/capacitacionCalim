@@ -24,7 +24,7 @@
             function borrarSwal() {
             Swal.fire({
                 title: 'Borrar Personaje',
-                text: "No vas a poder revertir estos cambios.",
+                text: "No podras revertir estos cambios.",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -34,11 +34,12 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
+                    'Eliminado!',
+                    'Tu personaje fue eliminado correctamente.',
                     'success'
-                    )
-                    window.location.href = "${createLink(action:'delete',)}/" + '${personajeCommand.id}'
+                    ).then((result) => {
+                        window.location.href = "${createLink(action:'delete',)}/" + '${personajeCommand.id}'
+                    })                    
                 }
             });
         }

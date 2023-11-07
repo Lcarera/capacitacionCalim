@@ -14,7 +14,22 @@ class PersonajeService{
     }
 
     public List<Personaje> listPersonajes(){
-        def query = "Select a.id, a.nombre, a.puntos_fuerza, a.puntos_salud, TO_CHAR(a.fecha_creacion, 'DD/MM/YYYY') as fecha_creacion, a.grito_guerra, b.nombre as arma from personaje a join arma b on a.arma_id = b.id;"
+        def query ="""
+        SELECT
+            a.id,
+            a.nombre,
+            a.puntos_fuerza,
+            a.puntos_salud,
+            TO_CHAR(a.fecha_creacion, 'DD/MM/YYYY') AS fecha_creacion,
+            a.grito_guerra,
+            b.nombre AS arma
+        FROM
+            personaje a
+        JOIN
+            arma b
+        ON
+            a.arma_id = b.id;"""
+
         def personajes = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
             item.id = it.id
@@ -28,9 +43,27 @@ class PersonajeService{
         }
         return personajes   
     }   
+
     def getPersonajeMasFuerte(){
-        def q = "SELECT p.id as id, p.nombre AS personaje_nombre, p.puntos_fuerza AS puntos_personaje, a.nombre as arma_nombre, a.puntos_fuerza AS puntos_arma, (p.puntos_fuerza + a.puntos_fuerza) AS total_puntos FROM personaje p JOIN arma a ON p.arma_id = a.id ORDER BY total_puntos DESC LIMIT 1;"
-        def personaje = sessionFactory.currentSession.createSQLQuery(q).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
+        def query = """
+        SELECT
+            p.id AS id,
+            p.nombre AS personaje_nombre,
+            p.puntos_fuerza AS puntos_personaje,
+            a.nombre AS arma_nombre,
+            a.puntos_fuerza AS puntos_arma,
+            (p.puntos_fuerza + a.puntos_fuerza) AS total_puntos
+        FROM
+            personaje p
+        JOIN
+            arma a
+        ON
+            p.arma_id = a.id
+        ORDER BY
+            total_puntos DESC
+        LIMIT 1;"""
+
+        def personaje = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
             item.id = it.id
             item.nombre = it.personaje_nombre
@@ -40,6 +73,7 @@ class PersonajeService{
         }
         return personaje
     }
+    
     public Personaje save(PersonajeCommand command) {   
         assert command.nombre != null: "Campo de nombre invalidofinerror"
         assert command.puntosFuerza > 0: "Campo de puntos de fuerza invalidofinerror"

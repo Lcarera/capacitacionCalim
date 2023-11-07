@@ -13,6 +13,7 @@
             .container-box {
                 max-width: 400px;
             }
+            
         </style>
     </head>
     <body>
@@ -42,7 +43,7 @@
     $(document).ready(function () {
 
         $("#cbArma").select2({
-            placeholder: 'Seleccione el arma',
+            placeholder: 'Elija un arma',
             formatNoMatches: function() {
                 return '<g:message code="default.no.elements" default="No hay elementos"/>';
             },

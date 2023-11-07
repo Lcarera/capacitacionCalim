@@ -13,12 +13,11 @@ class PersonajeController {
         def personajes = personajeService.listPersonajes()
         [personajes: personajes]
     }
-    
-    def listJson() {
-        def personajes = personajeService.listPersonajes()
-        render personajes as JSON
-    }
 
+    def create(){
+
+    }
+    
     def save(PersonajeCommand command){
         try{
         personajeService.save(command)
@@ -36,10 +35,12 @@ class PersonajeController {
             render (view: "create", model: [personajeCommand: command])
         }
     }
+
     def edit(Long id) {
         def personajeCommand = personajeService.getPersonajeCommand(id)
         [personajeCommand: personajeCommand]
     }
+
     def update(PersonajeCommand command){
         try{
         personajeService.update(command)
@@ -57,6 +58,7 @@ class PersonajeController {
             render (view: "edit", model: [personajeCommand: command])
         }
     }
+
     def delete(Long id){
         try{
         personajeService.delete(id)
@@ -69,14 +71,17 @@ class PersonajeController {
             render (view: "edit", model: [personajeCommand: command])
         }
     }
+
     def ajaxGetArmas(){
         def armas = personajeService.listArmas()
         render armas as JSON
     }
+
     def ajaxGetPersonajeMasFuerte(){
         def personaje = personajeService.getPersonajeMasFuerte()
         render personaje as JSON
     }
+
     def ajaxGetPersonajes(){
         def personajes = personajeService.listPersonajes()
         render personajes as JSON

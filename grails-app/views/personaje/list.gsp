@@ -13,7 +13,7 @@
                 text-align: center;
                 color: black;
             }
-            .BotonCalimVerde {
+            .container .BotonCalimVerde {
                 background-color: #c1d64a;
                 font-size: 30px;
                 font-weight: bold;
@@ -23,6 +23,9 @@
                 margin-left: 10px;
                 padding-top: 0px;
                 font-family: "Lucida Console", "Courier New", monospace;              
+            }
+            .container .BotonCalimVerde:hover {
+                background-color: #c1d64a; /* Mismo color de fondo que el estado normal */
             }
             .BotonCalimCeleste{
                 background-color: #2091a2;
@@ -158,12 +161,21 @@
 
             function mostrarModalPersonajeMasFuerte(data) {
                 const MasFuerte = data[0]; 
-                Swal.fire({
-                    title: '<span style="text-transform:uppercase">EL MÁS FUERTE</span>',
-                    html: 'El personaje más fuerte es <b>' + MasFuerte.nombre + '</b> <br>' +
-                    'Tiene una fuerza de <b>' + MasFuerte.puntosFuerza + '</b><br>' +
-                    'Su arma es <b>' + MasFuerte.arma + '</b>',
-                });
+                if (MasFuerte) {
+                        Swal.fire({
+                            title: '<span style="text-transform:uppercase">EL MÁS FUERTE</span>',
+                            html: 'El personaje más fuerte es <b>' + MasFuerte.nombre + '</b> <br>' +
+                            'Tiene una fuerza de <b>' + MasFuerte.puntosFuerza + '</b><br>' +
+                            'Su arma es <b>' + MasFuerte.arma + '</b>',
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'No se pudo obtener el personaje más fuerte.',
+                        });
+                    }
+                ;
             } 
         </script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
