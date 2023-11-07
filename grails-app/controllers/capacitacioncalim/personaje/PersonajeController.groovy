@@ -97,9 +97,4 @@ class PersonajeController {
 
     }
 
-    def crearArmas()
-    {
-        personajeService.crearArmas()
-    }
-
 }

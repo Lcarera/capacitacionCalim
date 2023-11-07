@@ -152,7 +152,7 @@ class PersonajeService {
 
         return personaje
     }
-
+    /*
     def crearArmas()
     {
         armas = listArmas()
@@ -171,6 +171,6 @@ class PersonajeService {
             
         
     }
-    
+    */  
 
 }
