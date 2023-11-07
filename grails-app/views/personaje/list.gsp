@@ -13,6 +13,7 @@
                 text-align: center;
                 color: black;
             }
+            
             .container .BotonCalimVerde {
                 background-color: #c1d64a;
                 font-size: 30px;
@@ -22,15 +23,16 @@
                 text-align: justify;   
                 margin-left: 10px;
                 padding-top: 0px;
-                font-family: "Lucida Console", "Courier New", monospace;              
+                font-family: "Lucida Console", "Courier New", monospace;          
+                border-radius: 3px;    
             }
-            .container .BotonCalimVerde:hover {
-                background-color: #c1d64a; /* Mismo color de fondo que el estado normal */
-            }
+
             .BotonCalimCeleste{
                 background-color: #2091a2;
                 color: white;
+                border-radius: 3px;  
             }
+
             .FondoBlancoPersonajes{
                 box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
                 padding: 20px;
