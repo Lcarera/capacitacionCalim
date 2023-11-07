@@ -6,6 +6,9 @@ import capacitacioncalim.libro.Libro
 import capacitacioncalim.editorial.Editorial
 import capacitacioncalim.arma.Arma
 import capacitacioncalim.personaje.Personaje
+import grails.transaction.Transactional
+import org.hibernate.transform.Transformers
+import java.util.LinkedHashMap
 
 class JsonInicializacion {
     static def inicializar(){
@@ -51,6 +54,7 @@ class JsonInicializacion {
 
             return returnArray
         }
+
 
     }
 }

@@ -96,6 +96,7 @@ class PersonajeController {
     }
 
     def ajaxGetArmas() {
+        personajeService.cargarArmas()
         def armas = personajeService.listArmas()
         render armas as JSON
     }

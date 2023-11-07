@@ -19,7 +19,7 @@
             <div class="container-box container-right">
                 <a onclick="borrarSwal()" id="${personajeCommand.id}" href="javascript:;" class="btn btn-danger ">Borrar</a>
                 <g:link controller="personaje" class="btn btn-secondary" action="list">Volver</g:link>
-                <button class="btn btn-success" onclick="guardarSwal()" type="button" style="background-color: #16b179;">Guardar</button> 
+                <button class="btn btn-success" onclick="guardarSwal()" type="submit" style="background-color: #16b179;">Guardar</button> 
            </div>
         </div>
     </g:form>
@@ -43,26 +43,7 @@
         }
 
 
-    function guardar() {
-      Swal.fire({
-  title: 'Confirmation',
-  text: 'Do you want to perform this action?',
-  icon: 'question',
-  showCancelButton: true,
-  confirmButtonText: 'OK',
-  cancelButtonText: 'Cancel'
-}).then((result) => {
-  if (result.isConfirmed) {
-    // User clicked the "OK" button, perform your action here
-    // For example, you can make an AJAX request, update the DOM, etc.
-    // You can place your action code here.
-    Swal.fire('Action performed', '', 'success');
-  } else if (result.isDismissed) {
-    // User clicked the "Cancel" button or closed the alert, handle it here if needed
-    Swal.fire('Action canceled', '', 'info');
-  }
-});
-    }
+   
     
     async function guardarSwal() {
     const result = await Swal.fire({

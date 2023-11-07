@@ -13,7 +13,7 @@ class PersonajeService {
 
     public List<Personaje> listPersonajes() {
 
-        def query= """ SELECT 
+        def query= """  SELECT 
         personaje.id as id,
         personaje.nombre as nombre,
         personaje.puntos_salud as puntosSalud,
@@ -23,9 +23,8 @@ class PersonajeService {
         arma.nombre as arma
         FROM personaje personaje
         join arma arma
-        on arma.id = personaje.arma_id;"""
-
-
+        on arma.id = personaje.arma_id; """
+    
         def personajes = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
             item["id"] = it.id
@@ -67,6 +66,15 @@ class PersonajeService {
         return personaje
     }
 
+    def cargarArmas()
+    {
+        def query2= """ INSERT INTO arma (id, version, puntos_ataque, nombre)
+                VALUES (0, 1, 12, 'Arco'),
+                       (1, 1, 20, 'Espada'),
+                       (2, 1, 24, 'Martillo')
+                ON CONFLICT DO NOTHING; """
+        sessionFactory.currentSession.createSQLQuery(query2).executeUpdate()
+    }
 
     public Personaje save(PersonajeCommand command) {
         assert command.puntosFuerza > 0: "Los puntos de fuerza deben ser mayores a 0finerror" 
@@ -90,8 +98,8 @@ class PersonajeService {
     }
 
     public Personaje update(PersonajeCommand command) {
-        assert command.puntosSalud > 0: "Los puntos de salud deben ser mayores a 0finerror" 
-        assert command.puntosFuerza > 0: "Los puntos de fuerza deben ser mayores a 0finerror"
+        //assert command.puntosSalud > 0: "Los puntos de salud deben ser mayores a 0finerror" 
+        //assert command.puntosFuerza > 0: "Los puntos de fuerza deben ser mayores a 0finerror"
         Arma arma = getArma(command.armaId)
         Personaje personaje = Personaje.get(command.id)
         personaje.nombre = command.nombre

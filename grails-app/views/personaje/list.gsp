@@ -146,15 +146,25 @@
              function personajeMasPoderosoSwal() {
                 $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajeMasPoderoso')}", {
                     dataType: "json",
-                    data: { }
+                    data: {}
                 }).done(function (data) {
-                Swal.fire({
-                    title: 'Personaje mas Poderoso',
-                    icon: "info",
-                    text: 'El personaje mas poderoso es ' + data[0].nombre + ' con un poder total de ' + data[0].poderTotal, 
-                    confirmButtonText: 'OK',
-                })
-                })}
+                    if (data.length === 0) {
+                        Swal.fire({
+                            title: 'Sin personajes!',
+                            icon: 'warning',
+                            text: 'No hay personajes!',
+                            confirmButtonText: 'OK',
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Personaje mas Poderoso',
+                            icon: 'info',
+                            text: 'El personaje mas poderoso es ' + data[0].nombre + ' con un poder total de ' + data[0].poderTotal + ' puntos.',
+                            confirmButtonText: 'OK',
+                        });
+                    }
+                });
+}
 
             function llenarDatosListPersonaje() {
                 tabla.clear().draw();

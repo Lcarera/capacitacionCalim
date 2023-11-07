@@ -9,7 +9,7 @@
             <div class="center-content">
                 <div class="container-box">    
                     <g:link controller="personaje" class="btn btn-secondary" action="list">Volver</g:link>
-                    <button class="btn btn-success" type="submit">Guardar</button>                
+                    <button class="btn btn-success" type="submit" style="background-color: #16b179;">Guardar</button>                
                 </div>
             </div>
         </g:form>
