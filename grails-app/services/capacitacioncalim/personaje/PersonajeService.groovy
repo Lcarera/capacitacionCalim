@@ -57,7 +57,7 @@ def sessionFactory
         personaje.nombre = command.nombre
         personaje.puntosSalud = command.puntosSalud
         personaje.puntosFuerza = command.puntosFuerza
-        personaje.fechaCreacion = LocalDate.now()  //command.fechaCreacion
+        //personaje.fechaCreacion = command.fechaCreacion // LocalDate.now()  
         personaje.gritoGuerra = command.gritoGuerra
         personaje.arma = arma
         personaje.save(flush:true, failOnError: true)

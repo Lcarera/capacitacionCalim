@@ -6,7 +6,6 @@
 
 <body>
     <g:form controller="personaje" action="update">
-    <g:hiddenField name="fechaCreacion" value="${personajeCommand?.fechaCreacion}" />
         <g:hiddenField name="id" value="${personajeCommand.id}" />
         <g:render template="form" />
         <div class="center-content">
