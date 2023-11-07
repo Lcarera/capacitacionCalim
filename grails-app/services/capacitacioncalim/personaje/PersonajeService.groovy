@@ -4,6 +4,7 @@ import capacitacioncalim.arma.Arma
 import grails.transaction.Transactional
 import org.hibernate.transform.Transformers
 import java.util.LinkedHashMap
+import java.time.format.DateTimeFormatter
 
 class PersonajeService{
 
@@ -18,7 +19,10 @@ def sessionFactory
     }
 
     public Personaje save(PersonajeCommand command) {
-        //assert command.ano > 0: "El ano debe ser mayor a 0finerror"
+        assert command.nombre != null: "Nombre invalidofinerror"
+        assert command.puntosFuerza > 0: "Puntos de fuerza invalidosfinerror"
+        assert command.puntosSalud > 0: "Puntos de salud invalidosfinerror"
+        assert command.armaId != null: "Arma invalidafinerror"
         Arma arma = Arma.get(command.armaId)
         command.fechaCreacion = new LocalDate()
         Personaje personaje = new Personaje()
@@ -28,7 +32,6 @@ def sessionFactory
         personaje.fechaCreacion = command.fechaCreacion
         personaje.gritoGuerra = command.gritoGuerra
         personaje.arma = arma
-        println personaje.fechaCreacion
         personaje.save(flush:true, failOnError:true)
         return personaje
     }
@@ -45,13 +48,16 @@ def sessionFactory
     }
 
     public Personaje update(command) {
-        //assert command.ano > 0: "El ano debe ser mayor a 0finerror"
+        assert command.nombre != null: "Nombre invalidofinerror"
+        assert command.puntosFuerza > 0: "Puntos de fuerza invalidosfinerror"
+        assert command.puntosSalud > 0: "Puntos de salud invalidosfinerror"
+        assert command.armaId != null: "Arma invalidafinerror"
         Arma arma = Arma.get(command.armaId)
         Personaje personaje = Personaje.get(command.id)
         personaje.nombre = command.nombre
         personaje.puntosSalud = command.puntosSalud
         personaje.puntosFuerza = command.puntosFuerza
-        personaje.fechaCreacion = command.fechaCreacion
+        personaje.fechaCreacion = LocalDate.now()  //command.fechaCreacion
         personaje.gritoGuerra = command.gritoGuerra
         personaje.arma = arma
         personaje.save(flush:true, failOnError: true)
@@ -74,7 +80,7 @@ def sessionFactory
         personajeCommand.puntosFuerza = personaje.puntosFuerza
         personajeCommand.fechaCreacion = personaje.fechaCreacion
         personajeCommand.gritoGuerra = personaje.gritoGuerra
-        personajeCommand.armaId = personaje.armaId
+        personajeCommand.armaId = personaje.arma.id
 
         return personajeCommand
     }
@@ -87,7 +93,7 @@ def sessionFactory
             item.nombre = it.nombre_personaje
             item.puntosSalud = it.puntos_salud
             item.puntosFuerza = it.puntos_fuerza
-            item.fechaCreacion = it.fecha_creacion
+            item.fechaCreacion = it.fecha_creacion.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
             item.gritoGuerra = it.grito_guerra
             item.armaNombre = it.nombre_arma
             return item

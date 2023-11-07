@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
-    
+<head> 
     <style>
         .center-content {
             display: flex;

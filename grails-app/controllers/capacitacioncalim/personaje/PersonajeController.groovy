@@ -9,7 +9,6 @@ class PersonajeController{
 
     def ajaxGetPersonajes() {
         def personajes = personajeService.getPersonajesSQL()
-        println personajes
         render personajes as JSON
     }
 
@@ -82,7 +81,6 @@ class PersonajeController{
             personajeService.save(command)
             flash.message = "Personaje guardado correctamente"
             redirect(action: "list")
-            println command.fechaCreacion
         }
         catch(AssertionError e) {
             Auxiliar.printearError e
@@ -95,7 +93,6 @@ class PersonajeController{
             render (view: "create", model: [personajeCommand: command])
         }
 
-        println command.fechaCreacion
     }
 
     def edit(Long id) {
@@ -106,7 +103,7 @@ class PersonajeController{
     def update(PersonajeCommand command) {
         try{
             personajeService.update(command)
-            flash.message = "Personaje actuelizado correctamente"
+            flash.message = "Personaje actualizado correctamente"
             redirect(action: "list")
         }
         catch(AssertionError e) {
@@ -123,7 +120,7 @@ class PersonajeController{
 
     def delete(Long id) {
         try{
-            personajeService.delate(id)
+            personajeService.delete(id)
             flash.message = "personaje eliminado correctamente"
             redirect(action: "list")
         }

@@ -19,6 +19,5 @@
         </g:form>
 
        
-        <script src="sweetalert2.all.min.js"></script>
     </body> 
 </html>
