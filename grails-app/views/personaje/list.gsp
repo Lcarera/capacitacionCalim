@@ -53,6 +53,10 @@
         <div class="dt-responsive table-responsive">
             <g:link controller="personaje" action="create" class="btn btn-primary" style="float: right; margin-left: 10px">
                 Agregar Personaje</g:link>
+            
+                <button id="masPolentaButton" class="btn btn-info" type="button" onclick="mostrarMasFuerte()" style="float: right; margin-left: 10px">
+                EL MAS POLENTA</button>
+
             <table id="listPersonaje" class="table table-striped table-bordered nowrap" style="cursor:pointer">
                 <thead>
                     <tr>
@@ -70,14 +74,11 @@
                 </tbody>
             </table>
         </div>
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             var tabla;
             jQuery(document).ready(function () {
                 tabla = $('#listPersonaje').DataTable({
-                    //bAutoWidth: false,
-                    //bSortCellsTop: true,
-                    //BProcessing: true,
                     "ordering": true,
                     "searching": true,
                     oLanguage: {
@@ -97,8 +98,6 @@
                             "sLast": "${message(code: 'default.datatable.paginate.last', default: '&Uacute;ltimo')}"
                         }
                     },
-                    //iDisplayLength: 100,
-                    //scrollX: true,
                     aaSorting: [
                         [0, 'desc']
                     ],
@@ -138,10 +137,9 @@
                         });
                     }
                 });
-
                 llenarDatoslistPersonaje();
             });
-
+            
             function llenarDatoslistPersonaje() {
                 tabla.clear().draw();
                 $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajes')}", {
@@ -153,6 +151,60 @@
                     console.log(data);
                     tabla.rows.add(data)
                     tabla.draw();
+
+                    // Verifica si hay más de 1 personaje y muestra el botón
+                    if (data.length > 1) {
+                        $("#masPolentaButton").show();
+                    } else {
+                        $("#masPolentaButton").hide();
+                    }
+                });
+            }
+
+            function mostrarMasFuerte() {
+                $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajes')}", {
+                    dataType: "json",
+                    data: {}
+                }).done(function (data) {
+                    var personajes = data;
+
+                    if (personajes.length === 0) {
+                        Swal.fire('Sin personajes', 'No hay personajes en la tabla.', 'info');
+                        return;
+                    }
+
+                    personajes.sort(function (a, b) {
+                        return b.personajePoder - a.personajePoder;
+                    });
+
+                    var personajeMasFuerte = personajes[0];
+                    var empates = [];
+                    
+                    for (var i = 0; i < personajes.length; i++) {
+                        if (personajes[i].personajePoder > personajeMasFuerte.personajePoder) {
+                            personajeMasFuerte = personajes[i] 
+                        }
+                    }
+
+                    for (var i = 0; i < personajes.length; i++) {
+                        if (personajes[i].personajePoder === personajeMasFuerte.personajePoder) {
+                            empates.push(personajes[i]);
+                            console.log("hola : " + empates)
+                        }
+                    }
+
+                    if (empates.length === 1) {
+                        Swal.fire('Personaje más fuerte', 'El personaje más fuerte es: ' + personajeMasFuerte.nombre + '<br>' +
+                            'Nivel de poder: ' + personajeMasFuerte.personajePoder, 'info');
+                    } else {
+                        var mensaje = "Hubo un empate, los ganadores son:" + "<br>";
+
+                        for (var x = 0; x < empates.length; x++) {
+                            mensaje += "-" + empates[x].nombre + "<br>";
+                        }
+                        mensaje += "Nivel de poder todos: " + empates[0].personajePoder;
+                        Swal.fire('Empate', mensaje , 'info')   
+                    }
                 });
             }
 

@@ -12,15 +12,6 @@ class PersonajeService {
     def sessionFactory
 
     def dataBaseQueryPersonajes(){
-        // def dfquery = "Select id as iD, titulo as ti, autor as au, ano as an, editorial_id as edi from Personaje;"
-        // def personajes = sessionFactory.currentSession.createSQLquery(query).List().each{
-        //     def item = [:]
-        //     item.nombre = it[0]
-        //     item.autor = it[1]
-        // }
-        // return personajes
-
-        // def personajes = sessionFactory.currentSession.createSQLQuery(dfquery).setResultTransformer(Transformers.aliasToBean(Personaje)).list()
         
         def dbquery = """
         Select Personaje.id,
@@ -46,9 +37,7 @@ class PersonajeService {
             item.gritoGuerra = it.grito_guerra
             item.armaId = it.armaid
             item.armaNombre = it.armanombre
-            item.personajePoder = (it.puntos_ataque + it.puntos_fuerza)
-
-            println("Items: " + item) 
+            item.personajePoder = (it.puntos_ataque + it.puntos_fuerza) 
             return item
         }
         return personajes
@@ -86,7 +75,6 @@ class PersonajeService {
         personaje.nombre = command.nombre
         personaje.puntosSalud = command.puntosSalud
         personaje.puntosFuerza = command.puntosFuerza
-        //personaje.fechaCreacion = new LocalDate().format("yyyy-MM-dd")
         personaje.fechaCreacion = new LocalDate()
         personaje.gritoGuerra = command.gritoGuerra ?: ""
         personaje.arma = arma
@@ -130,5 +118,23 @@ class PersonajeService {
         personajeCommand.armaId = personaje.armaId
 
         return personajeCommand
+    }
+
+    def inicioCrearArmas(){
+        def dbQuery = """
+            SELECT COUNT(*) as count FROM Arma
+        """
+        def armaCount = sessionFactory.currentSession.createSQLQuery(dbQuery).uniqueResult() as Long
+
+        if (armaCount == 0) {
+            def insertQuery = """
+                INSERT INTO Arma (id, version, puntos_ataque, nombre)
+                VALUES
+                    (1, 0, 12, 'Arco'),
+                    (2, 0, 20, 'Espada'),
+                    (3, 0, 24, 'Martillo')
+            """
+            sessionFactory.currentSession.createSQLQuery(insertQuery).executeUpdate()
+        }
     }
 }

@@ -2,6 +2,8 @@ package capacitacioncalim.personaje
 import grails.converters.JSON
 import capacitacioncalim.Auxiliar
 
+
+//@Transactional
 class PersonajeController {
 
     def personajeService
@@ -96,5 +98,9 @@ class PersonajeController {
         def armas = personajeService.dataBaseQueryArmas()
         println("armas: " + armas)
         render armas as JSON
+    }
+
+    def inicioCrearArmas(){
+        personajeService.inicioCrearArmas()
     }
 }
