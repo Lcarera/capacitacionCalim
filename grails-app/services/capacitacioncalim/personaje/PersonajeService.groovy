@@ -59,22 +59,22 @@ class PersonajeService {
             item["puntosFuerza"] = it.puntosfuerza
             item["arma"] = it.arma
             item["poderTotal"] = it.podertotal
-            //println(item)z
+            //println(item)
             return item
             }
 
         return personaje
     }
 
-    def cargarArmas()
-    {
-        def query2= """ INSERT INTO arma (id, version, puntos_ataque, nombre)
-                VALUES (0, 1, 12, 'Arco'),
-                       (1, 1, 20, 'Espada'),
-                       (2, 1, 24, 'Martillo')
-                ON CONFLICT DO NOTHING; """
-        sessionFactory.currentSession.createSQLQuery(query2).executeUpdate()
-    }
+    // def cargarArmasBaseDeDatos()  Metodo anterior para cargar armas en caso de que no existan.
+    // {
+    //     def query2= """ INSERT INTO arma (id, version, puntos_ataque, nombre)
+    //             VALUES (0, 1, 12, 'Arco'),
+    //                    (1, 1, 20, 'Espada'),
+    //                    (2, 1, 24, 'Martillo')
+    //             ON CONFLICT DO NOTHING; """
+    //     sessionFactory.currentSession.createSQLQuery(query2).executeUpdate()
+    // }
 
     public Personaje save(PersonajeCommand command) {
         assert command.puntosFuerza > 0: "Los puntos de fuerza deben ser mayores a 0finerror" 
@@ -98,8 +98,8 @@ class PersonajeService {
     }
 
     public Personaje update(PersonajeCommand command) {
-        //assert command.puntosSalud > 0: "Los puntos de salud deben ser mayores a 0finerror" 
-        //assert command.puntosFuerza > 0: "Los puntos de fuerza deben ser mayores a 0finerror"
+        assert command.puntosSalud > 0: "Los puntos de salud deben ser mayores a 0finerror" 
+        assert command.puntosFuerza > 0: "Los puntos de fuerza deben ser mayores a 0finerror"
         Arma arma = getArma(command.armaId)
         Personaje personaje = Personaje.get(command.id)
         personaje.nombre = command.nombre

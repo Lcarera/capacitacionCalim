@@ -90,7 +90,7 @@
                         sProcessing: "Buscando...",
                         sSearch: "",
                         sLengthMenu: "_MENU_",
-                        sZeroRecords: "Buscando personaje...",
+                        sZeroRecords: "Buscando personaje(s)...",
                         sInfo: "_START_ - _END_ de _TOTAL_",
                         sInfoFiltered: "${message(code: 'default.datatable.infoFiltered', default: '(filtrado de MAX registros en total)')}",
                         sInfoPostFix: "",
@@ -132,7 +132,6 @@
                     sPaginationType: 'simple',
                     sDom: '<"row"<"col-4"l><"col-8"Bf>>t<"row"<"col-6"i><"col-6"p>>',
                     fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                        // Row click
                         $(nRow).off('click').on('click', function () {
                             console.log(aData);
                              window.location.href = ('${createLink(controller:"personaje", action:"edit")}') + '/' + aData['id'];

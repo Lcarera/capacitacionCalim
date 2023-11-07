@@ -19,7 +19,7 @@
             <div class="container-box container-right">
                 <a onclick="borrarSwal()" id="${personajeCommand.id}" href="javascript:;" class="btn btn-danger ">Borrar</a>
                 <g:link controller="personaje" class="btn btn-secondary" action="list">Volver</g:link>
-                <button class="btn btn-success" onclick="guardarSwal()" type="submit" style="background-color: #16b179;">Guardar</button> 
+                <button class="btn btn-success" id="submitButton" type="button" style="background-color: #16b179;">Guardar</button> 
            </div>
         </div>
     </g:form>
@@ -31,6 +31,7 @@
                 text: 'Esta seguro que desea borrar el personaje?',
                 showCancelButton: true,
                 confirmButtonText: 'Borrar',
+                icon: 'question',
                 cancelButtonText: 'Cancelar',
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -42,28 +43,7 @@
             })
         }
 
-
-   
     
-    async function guardarSwal() {
-    const result = await Swal.fire({
-        title: 'Confirmar cambios?',
-        showDenyButton: true,
-        showCancelButton: true,
-        closeOnClickOutside: false,
-        confirmButtonText: 'Guardar',
-        cancelButtonText: 'Cancelar',
-    });
-
-    if (result.isConfirmed) {
-        Swal.fire('Guardado!', '', 'success');
-        // Proceed with your action after user confirmation.
-    } else if (result.isDenied) {
-        Swal.fire('Guardado Cancelado', '', 'info');
-        // Handle the case when the user denies the action.
-    }
-}
-
     </script>
     <script src="sweetalert2.all.min.js"></script>
 </body>
