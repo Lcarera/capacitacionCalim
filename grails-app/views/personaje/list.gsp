@@ -70,7 +70,7 @@
                 </tbody>
             </table>
         </div>
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             var tabla;
             jQuery(document).ready(function () {
@@ -145,9 +145,29 @@
                 });
             }
         </script>
-        <g:link controller="personaje" action="calcularMasPoderoso" class="btn btn-primary" style="float: right; margin-left: 10px">
-            Personaje mas poderoso</g:link>
+        <g:link controller="personaje" action="calcularMasPoderoso" class="btn btn-primary" style="float: right; margin-left: 10px" onclick="mostrarPersonajeMasPoderoso(event)">
+        Personaje mas poderoso
+        </g:link>
     </div>
+
+    <script>
+    function mostrarPersonajeMasPoderoso(event) {
+        event.preventDefault();
+        fetch('${createLink(action: 'calcularMasPoderoso')}', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.text())
+        .then(data => {
+            eval(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
 </body>
 
 </html>

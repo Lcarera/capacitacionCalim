@@ -38,10 +38,6 @@ class PersonajeController{
             if (!armaExistente) {
                 def nuevaArma = new Arma(nombre: arma.nombre, puntosAtaque: arma.puntosAtaque)
                 nuevaArma.save(flush: true)
-                println "Arma ${arma.nombre} agregada a la base de datos."
-            } else {
-                println "Arma ${arma.nombre} ya existe en la base de datos."
-                
             }
         }
 
@@ -65,11 +61,11 @@ class PersonajeController{
         }
 
         if (personajeMasPoderoso) {
-            def mensaje = "El personaje más poderoso es ${personajeMasPoderoso.nombre} con ${maxPuntos} puntos de fuerza y ataque combinados."
-            flash.message = mensaje
+        def mensaje = "El personaje más poderoso es ${personajeMasPoderoso.nombre} con ${maxPuntos} puntos de fuerza y ataque combinados."
+        render "Swal.fire('${mensaje}');"
         } else {
-            flash.message = "No hay personajes creados."
-        }
+        render "Swal.fire('No hay personajes creados.');"
+         }
 
         redirect(action: "list") 
     }
