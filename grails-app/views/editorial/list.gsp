@@ -102,9 +102,9 @@
                     "mData": "anoCreacion"
                 }],
                 buttons: [],
-            sPaginationType: 'simple',
-            sDom: '<"row"<"col-4"l><"col-8"Bf>>t<"row"<"col-6"i><"col-6"p>>',
-            fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                sPaginationType: 'simple',
+                sDom: '<"row"<"col-4"l><"col-8"Bf>>t<"row"<"col-6"i><"col-6"p>>',
+                fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
                 // Row click
                  $(nRow).off('click').on('click', function() {
                     window.location.href = ('${createLink(controller:"editorial", action:"edit")}') + '/' + aData['id'];

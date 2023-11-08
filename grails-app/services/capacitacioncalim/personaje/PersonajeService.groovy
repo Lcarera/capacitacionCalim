@@ -69,8 +69,10 @@ class PersonajeService {
     }
 
     public Personaje update(command) {
+        assert command.nombre != null: "Campo de nombre vacíofinerror"
         assert command.puntosDeFuerza > 0: "Campo de puntos de fuerza invalidofinerror"
         assert command.puntosDeSalud > 0: "Campo de puntos de salud invalidofinerror"
+        assert command.armaId != null: "Selecciona un armafinerror"
         Arma arma = armaService.getArma(command.armaId)
         Personaje personaje = Personaje.get(command.id)
         personaje.nombre = command.nombre

@@ -51,7 +51,7 @@
             <h1 class="librotitulo">LIBROS</h1>
         </div>
         <div class="dt-responsive table-responsive">
-            <g:link controller="libro" action="create" class="btn btn-primary" style="float: right; margin-left: 10px">
+            <g:link controller="libro" action="create" class="btn btn-primary" style="float: right">
                 Agregar Libro</g:link>
             <table id="listLibro" class="table table-striped table-bordered nowrap" style="cursor:pointer">
                 <thead>
