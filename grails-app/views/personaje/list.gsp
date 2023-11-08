@@ -159,7 +159,6 @@
                 Swal.fire({
                     title: 'El personaje más fuerte es: ' + personajeFuerte.nombre,
                     text: 'Su daño en total es: ' + personajeFuerte.daño,
-                    imageUrl: 'https://i.pinimg.com/originals/c6/25/90/c62590c1756680060e7c38011cd704b5.jpg',
                     imageWidth: 400,
                     imageHeight: 400,
                     imageAlt: 'Custom image',

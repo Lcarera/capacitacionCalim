@@ -8,8 +8,6 @@ class PersonajeController {
     def personajeService
 
     def list() {
-        def personajes = personajeService.listPersonajes()
-        [personajes: personajes]
     }
 
     def create() {  
