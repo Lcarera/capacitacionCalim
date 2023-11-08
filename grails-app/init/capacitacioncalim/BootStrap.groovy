@@ -1,17 +1,24 @@
 package capacitacioncalim
-import capacitacioncalim.arma.Arma
-import capacitacioncalim.inicializacion.JsonInicializacion
 
+import capacitacioncalim.inicializacion.JsonInicializacion
+import groovy.transform.CompileStatic
+import capacitacioncalim.arma.Arma
+
+@CompileStatic
 class BootStrap {
 
+
     def init = { servletContext ->
-        if (!Arma.count()){
-            def armas = [
-                new Arma(nombre: 'Pico', puntosFuerza: 15),
-                new Arma(nombre: 'Espada', puntosFuerza: 13),
-                new Arma(nombre: 'Lanzacohetes', puntosFuerza: 30)
-            ]
-            armas.each { it.save(failOnError: true) }
+
+        def registrosCreados = Arma.findAll()
+
+        if (!registrosCreados) {
+            def arco = new Arma(nombre: 'Sable', puntosDeAtaque: 20)
+            def espada = new Arma(nombre: 'Lanzacohetes',  puntosDeAtaque: 40)
+            def martillo = new Arma(nombre: 'Llave',  puntosDeAtaque: 15)
+            arco.save(failOnError: true)
+            espada.save(failOnError: true)
+            martillo.save(failOnError: true)
         }
         JsonInicializacion.inicializar()
     }
