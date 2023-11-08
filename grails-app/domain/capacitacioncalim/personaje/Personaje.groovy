@@ -1,15 +1,14 @@
 package capacitacioncalim.personaje
 import org.joda.time.LocalDate
-import org.joda.time.LocalDateTime
 import capacitacioncalim.arma.Arma
 
 class Personaje {
     String nombre
     Integer puntosSalud
     Integer puntosFuerza
-    LocalDateTime fechaCreacion
+    LocalDate fechaCreacion
     String gritoGuerra
-    static belongsTo = [arma: Arma]
+    Arma arma
 
     static constraints = {
         nombre nullable: false
