@@ -42,7 +42,7 @@
 
 
         $("#cbArma").select2({
-            placeholder: 'Seleccione el arma',
+            placeholder: 'Elija el arma',
             formatNoMatches: function() {
                 return '<g:message code="default.no.elements" default="No hay elementos"/>';
             },

@@ -22,17 +22,11 @@
         Swal.fire({
             title: 'Borrar personaje?',
             showDenyButton: true,
-            showCancelButton: true,
             confirmButtonText: 'Borrar',
-            cancelButtonText: 'Cancelar',
-            denyButtonText: `No Borrar`,
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire('Personaje Borrado!', '', 'success')
                 var url = "${createLink(action: 'delete')}/" + id;
                 window.location.href = url;
-            } else if (result.isDenied) {
-                Swal.fire('Borrado cancelado', '', 'info')
             }
         })
     }

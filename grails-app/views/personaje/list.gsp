@@ -53,8 +53,9 @@
         <div class="dt-responsive table-responsive">
             <g:link controller="personaje" action="create" class="btn btn-primary" style="float: right; margin-left: 10px">
                 Agregar Personaje</g:link>
-            <g:link controller="personaje" action="agregarArmas" class="btn btn-primary" style="float: right; margin-left: 10px">
-            Agregar Armas</g:link>
+            <g:link controller="personaje" action="calcularMasPoderoso" class="btn btn-primary" style="float: right; margin-left: 10px" onclick="mostrarPersonajeMasPoderoso(event)">
+            Personaje mas poderoso
+            </g:link>
             <table id="listPersonaje" class="table table-striped table-bordered nowrap" style="cursor:pointer">
                 <thead>
                     <tr>
@@ -145,9 +146,6 @@
                 });
             }
         </script>
-        <g:link controller="personaje" action="calcularMasPoderoso" class="btn btn-primary" style="float: right; margin-left: 10px" onclick="mostrarPersonajeMasPoderoso(event)">
-        Personaje mas poderoso
-        </g:link>
     </div>
 
     <script>

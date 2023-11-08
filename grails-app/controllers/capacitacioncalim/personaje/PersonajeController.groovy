@@ -13,8 +13,6 @@ class PersonajeController{
     }
 
     def list() {
-        def personajes = personajeService.listPersonajes()
-        [personajes: personajes]
     }
 
     def create() {  
@@ -23,25 +21,6 @@ class PersonajeController{
     def ajaxGetArmas() {
         def armas = personajeService.listArmas()
         render armas as JSON
-    }
-
-    def agregarArmas() {
-        def listaArmas = [
-            ["nombre": "Espada", "puntosAtaque": 20],
-            ["nombre": "Arco", "puntosAtaque": 12],
-            ["nombre": "Martillo", "puntosAtaque": 24]
-        ] 
-
-        listaArmas.each { arma ->
-            def armaExistente = Arma.findByNombre(arma.nombre)
-
-            if (!armaExistente) {
-                def nuevaArma = new Arma(nombre: arma.nombre, puntosAtaque: arma.puntosAtaque)
-                nuevaArma.save(flush: true)
-            }
-        }
-
-        redirect(action: "list") 
     }
     
     def calcularMasPoderoso() {
@@ -66,8 +45,6 @@ class PersonajeController{
         } else {
         render "Swal.fire('No hay personajes creados.');"
          }
-
-        redirect(action: "list") 
     }
 
 
