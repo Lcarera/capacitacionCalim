@@ -15,34 +15,6 @@ class PersonajeService {
         return Personaje.get(id)
     }
 
-    def getPersonajeMasFuerte() {
-        String query = """
-            SELECT p.id, p.nombre, p.puntos_salud, p.puntos_fuerza, p.fecha_creacion, p.grito_guerra, p.arma_id FROM personaje p JOIN arma a ON p.arma_id = a.id order by p.puntos_fuerza + a.puntos_ataque desc limit 1;
-        """
-
-        def resultado = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(
-            Transformers.aliasToBean(LinkedHashMap)
-        ).uniqueResult()
-
-        if (resultado) {
-            Arma arma = Arma.get(resultado['arma_id'])
-            def item = [:]
-
-            item.id = resultado.id
-            item.nombre = resultado.nombre
-            item.puntosSalud = resultado['puntos_salud']
-            item.puntosFuerza = resultado['puntos_fuerza']
-            item.puntosAtaqueTotal = arma.puntosAtaque + item.puntosFuerza
-            item.fechaCreacion = resultado['fecha_creacion'].toString()
-            item.gritoGuerra = resultado['grito_guerra']
-            item.arma = arma
-
-            return item
-        } else {
-            return null
-        }
-    }
-
     def listPersonajes() {
         String query = """
             SELECT id, nombre, puntos_salud, puntos_fuerza, fecha_creacion, grito_guerra, arma_id FROM personaje;
