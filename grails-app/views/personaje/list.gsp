@@ -76,6 +76,7 @@
 
         <script>
             var tabla;
+            var personajes;
             jQuery(document).ready(function () {
                 tabla = $('#listPersonaje').DataTable({
                     //bAutoWidth: false,
@@ -147,15 +148,17 @@
                 $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajes')}", {
                     dataType: "json",
                     data: {
-
+                        
                     }
                 }).done(function (data) {
+                    personajes = data;
                     console.log(data);
                     tabla.rows.add(data)
                     tabla.draw();
                 });
             }
             function masPoderosoSwal() {
+                /*
                     $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajePoderoso')}", {
                         dataType: "json",
                         data: {
@@ -177,6 +180,41 @@
                         });
                         }
                     });
+                    */
+                   if (personajes.length > 0)
+                   {
+                      for (var i = 0; i < personajes.length; i++) { 
+  
+                        // Last i elements are already in place   
+                        for (var j = 0; j < (personajes.length - i - 1); j++) { 
+
+                            // Checking if the item at present iteration  
+                            // is greater than the next iteration 
+                            if (personajes[j] > personajes[j + 1]) { 
+
+                                // If the condition is true 
+                                // then swap them 
+                                var temp = personajes[j] 
+                                personajes[j] = personajes[j + 1] 
+                                personajes[j + 1] = temp 
+                            } 
+                        }
+                    }
+                    Swal.fire({
+                        title: 'Personaje mas Poderoso:',
+                        html: `<strong> Nombre: </strong>` + personajes[0].nombre + `<br> <strong> Poder Total: </strong>` + personajes[0].poderTotal + `<br> <strong> Arma Elegida: </strong>` + personajes[0].arma, 
+                        confirmButtonText: 'Cerrar',
+                        });
+                   }
+                   else
+                   {
+                        Swal.fire({
+                            title: 'Sin datos',
+                            text: 'No hay datos en la tabla para mostrar.',
+                            confirmButtonText: 'Cerrar',
+                        });
+                   }
+                
                 }
         </script>
     </div>

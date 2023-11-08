@@ -16,6 +16,7 @@ class BootStrap {
                 [nombre: "Martillo", puntosAtaque: 24]
             ]
             armas.each { armaData ->
+            if(Arma.findByNombre(armaData.nombre)) return
             def nuevaArma = new Arma(nombre: armaData.nombre, puntosAtaque: armaData.puntosAtaque)
             nuevaArma.save(flush: true)
             }

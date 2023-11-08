@@ -14,18 +14,20 @@ class PersonajeService {
     
     public List<Personaje> listPersonajes() {
 
-        def query= """SELECT 
+        def query= """
+        SELECT 
         pers.id as id,
         pers.nombre as nombrePersonaje,
         pers.puntos_fuerza as puntosFuerza,
         pers.puntos_salud as puntosSalud,
-        pers.fecha_creacion as fecha,
+        TO_CHAR(pers.fecha_creacion, 'dd/mm/yyyy') as fecha, 
         pers.grito_guerra as grito,
         ar.nombre as arma,
         (ar.puntos_ataque + puntos_fuerza) as poderTotal
 
         FROM personaje pers
-        join arma ar on pers.arma_id = ar.id;"""
+        join arma ar on pers.arma_id = ar.id;
+"""
 
         def personajes = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
@@ -34,7 +36,7 @@ class PersonajeService {
             item["puntosFuerza"] = it.puntosfuerza
             item["puntosSalud"] = it.puntossalud
             item["fecha"] = it.fecha
-            item["gritoGuerra"] = it.grito
+            item["gritoGuerra"] = it.grito ?:"-"
             item["arma"] = it.arma
             item["poderTotal"] = it.podertotal
             return item
@@ -43,7 +45,7 @@ class PersonajeService {
     } 
 
     public Personaje save(PersonajeCommand command) {
-        assert command.nombre != "": "El Nombre no puede estar vaciofinerror" 
+        assert command.nombre != null: "El Nombre no puede estar vaciofinerror" 
         assert command.puntosFuerza > 0 || command.puntosFuerza != null: "Los puntos de fuerza deben ser un numero y ser mayor a 0finerror" 
         assert command.puntosSalud > 0 || command.puntosSalud != null: "Los puntos de salud deben ser un numero y ser mayor a 0finerror" 
         assert command.armaId != null: "El arma debe ser elegida ahorafinerror" 
@@ -54,7 +56,7 @@ class PersonajeService {
         personaje.puntosFuerza = command.puntosFuerza
         personaje.puntosSalud = command.puntosSalud
         personaje.fechaCreacion = new LocalDate()
-        personaje.gritoGuerra = command.gritoGuerra ?:""
+        personaje.gritoGuerra = command.gritoGuerra
             
         personaje.arma = arma
 
@@ -69,7 +71,7 @@ class PersonajeService {
     public Personaje update(PersonajeCommand command) {
         //assert command.ano > 0: "EL año debe ser mayor a 0finerror"
         //Editorial editorial = editorialService.getEditorial(command.editorialId)
-        assert command.nombre != "": "El Nombre no puede estar vaciofinerror" 
+       assert command.nombre != null || command.nombre != " ": "El Nombre no puede estar vaciofinerror" 
         assert command.puntosFuerza > 0 || command.puntosFuerza != null: "Los puntos de fuerza no pueden ser menor a 0finerror" 
         assert command.puntosSalud > 0 || command.puntosSalud != null: "Los puntos de salud no pueden ser menor a 0finerror" 
         assert command.armaId != null: "El arma debe ser elegida ahorafinerror" 

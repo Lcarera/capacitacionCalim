@@ -37,8 +37,8 @@ class JsonInicializacion {
             returnArray['nombre'] = it.nombre
             returnArray['puntosFuerza'] = it.puntosFuerza
             returnArray['puntosSalud'] = it.puntosSalud
-            returnArray['fecha'] = it.fecha
-            returnArray['gritoGuerra'] = it.gritoGuerra
+            returnArray['fecha'] = it.fecha.toString("yyyy/MM/dd")
+            returnArray['gritoGuerra'] = it.gritoGuerra?: '-'
             returnArray['arma'] = it.arma
             returnArray['PoderTotal'] = it.poderTotal
 

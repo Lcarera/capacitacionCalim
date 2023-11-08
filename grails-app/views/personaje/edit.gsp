@@ -35,7 +35,7 @@
                     Swal.fire('Personaje Borrado!', '', 'success')
                     window.location.href = "${createLink(action:'delete',)}/" + '${personajeCommand.id}'
                 } else if (result.isDenied) {
-                    await Swal.fire('Borrado cancelado', '', 'info')
+                    Swal.fire('Borrado cancelado', '', 'info')
                 }
             })
         }
@@ -68,7 +68,6 @@
             $("#guardarButton").click(function() {
                 Swal.fire({
                     title: 'Confirmar cambios?',
-                    showDenyButton: true,
                     showCancelButton: true,
                     confirmButtonText: 'Guardar',
                     cancelButtonText: 'Cancelar',
@@ -77,8 +76,6 @@
                         Swal.fire('Guardado!', '', 'success');
                         // Proceed with the form submission.
                         document.querySelector("form").submit();                    
-                    } else if (result.isDenied) {
-                        Swal.fire('Guardado Cancelado', '', 'info');
                     }
                 });
             });

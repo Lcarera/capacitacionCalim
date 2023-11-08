@@ -10,7 +10,7 @@ class Personaje {
     Integer puntosSalud
     LocalDate fechaCreacion
     String gritoGuerra
-    static belongsTo = [arma: Arma]
+    Arma arma 
 
 
     static constraints = {
