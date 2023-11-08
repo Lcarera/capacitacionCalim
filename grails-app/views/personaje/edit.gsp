@@ -7,28 +7,30 @@
 </head>
 
 <body>
-    <g:form controller="personaje" action="update">
-        <g:hiddenField name="id" value="${personajeCommand.id}" />
-        <g:render template="form" />
-        <div class="center-content">
-            <div class="container-box">
-                <a onclick="borrarSwal()" id="${personajeCommand.id}" href="javascript:;" class="btn btn-danger ">Borrar</a>
-                <g:link controller="personaje" class="btn btn-secondary" action="list">Volver</g:link>
-                <button class="btn btn-success" type="submit">Guardar</button>
+    <div class="container text-center border border-success rounded"
+        style="margin-top: 20px;padding: 20px; color: rgb(72, 66, 66);">
+        <g:form controller="personaje" action="update">
+            <div class="row">
+                <g:hiddenField name="id" value="${personajeCommand.id}" />
+                <g:render template="form" />
             </div>
-        </div>
-    </g:form>
 
+            <div class="row d-flex justify-content-center">
+                <div style="margin-top: 15px;">
+                    <button class="btn btn-danger" onclick="borrarSwal()" type="button">Borrar</button>
+                    <g:link controller="personaje" class="btn btn-secondary" action="list">Volver</g:link>
+                    <button class="btn" style="background-color: #39813c; color: white;" type="submit">Guardar</button>
+                </div>
+            </div>
+        </g:form>
+    </div>
 
     <script>
         function borrarSwal() {
             Swal.fire({
                 title: 'Borrar personaje?',
                 showDenyButton: true,
-                showCancelButton: true,
                 confirmButtonText: 'Borrar',
-                cancelButtonText: 'Cancelar',
-                denyButtonText: `No Borrar`,
             }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire('Personaje Borrado!', '', 'success').then((result) => {
@@ -40,24 +42,6 @@
             });
         }
 
-        /* function guardarSwal() {
-            Swal.fire({
-                title: 'Confirmar cambios?',
-                showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: 'Guardado',
-                cancelButtonText: 'Cancelar',
-                denyButtonText: `No Guardado`,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire('Cambios Guardados!', '', 'success').then((result) => {
-                        window.location.href = "${createLink(action: 'update', id: personajeCommand.id)}";
-                    });
-                } else if (result.isDenied) {
-                    Swal.fire('Guardado cancelado', '', 'info');
-                }
-            });
-        } */
 
     </script>
     <script src="sweetalert2.all.min.js"></script>

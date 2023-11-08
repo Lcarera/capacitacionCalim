@@ -44,6 +44,7 @@ class JsonInicializacion {
             returnArray['id'] = it.id
             returnArray['nombre'] = it.nombre
             returnArray['puntosDeFuerza'] = it.puntosDeFuerza
+            returnArray['puntosDeSalud'] = it.puntosDeSalud
             returnArray['fechaCreacion'] = it.fechaCreacion
             returnArray['gritoDeGuerra'] = it.gritoDeGuerra
             returnArray['arma'] = it.arma.nombre

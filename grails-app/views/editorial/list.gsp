@@ -107,7 +107,6 @@
             fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
                 // Row click
                  $(nRow).off('click').on('click', function() {
-                    console.log(aData);
                     window.location.href = ('${createLink(controller:"editorial", action:"edit")}') + '/' + aData['id'];
                 }); 
             }
@@ -124,7 +123,6 @@
                 
         }
         }).done(function(data) {
-            console.log(data);
             tabla.rows.add(data)
             tabla.draw();
         });

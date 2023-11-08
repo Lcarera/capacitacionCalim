@@ -74,4 +74,9 @@ class PersonajeController {
         render personajes as JSON
     }
 
+    def ajaxGetPersonajeMasFuerte() {
+        def personaje = personajeService.getPersonajeMasFuerte()
+        render personaje as JSON
+    }
+
 }
