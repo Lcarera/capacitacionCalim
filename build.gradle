@@ -64,6 +64,10 @@ dependencies {
 	compile 'org.postgresql:postgresql:9.4.1211.jre7'
 	compile 'org.grails.plugins:joda-time:2.1.0'
 	compile "org.jadira.usertype:usertype.core:5.0.0.GA"
+	compile 'org.grails.plugins:spring-security-core:3.2.3'
+    compile "org.grails.plugins:spring-security-rest:2.0.0.M2"
+	compile 'org.grails.plugins:spring-security-ui:4.0.0.M1'
+
 }
 
 bootRun {
