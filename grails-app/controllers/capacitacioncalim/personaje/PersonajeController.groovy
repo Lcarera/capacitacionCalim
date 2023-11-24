@@ -4,6 +4,9 @@ import capacitacioncalim.Auxiliar
 
 import grails.converters.JSON
 
+import grails.plugin.springsecurity.annotation.Secured
+
+@Secured(['ROLE_ADMIN', 'ROLE_USER'])
 class PersonajeController {
 
     def personajeService

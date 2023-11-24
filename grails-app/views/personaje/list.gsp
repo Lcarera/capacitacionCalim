@@ -29,6 +29,9 @@
                         <div class="page-header-title">
                             <div class="d-inline">
                                 <h4>Personajes</h4>
+                                <sec:ifAnyGranted roles="ROLE_USER">
+                                    <span>Lista de personajes del user</span>
+                                </sec:ifAnyGranted>
                             </div>
                         </div>
                     </div>
