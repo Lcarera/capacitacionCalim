@@ -136,6 +136,36 @@
                     llenarDatoslistPersonaje();
 
                     $("#btnPersonajeMasFuerte").click(() => {
+                        let title;
+                        let text;
+                        
+                        if (personajes) {
+                            let personajesMasFuertes = [ { puntosAtaqueTotal: 0 } ];
+                            personajes.map(personaje => {
+                                if (personaje.puntosAtaqueTotal > personajesMasFuertes[0].puntosAtaqueTotal) {
+                                    personajesMasFuertes = [];
+                                    personajesMasFuertes.push(personaje);
+                                } else if (personaje.puntosAtaqueTotal === personajesMasFuertes[0].puntosAtaqueTotal) {
+                                    personajesMasFuertes.push(personaje);
+                                }
+                            });
+                            console.log(personajesMasFuertes);
+                            if (personajesMasFuertes.length == 1) {
+                                const title = "¿Quién es el más fuerte?";
+                                const text = "El personaje más fuerte es:<br>"
+                                + personajesMasFuertes[0].nombre + ", ataque: " + personajesMasFuertes[0].puntosAtaqueTotal;
+                            } else {
+                                const title = "¿Quiénes son los más fuertes?";
+                                const text = "El personaje más fuerte es:<br>";
+                                personajesMasFuertes.map(personaje => {
+                                    text += personaje.nombre + ", ataque: " + personaje.puntosAtaqueTotal;
+                                })
+                            }
+                        } else {
+                            const title = "No hay personajes";
+                            const text = "Para ver cuál es el personaje más fuerte, primero ingresa unos cuantos.";
+                        }
+
                         swal({
                             title: "¿Quién es el más fuerte?",
                             content: $mensajePersonajesMasFuertes,
