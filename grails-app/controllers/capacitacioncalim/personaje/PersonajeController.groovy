@@ -7,15 +7,7 @@ import capacitacioncalim.Auxiliar
 class PersonajeController {
 
     def personajeService
-
-   
-
-    def list() {
-        def personaje = personajeService.listPersonajes()
-        [personajes: personaje]
-    }
-
-   
+    
     def save(PersonajeCommand command) {
         try{
             personajeService.save(command)
