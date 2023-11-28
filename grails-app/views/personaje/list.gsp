@@ -122,7 +122,10 @@
                         "mData": "fechaCreacion"
                     }, {
                         "aTargets": [4],
-                        "mData": "gritoGuerra"
+                        "mData": "gritoGuerra",
+                        "mRender": function (data, type, full) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         "aTargets": [5],

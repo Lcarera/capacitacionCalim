@@ -8,14 +8,9 @@ class PersonajeController {
 
     def personajeService
 
-    def prueba() {
-        render "Hola mundo"
-    }
+   
 
-    def listJson() {
-        def personajes = personajeService.listPersonajes()
-        render personajes as JSON
-    }
+    
 
     def list() {
         def personaje = personajeService.listPersonajes()

@@ -35,7 +35,6 @@
                 cancelButtonText: 'Cancelar',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    Swal.fire('Personaje Borrado!', '', 'success')
                     window.location.href = "${createLink(action:'delete',)}/" + '${personajeCommand.id}'
                 } else if (result.isDenied) {
                     Swal.fire('Borrado cancelado', '', 'info')

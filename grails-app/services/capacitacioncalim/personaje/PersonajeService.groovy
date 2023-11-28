@@ -1,5 +1,5 @@
 package capacitacioncalim.personaje
-import org.joda.time.LocalDateTime
+import org.joda.time.LocalDate
 import capacitacioncalim.arma.Arma
 import grails.transaction.Transactional
 import org.hibernate.transform.Transformers
@@ -18,7 +18,7 @@ class PersonajeService {
         personaje.nombre as nombre,
         personaje.puntos_salud as puntosSalud,
         personaje.puntos_fuerza as puntosFuerza,
-        personaje.fecha_creacion as fechaCreacion,
+        to_char(personaje.fecha_creacion, 'dd/MM/yyyy') as fechaCreacion,
         personaje.grito_guerra as gritoGuerra,
         arma.nombre as arma
         FROM personaje personaje
@@ -32,7 +32,7 @@ class PersonajeService {
             item["puntosSalud"] = it.puntossalud
             item["puntosFuerza"] = it.puntosfuerza
             item["fechaCreacion"] = it.fechacreacion
-            item["gritoGuerra"] = it.gritoguerra
+            item["gritoGuerra"] = it.gritoguerra ?: '-'
             item["arma"] = it.arma
             //println(item)
             return item
@@ -81,13 +81,13 @@ class PersonajeService {
         assert command.puntosSalud > 0: "Los puntos de salud deben ser mayores a 0finerror" 
 
         Arma arma = getArma(command.armaId)
-        command.fechaCreacion = new LocalDateTime()
+        command.fechaCreacion = new LocalDate()
         Personaje personaje = new Personaje()
         personaje.nombre = command.nombre
         personaje.puntosSalud = command.puntosSalud
         personaje.puntosFuerza = command.puntosFuerza
         personaje.arma = arma
-        personaje.gritoGuerra = command.gritoGuerra ?: " "
+        personaje.gritoGuerra = command.gritoGuerra
         personaje.fechaCreacion = command.fechaCreacion
         personaje.save(flush:true, failOnError:true)
         return personaje
@@ -105,7 +105,7 @@ class PersonajeService {
         personaje.nombre = command.nombre
         personaje.puntosSalud = command.puntosSalud
         personaje.puntosFuerza = command.puntosFuerza
-        personaje.gritoGuerra = command.gritoGuerra ?: ""
+        personaje.gritoGuerra = command.gritoGuerra
         personaje.arma = arma
         personaje.save(flush:true)
         return personaje
