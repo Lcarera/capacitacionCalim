@@ -87,7 +87,7 @@ class PersonajeService {
         personaje.puntosSalud = command.puntosSalud
         personaje.puntosFuerza = command.puntosFuerza
         personaje.arma = arma
-        personaje.gritoGuerra = command.gritoGuerra ?: " "
+        personaje.gritoGuerra = command.gritoGuerra
         personaje.fechaCreacion = command.fechaCreacion
         personaje.save(flush:true, failOnError:true)
         return personaje
@@ -105,7 +105,7 @@ class PersonajeService {
         personaje.nombre = command.nombre
         personaje.puntosSalud = command.puntosSalud
         personaje.puntosFuerza = command.puntosFuerza
-        personaje.gritoGuerra = command.gritoGuerra ?: ""
+        personaje.gritoGuerra = command.gritoGuerra
         personaje.arma = arma
         personaje.save(flush:true)
         return personaje
