@@ -7,6 +7,7 @@ class Personaje {
     Integer puntosSalud
     Integer puntosFuerza
     LocalDate fechaCreacion
+    LocalDate fechaCreacion
     String gritoGuerra
     Arma arma
     static constraints = {

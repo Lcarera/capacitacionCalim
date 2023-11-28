@@ -50,7 +50,7 @@ class JsonInicializacion {
             returnArray['puntosSalud'] = it.puntosSalud
             returnArray['puntosFuerza'] = it.puntosFuerza
             returnArray['fechaCreacion'] = it.fechaCreacion
-            returnArray['gritoGuerra'] = it.gritoGuerra
+            returnArray['gritoGuerra'] = it.gritoGuerra ?: '-'
 
             return returnArray
         }

@@ -50,7 +50,7 @@
 <body>
     <div class="container col-8">
         <div class="container col-12 xd">
-            <h1 class="personajeTitulo">Personajes</h1>           
+            <h1 class="personajeTitulo">Persosdasdasdanajes</h1>           
         </div>
         <br>
         <div class="dt-responsive table-responsive">

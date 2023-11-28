@@ -13,16 +13,15 @@ class BootStrap {
     }
 
     def crearArmas() {
-    if (Arma.count() == 0) {
         def armas = [
             ["nombre": "Arco", "puntosAtaque": 12],
             ["nombre": "Espada", "puntosAtaque": 20],
             ["nombre": "Martillo", "puntosAtaque": 24]
         ]
-        armas.each { armaData ->
-            def nuevaArma = new Arma(nombre: armaData.nombre, puntosAtaque: armaData.puntosAtaque)
-            nuevaArma.save(flush: true)
-        }
+        armas.each { arma ->
+            if(Arma.findByNombre(arma.nombre)) return
+            new Arma(arma).save(flush: true, failOnError: true)
+            
     }
 }
 
