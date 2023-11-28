@@ -10,8 +10,8 @@
             <g:hiddenField name="id" value="${personajeCommand.id}" />
             <g:render template="form" />
             <div class="container-box">
-                <g:link controller="personaje" class="btn btn-outline-secondary" action="list">Volver</g:link>
-                <button id="btnBorrar" class="btn btn-outline-danger">Borrar</button>
+                <g:link controller="personaje" class="btn btn-secondary" action="list">Volver</g:link>
+                <button id="btnBorrar" class="btn btn-danger">Borrar</button>
                 <button id="btnGuardar" class="btn btn-success" type="submit">Guardar</button>
             </div>
         </g:form>

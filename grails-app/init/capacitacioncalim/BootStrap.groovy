@@ -7,18 +7,18 @@ class BootStrap {
 
     def init = { servletContext ->
         JsonInicializacion.inicializar()
+        
+        def armasPorDefecto = [
+            ["Arco", 12],
+            ["Espada", 20],
+            ["Martillo", 24]
+        ]
 
-        def armaCount = Arma.count()
-        if (armaCount == 0) {
-            // Si no hay registros en la tabla "Arma", realiza las inserciones
-            def armas = [
-                [nombre: "Arco", puntosAtaque: 12],
-                [nombre: "Espada", puntosAtaque: 20],
-                [nombre: "Martillo", puntosAtaque: 24]
-            ]
-
-            armas.each { armaData ->
-                def nuevaArma = new Arma(armaData)
+        armasPorDefecto.each { nombre, puntosAtaque ->
+            def armaExistente = Arma.findByNombre(nombre)
+            if (!armaExistente) {
+                // Si no se encuentra el arma, se crea y se guarda en la base de datos
+                def nuevaArma = new Arma(nombre: nombre, puntosAtaque: puntosAtaque)
                 nuevaArma.save(flush: true)
             }
         }

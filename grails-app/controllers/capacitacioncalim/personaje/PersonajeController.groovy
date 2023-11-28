@@ -18,10 +18,6 @@ class PersonajeController {
     def save(PersonajeCommand command) {
         try {
             command.fechaCreacion = new LocalDate()
-            if (!command.gritoGuerra) {
-                command.gritoGuerra = "-"
-            }
-
             personajeService.save(command)
             flash.message = "Personaje guardado correctamente"
             redirect(action: "list")
@@ -93,10 +89,5 @@ class PersonajeController {
     def ajaxGetPersonajes() {
         def personajes = personajeService.listPersonajes()
         render personajes as JSON
-    }
-
-    def ajaxGetPersonajeMasFuerte() {
-        def personaje = personajeService.getPersonajeMasFuerte()
-        render personaje as JSON
     }
 }

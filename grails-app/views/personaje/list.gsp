@@ -71,15 +71,9 @@
             </div>
 
             <script>
-                let personajeMasFuerte;
-                $.ajax({
-                    url: "${createLink(controller:'personaje', action:'ajaxGetPersonajeMasFuerte')}",
-                    method: "GET",
-                    dataType: "json",
-                    success: function(data) {
-                        personajeMasFuerte = data;
-                    }
-                });
+                let $mensajePersonajesMasFuertes = document.createElement("p");
+                $mensajePersonajesMasFuertes.innerHTML = "No hay personajes cargados todavía.<br>";
+                let personajes;
 
                 var tabla;
                 jQuery(document).ready(function () {
@@ -144,24 +138,39 @@
                     $("#btnPersonajeMasFuerte").click(() => {
                         swal({
                             title: "¿Quién es el más fuerte?",
-                            text: "El personaje más fuerte es " + personajeMasFuerte.nombre + " con un total de " + personajeMasFuerte.puntosAtaqueTotal + " puntos de ataque totales.",
+                            content: $mensajePersonajesMasFuertes,
                             button: "Cerrar"
-                        })
+                        });
                     });
                 });
 
                 function llenarDatoslistPersonaje() {
                     tabla.clear().draw();
-                    $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajes')}", {
-                        dataType: "json",
-                        data: {
+
+                    $.ajax({
+                        url: "${createLink(controller:'personaje', action:'ajaxGetPersonajes')}",
+                        dataType: "json"
+                    })
+                    .done(data => {
+                        personajes = data;
+
+                        if (personajes.length > 0) {
+                            personajes.sort((a, b) => b.puntosAtaqueTotal - a.puntosAtaqueTotal);
+                            maxPuntosAtaqueTotal =  personajes[0].puntosAtaqueTotal;
+                            
+                            personajesMasFuertes = personajes.filter(personaje => personaje.puntosAtaqueTotal === maxPuntosAtaqueTotal);
+
+                            $mensajePersonajesMasFuertes.innerHTML = personajesMasFuertes.length > 1 ? "Los personajes más fuertes son:" : "El personaje más fuerte es:";
+
+                            personajesMasFuertes.forEach(personaje => {
+                                $mensajePersonajesMasFuertes.innerHTML += "<br>" + personaje.nombre + ": " + personaje.puntosAtaqueTotal + "ptos";
+                            });
                         }
-                    }).done(function (data) {
-                        tabla.rows.add(data)
+
+                        tabla.rows.add(personajes);
                         tabla.draw();
                     });
                 }
-
             </script>
         </div>
     </body>
