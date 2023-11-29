@@ -1,10 +1,8 @@
 package capacitacioncalim
 
+import capacitacioncalim.inicializacion.Inicializacion
 import capacitacioncalim.inicializacion.JsonInicializacion
-import groovy.transform.CompileStatic
-import capacitacioncalim.arma.Arma
 
-@CompileStatic
 class BootStrap {
 
 
@@ -21,7 +19,10 @@ class BootStrap {
             martillo.save(failOnError: true)
         }
         JsonInicializacion.inicializar()
+        Inicializacion.comienzo()
     }
     def destroy = {
     }
+
+    
 }

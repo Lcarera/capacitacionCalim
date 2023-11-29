@@ -1,23 +1,25 @@
 package capacitacioncalim.personaje
 
-import capacitacioncalim.arma.Arma
 import org.joda.time.LocalDate
 
 class Personaje {
-    String nombre
-    Integer puntosDeFuerza
-    Integer puntosDeSalud
-    LocalDate fechaCreacion
-    String gritoDeGuerra
 
-    static hasOne = [arma: Arma]
+    String nombre
+    Long puntosFuerza
+    Long puntosSalud
+    String gritoGuerra
+
+    LocalDate fechaCreacion
+
+    Arma arma
 
     static constraints = {
         nombre nullable: false
-        puntosDeFuerza nullable: false
-        puntosDeSalud nullable: false
+        puntosFuerza nullable: false
+        puntosSalud nullable: false
+        gritoGuerra nullable: true
         fechaCreacion nullable: false
         arma nullable: false
-        gritoDeGuerra nullable: true
     }
+
 }
