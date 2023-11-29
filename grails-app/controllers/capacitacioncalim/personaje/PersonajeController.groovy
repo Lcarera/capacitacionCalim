@@ -1,51 +1,59 @@
 package capacitacioncalim.personaje
 
-import capacitacioncalim.Auxiliar
-
 import grails.converters.JSON
 
-import grails.plugin.springsecurity.annotation.Secured
+import capacitacioncalim.Auxiliar
 
-@Secured(['ROLE_ADMIN', 'ROLE_USER'])
+
+
 class PersonajeController {
 
     def personajeService
 
-    def index() {
-        render (view: 'list')
+    def list() {
+        def personajes = personajeService.listPersonajes()
+        [personajes: personajes]
     }
 
-    def list() {}
+    def create() {  
+    }
 
     def create() {}
 
+    @Secured(['ROLE_ADMIN'])
+    def hola(){
+        render("hola")
+    }
+
     def save(PersonajeCommand personajeCommand) {
         try{
-            personajeService.save(personajeCommand)
+
+            personajeService.save(command)
             flash.message = "Personaje guardado correctamente"
             redirect(action: "list")
         }
         catch(AssertionError e) {
-            flash.message = e.message.split("finerror")[0]
             Auxiliar.printearError e
-            render(view: "create", model: [personajeCommand: personajeCommand])
+            flash.error = e.message.split("finerror")[0]
+            render (view: "create", model: [personajeCommand: command])
         }
         catch(Exception e){
-            flash.message = "Error al guardar el personaje"
+            flash.error = "Error al guardar el Personaje"
             Auxiliar.printearError e
-            render(view: "create", model: [personajeCommand: personajeCommand])
+            render (view: "create", model: [personajeCommand: command])
         }
     }
 
     def edit(Long id) {
-        [personajeCommand: personajeService.getPersonajeCommand(id)]
+        def personajeCommand = personajeService.getPersonajeCommand(id)
+        [personajeCommand: personajeCommand]
     }
 
     def update(PersonajeCommand command) {
         try{
             personajeService.update(command)
             redirect(action: "list")
-            flash.message = "Personaje guardado"
+            flash.message = "Personaje guardado correctamente"
         }
         catch(AssertionError e) {
             Auxiliar.printearError e
@@ -53,7 +61,7 @@ class PersonajeController {
             render (view: "edit", model: [personajeCommand: command])
         }
         catch(Exception e){
-            flash.error = "Error al guardar el personaje"
+            flash.error = "Error al guardar el Personaje"
             Auxiliar.printearError e
             render (view: "edit", model: [personajeCommand: command])
         }
@@ -64,7 +72,7 @@ class PersonajeController {
         try{
             personajeService.delete(id)
             redirect(action: "list")
-            flash.message = "Personaje borrado"
+            flash.message = "Personaje borrado correctamente"
         }
         catch(AssertionError e) {
             Auxiliar.printearError e
@@ -72,7 +80,7 @@ class PersonajeController {
             render (view: "edit", model: [personajeCommand: command])
         }
         catch(Exception e){
-            flash.error = "Error al guardar el personaje"
+            flash.error = "Error al borrar el Personaje"
             Auxiliar.printearError e
             render (view: "edit", model: [personajeCommand: command])
         }
@@ -83,9 +91,17 @@ class PersonajeController {
         render personajes as JSON
     }
 
-    def ajaxGetPersonajeMasPoderoso() {
-        def personaje = personajeService.getPersonajeMasPoderoso()
+    def ajaxGetArmas()
+    {
+        def armas = personajeService.listArmas()
+        render armas as JSON
+    }
+
+    def ajaxGetPersonajePoderoso()
+    {
+        def personaje = personajeService.getMasPoderoso()
         render personaje as JSON
+
     }
 
 }
