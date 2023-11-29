@@ -65,8 +65,10 @@
             </div>
         </div>
         <div class="dt-responsive table-responsive">
+            <sec:ifAnyGranted roles="ROLE_USER">
             <g:link controller="personaje" action="create" class="btn btn-success" style="float: right; margin-left: 10px,">
                 <b>+</b></g:link>
+            </sec:ifAnyGranted>
 
             <table id="listPersonaje" class="table table-striped table-bordered nowrap" style="cursor:pointer">
                 <thead>
@@ -78,6 +80,10 @@
                         <th>Grito de Guerra</th>
                         <th>Arma</th>
                         <th>Poder Total</th>
+                        <sec:ifAnyGranted roles="ROLE_ADMIN">
+                            th>User id</th>
+                        </sec:ifAnyGranted>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -140,6 +146,10 @@
                     },{
                         "aTargets": [6],
                         "mData": "poderTotal"
+                    },{
+                        "aTargets": [7],
+                        "mData": "user",
+                        "visible": '${request.isUserInRole("ROLE_ADMIN")}'
                     }],
                     buttons: [],
                     sPaginationType: 'simple',

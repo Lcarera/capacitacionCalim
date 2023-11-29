@@ -41,6 +41,7 @@ class JsonInicializacion {
             returnArray['gritoGuerra'] = it.gritoGuerra?: '-'
             returnArray['arma'] = it.arma
             returnArray['PoderTotal'] = it.poderTotal
+            returnArray["user"] = it.user
 
             return returnArray
         }

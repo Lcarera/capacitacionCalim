@@ -47,18 +47,18 @@ class Inicializacion {
 
     private static void inicializarPersonajes() {
         println "Inicializando personajes"
-        def personajes = [
-            ["nombre": "Test1", "puntosFuerza": 12, "puntosSalud": 12, "gritoGuerra": "Peleo mucho", 
-             "arma": Arma.findByNombre('Martillo'), "fechaCreacion": new LocalDate()],
-            ["nombre": "Test2", "puntosFuerza": 20, "puntosSalud": 20, "gritoGuerra": "Peleo mejor", 
-             "arma": Arma.findByNombre('Arco'), "fechaCreacion": new LocalDate()],
-            ["nombre": "Test3", "puntosFuerza": 24, "puntosSalud": 24, "gritoGuerra": null, 
-             "arma": Arma.findByNombre('Espada'), "fechaCreacion": new LocalDate()]
-        ]
-        personajes.each { personaje ->
-            if(Personaje.findByNombre(personaje.nombre)) return
-            new Personaje(personaje).save(flush: true, failOnError: true)
-        }
+//        def personajes = [
+//            ["nombre": "Test1", "puntosFuerza": 12, "puntosSalud": 12, "gritoGuerra": "Peleo mucho", 
+//             "arma": Arma.findByNombre('Martillo'), "fechaCreacion": new LocalDate(), "user": ],
+//            ["nombre": "Test2", "puntosFuerza": 20, "puntosSalud": 20, "gritoGuerra": "Peleo mejor", 
+//             "arma": Arma.findByNombre('Arco'), "fechaCreacion": new LocalDate()],
+//            ["nombre": "Test3", "puntosFuerza": 24, "puntosSalud": 24, "gritoGuerra": null, 
+//             "arma": Arma.findByNombre('Espada'), "fechaCreacion": new LocalDate()]
+//        ]
+//        personajes.each { personaje ->
+//            if(Personaje.findByNombre(personaje.nombre)) return
+//            new Personaje(personaje).save(flush: true, failOnError: true)
+//        }
     }
 
     private static void inicializarUsuarios() {

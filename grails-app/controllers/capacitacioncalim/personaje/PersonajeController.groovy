@@ -4,7 +4,7 @@ import grails.converters.JSON
 
 import capacitacioncalim.Auxiliar
 
-
+import grails.plugin.springsecurity.annotation.Secured
 
 class PersonajeController {
 
@@ -18,13 +18,12 @@ class PersonajeController {
     def create() {  
     }
 
-    def create() {}
-
     @Secured(['ROLE_ADMIN'])
     def hola(){
         render("hola")
     }
 
+    @Secured(['ROLE_USER'])
     def save(PersonajeCommand personajeCommand) {
         try{
 

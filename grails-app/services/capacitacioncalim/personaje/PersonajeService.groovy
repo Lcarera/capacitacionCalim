@@ -6,7 +6,7 @@ import java.util.LinkedHashMap
 import org.joda.time.LocalDate
 import java.util.Date
 import capacitacioncalim.arma.Arma
-
+import capacitacioncalim.User
 @Transactional
 class PersonajeService {
 
@@ -22,6 +22,7 @@ class PersonajeService {
             personaje.puntos_fuerza as puntosFuerza,
             to_char( personaje.fecha_creacion, 'DD/MM/yyyy') as fechaCreacion,
             personaje.grito_guerra as gritoGuerra,
+            personaje.user_id as user,
             arma.nombre as arma,
         FROM personaje personaje
         JOIN arma arma
@@ -36,6 +37,7 @@ class PersonajeService {
             item["fechaCreacion"] = it.fechacreacion
             item["gritoGuerra"] = it.gritoguerra ?: '-'
             item["arma"] = it.arma
+            item["user"] = it.user
            
             return item
         }    
@@ -82,6 +84,7 @@ class PersonajeService {
         assert command.armaId != null: "El arma debe ser elegida ahorafinerror" 
 
         Arma arma = getArma(command.armaId)
+        User user = getUser(command.userId)
         Personaje personaje = new Personaje()
         personaje.nombre = command.nombre
         personaje.puntosFuerza = command.puntosFuerza
@@ -90,7 +93,7 @@ class PersonajeService {
         personaje.gritoGuerra = command.gritoGuerra
             
         personaje.arma = arma
-
+        personaje.user = user
         personaje.save(flush:true, failOnError:true)
         return personaje
     }
@@ -109,12 +112,15 @@ class PersonajeService {
 
         Personaje personaje = Personaje.get(command.id)
         Arma arma = getArma(command.armaId)
+        User user = getUser(command.userId)
+
         personaje.nombre = command.nombre
         personaje.puntosFuerza = command.puntosFuerza
         personaje.puntosSalud = command.puntosSalud
         personaje.fechaCreacion = personaje.fechaCreacion
         personaje.gritoGuerra = command.gritoGuerra
         personaje.arma = arma
+        personaje.user = user
         personaje.save(flush:true, failOnError: true)
         return personaje
     }
@@ -137,7 +143,7 @@ class PersonajeService {
         personajeCommand.gritoGuerra = personaje.gritoGuerra
 
         personajeCommand.armaId = personaje.armaId
-
+        personajeCommand.userId = personaje.userId
         return personajeCommand
     }
 
