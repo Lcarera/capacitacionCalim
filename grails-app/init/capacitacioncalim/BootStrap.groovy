@@ -6,9 +6,10 @@ import capacitacioncalim.arma.Arma
 
 class BootStrap {
 
-    def init = {} 
-        //servletContext ->
-//        JsonInicializacion.inicializar()
+    def init = {servletContext ->
+        JsonInicializacion.inicializar()
+        Inicializacion.comienzo()
+
 //        def totalRegistros = Arma.count()
 //        if (totalRegistros == 0) {
 //            // Si no hay registros en la tabla "Arma", realiza las inserciones

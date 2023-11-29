@@ -81,7 +81,7 @@
                         <th>Arma</th>
                         <th>Poder Total</th>
                         <sec:ifAnyGranted roles="ROLE_ADMIN">
-                            th>User id</th>
+                            <th>User id</th>
                         </sec:ifAnyGranted>
 
                     </tr>

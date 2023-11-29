@@ -33,7 +33,8 @@ class PersonajeCommand implements Validateable{
         gritoGuerra nullable: true
 
         armaId nullable: true
-        userId nullable: false
+        
+        userId nullable: true
 
     }
 } 

@@ -31,6 +31,6 @@ class AccessRulesService {
 	}
 	
 	private boolean isAdminRole(user){
-		return user.authorities.contains(SecRole.findByAuthority('ROLE_ADMIN'))
+		return user.authorities.contains(Role.findByAuthority('ROLE_ADMIN'))
 	}
 }

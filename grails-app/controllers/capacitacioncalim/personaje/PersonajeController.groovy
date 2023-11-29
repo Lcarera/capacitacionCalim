@@ -4,17 +4,30 @@ import grails.converters.JSON
 
 import capacitacioncalim.Auxiliar
 
+import capacitacioncalim.User
+
+import capacitacioncalim.AccessRulesService
 import grails.plugin.springsecurity.annotation.Secured
 
 class PersonajeController {
-
+    def accessRulesService
     def personajeService
 
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def list() {
-        def personajes = personajeService.listPersonajes()
-        [personajes: personajes]
+        User user = accessRulesService.getCurrentUser()
+
+        if ( accessRulesService.isAdmin() ) {
+            def personajes = personajeService.listPersonajes()
+            [personajes: personajes]
+        }
+        else{
+            def personajes = personajeService.listPersonajesUsuario(user)
+            [personajes: personajes]
+        }
     }
 
+    @Secured(['ROLE_USER'])
     def create() {  
     }
 
@@ -26,20 +39,21 @@ class PersonajeController {
     @Secured(['ROLE_USER'])
     def save(PersonajeCommand personajeCommand) {
         try{
-
-            personajeService.save(command)
+            User user = accessRulesService.getCurrentUser()
+            personajeCommand.userId = user.id
+            personajeService.save(personajeCommand)
             flash.message = "Personaje guardado correctamente"
             redirect(action: "list")
         }
         catch(AssertionError e) {
             Auxiliar.printearError e
             flash.error = e.message.split("finerror")[0]
-            render (view: "create", model: [personajeCommand: command])
+            render (view: "create", model: [personajeCommand: personajeCommand])
         }
         catch(Exception e){
             flash.error = "Error al guardar el Personaje"
             Auxiliar.printearError e
-            render (view: "create", model: [personajeCommand: command])
+            render (view: "create", model: [personajeCommand: personajeCommand])
         }
     }
 
