@@ -69,6 +69,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     var tabla;
+    let isAdmin=
     jQuery(document).ready(function () {
         tabla = $('#listPersonajes').DataTable({
             //bAutoWidth: false,
@@ -117,7 +118,13 @@
             },{
                 "aTargets": [5],
                 "mData": "fechaCreacion"
-            }],
+            },{
+                "aTargets":[6],
+                "mData": "usuario",
+                "visible": 
+            }
+            
+        ],
             buttons: [],
             sPaginationType: 'simple',
             sDom: '<"row"<"col-4"l><"col-8"Bf>>t<"row"<"col-6"i><"col-6"p>>',
@@ -130,7 +137,7 @@
 
         llenarDatosListPersonaje();
     });
-
+    console.log(user)
     function llenarDatosListPersonaje() {
         tabla.clear().draw();
         $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajes')}", {
@@ -142,6 +149,15 @@
             tabla.rows.add(data)
             tabla.draw();
         });
+    }
+
+    function buscarIsAdmin(){
+        $.valAdmin("${createLink(controller:'personaje', action:'isAdmin')}", {
+            dataType: "bool",
+            data: {
+            }
+        })
+        return data
     }
 
     function mostrarMasPoderoso() {

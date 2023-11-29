@@ -3,14 +3,15 @@ package capacitacioncalim.personaje
 import capacitacioncalim.Auxiliar
 
 import grails.converters.JSON
-
+import capacitacioncalim.AccessRulesService
 import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])
 class PersonajeController {
 
     def personajeService
-
+    def user
+    user=getCurrentUser()
     def index() {
         render (view: 'list')
     }
@@ -77,6 +78,11 @@ class PersonajeController {
             render (view: "edit", model: [personajeCommand: command])
         }
     }
+
+    def esAdmin() {
+        AccessRulesService.isAdmin()
+    }
+
 
     def ajaxGetPersonajes() {
         def personajes = personajeService.listPersonajes()

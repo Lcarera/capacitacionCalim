@@ -1,7 +1,7 @@
 package capacitacioncalim.personaje
 
 import capacitacioncalim.personaje.Arma
-
+import capacitacioncalim.AccessRulesService
 import grails.transaction.Transactional
 import org.hibernate.transform.Transformers
 import org.joda.time.LocalDate
@@ -9,7 +9,6 @@ import org.joda.time.LocalDate
 @Transactional
 class PersonajeService {
     def sessionFactory
-
     public List<Personaje> listPersonajes() {
 
         def query= """  
@@ -18,12 +17,13 @@ class PersonajeService {
             personaje.nombre as nombre,
             personaje.puntos_salud as puntosSalud,
             personaje.puntos_fuerza as puntosFuerza,
-            to_char( personaje.fecha_creacion, 'DD/MM/yyyy') as fechaCreacion,
+            to_char(personaje.fecha_creacion, 'DD/MM/yyyy') as fechaCreacion,
             personaje.grito_guerra as gritoGuerra,
-            arma.nombre as arma
+            arma.nombre as arma,
+            personaje.user_id_id as user
         FROM personaje personaje
         JOIN arma arma
-        on arma.id = personaje.arma_id; """
+        on arma.id = personaje.arma_id ; """
     
         def personajes = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
@@ -34,7 +34,7 @@ class PersonajeService {
             item["fechaCreacion"] = it.fechacreacion
             item["gritoGuerra"] = it.gritoguerra ?: '-'
             item["arma"] = it.arma
-           
+            item["user"] = it.user
             return item
         }    
         
