@@ -47,9 +47,22 @@
 </head>
 
 <body>
-    <div class="container col-12">
-        <div class="container col-12">
-            <h1 class="personajes-titulo"> <strong>Personajes</strong></h1>
+    <div class="main-body">
+        <div class="page-wrapper">
+            <div class="page-header card">
+                <div class="row align-items-end">
+                    <div class="col-lg-8">
+                        <div class="page-header-title">
+                            <div class="d-inline">
+                                <h4>Personajes</h4>
+                                <sec:ifAnyGranted roles="ROLE_USER,ROLE_ADMIN">
+                                    <span>Lista de personajes del user</span>
+                                </sec:ifAnyGranted>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="dt-responsive table-responsive">
             <g:link controller="personaje" action="create" class="btn btn-success" style="float: right; margin-left: 10px,">

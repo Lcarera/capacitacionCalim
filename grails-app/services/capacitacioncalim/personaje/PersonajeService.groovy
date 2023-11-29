@@ -16,34 +16,65 @@ class PersonajeService {
 
         def query= """
         SELECT 
-        pers.id as id,
-        pers.nombre as nombrePersonaje,
-        pers.puntos_fuerza as puntosFuerza,
-        pers.puntos_salud as puntosSalud,
-        TO_CHAR(pers.fecha_creacion, 'dd/mm/yyyy') as fecha, 
-        pers.grito_guerra as grito,
-        ar.nombre as arma,
-        (ar.puntos_ataque + puntos_fuerza) as poderTotal
-
-        FROM personaje pers
-        join arma ar on pers.arma_id = ar.id;
-"""
-
+            personaje.id as id,
+            personaje.nombre as nombre,
+            personaje.puntos_salud as puntosSalud,
+            personaje.puntos_fuerza as puntosFuerza,
+            to_char( personaje.fecha_creacion, 'DD/MM/yyyy') as fechaCreacion,
+            personaje.grito_guerra as gritoGuerra,
+            arma.nombre as arma,
+        FROM personaje personaje
+        JOIN arma arma
+        on arma.id = personaje.arma_id; """
+    
         def personajes = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
             item["id"] = it.id
-            item["nombre"] = it.nombrepersonaje
-            item["puntosFuerza"] = it.puntosfuerza
+            item["nombre"] = it.nombre
             item["puntosSalud"] = it.puntossalud
-            item["fecha"] = it.fecha
-            item["gritoGuerra"] = it.grito ?:"-"
+            item["puntosFuerza"] = it.puntosfuerza
+            item["fechaCreacion"] = it.fechacreacion
+            item["gritoGuerra"] = it.gritoguerra ?: '-'
             item["arma"] = it.arma
-            item["poderTotal"] = it.podertotal
+           
             return item
-            }    
+        }    
+        
         return personajes
     } 
+    public List<Personaje> listPersonajesUsuario(User user) {
 
+        def query= """  
+        SELECT 
+            personaje.id as id,
+            personaje.nombre as nombre,
+            personaje.puntos_salud as puntosSalud,
+            personaje.puntos_fuerza as puntosFuerza,
+            to_char( personaje.fecha_creacion, 'DD/MM/yyyy') as fechaCreacion,
+            personaje.grito_guerra as gritoGuerra,
+            personaje.user_id as user,
+            arma.nombre as arma,
+        FROM personaje personaje
+        JOIN arma arma
+        on arma.id = personaje.arma_id
+        where personaje.user_id = ${user.id}; """
+    
+        def personajes = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
+            def item = [:]
+            item["id"] = it.id
+            item["nombre"] = it.nombre
+            item["puntosSalud"] = it.puntossalud
+            item["puntosFuerza"] = it.puntosfuerza
+            item["fechaCreacion"] = it.fechacreacion
+            item["gritoGuerra"] = it.gritoguerra ?: '-'
+            item["arma"] = it.arma
+            item["user"] = it.user
+           
+            return item
+        }    
+        
+        return personajes
+    } 
     public Personaje save(PersonajeCommand command) {
         assert command.nombre != null: "El Nombre no puede estar vaciofinerror" 
         assert command.puntosFuerza > 0 || command.puntosFuerza != null: "Los puntos de fuerza deben ser un numero y ser mayor a 0finerror" 

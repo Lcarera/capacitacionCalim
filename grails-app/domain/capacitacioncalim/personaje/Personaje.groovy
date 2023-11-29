@@ -1,5 +1,6 @@
 package capacitacioncalim.personaje
 import org.joda.time.LocalDate
+import capacitacioncalim.User
 
 import capacitacioncalim.arma.Arma
 
@@ -13,6 +14,8 @@ class Personaje {
     Arma arma 
 
 
+    static belongsTo = [user: User]
+
     static constraints = {
         nombre nullable: false
         puntosFuerza nullable: false
@@ -20,5 +23,7 @@ class Personaje {
         fechaCreacion nullable: false
         gritoGuerra nullable: true
         arma nullable: false
+        user nullable: false
+
     }
 }

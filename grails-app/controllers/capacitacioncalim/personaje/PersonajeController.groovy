@@ -18,7 +18,14 @@ class PersonajeController {
     def create() {  
     }
 
-    def save(PersonajeCommand command) {
+    def create() {}
+
+    @Secured(['ROLE_ADMIN'])
+    def hola(){
+        render("hola")
+    }
+
+    def save(PersonajeCommand personajeCommand) {
         try{
 
             personajeService.save(command)
