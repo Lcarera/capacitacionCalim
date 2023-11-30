@@ -1,11 +1,17 @@
 package capacitacioncalim
 
+import capacitacioncalim.inicializacion.Inicializacion
 import capacitacioncalim.inicializacion.JsonInicializacion
+
 class BootStrap {
 
     def init = { servletContext ->
         JsonInicializacion.inicializar()
+<<<<<<< HEAD
         crearArmas()
+=======
+        Inicializacion.comienzo()
+>>>>>>> main
     }
 
     def crearArmas() {
@@ -22,4 +28,6 @@ class BootStrap {
 
     def destroy = {
     }
+
+    
 }
