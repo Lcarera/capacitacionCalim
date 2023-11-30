@@ -1,14 +1,14 @@
 <label for="nombre">Nombre:</label>
 <input type="text" class="form-control" name="nombre" id="nombre" value="${personajeCommand?.nombre}">
 <br>
-<label for="puntosDeFuerza">Puntos De Fuerza:</label>
-<input type="number" class="form-control" name="puntosDeFuerza" id="puntosDeFuerza" value="${personajeCommand?.puntosDeFuerza}">
+<label for="puntosFuerza">Puntos De Fuerza:</label>
+<input type="number" class="form-control" name="puntosFuerza" id="puntosFuerza" value="${personajeCommand?.puntosFuerza}">
 <br>
-<label for="puntosDeSalud">Puntos De Salud:</label>
-<input type="number" class="form-control" name="puntosDeSalud" id="puntosDeSalud" value="${personajeCommand?.puntosDeSalud}">
+<label for="puntosSalud">Puntos De Salud:</label>
+<input type="number" class="form-control" name="puntosSalud" id="puntosSalud" value="${personajeCommand?.puntosSalud}">
 <br>
-<label for="gritoDeGuerra">Grito De Guerra:</label>
-<input type="text" class="form-control" name="gritoDeGuerra" id="gritoDeGuerra" value="${personajeCommand?.gritoDeGuerra}">
+<label for="gritoGuerra">Grito De Guerra:</label>
+<input type="text" class="form-control" name="gritoGuerra" id="gritoGuerra" value="${personajeCommand?.gritoGuerra}">
 <br>
 <label for="arma">Arma:</label>
 <select id="cbArma" class="form-control" name="armaId"></select>

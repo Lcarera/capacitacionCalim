@@ -1,4 +1,4 @@
-package capacitacioncalim.arma
+package capacitacioncalim.personaje
 
 import grails.transaction.Transactional
 import java.util.LinkedHashMap
@@ -19,7 +19,7 @@ class ArmaService {
             def item = [:]
             item.id = it.id
             item.nombre = it.nombre
-            item.puntosDeAtaque = it.puntos_de_ataque
+            item.puntosAtaque = it.puntos_ataque
             return item
         }
         return armas

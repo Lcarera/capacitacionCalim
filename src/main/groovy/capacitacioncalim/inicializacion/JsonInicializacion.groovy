@@ -5,7 +5,8 @@ import grails.converters.JSON
 import capacitacioncalim.libro.Libro
 import capacitacioncalim.editorial.Editorial
 import capacitacioncalim.personaje.Personaje
-import capacitacioncalim.arma.Arma
+import capacitacioncalim.personaje.Arma
+import capacitacioncalim.User
 
 class JsonInicializacion {
     static def inicializar(){
@@ -34,7 +35,7 @@ class JsonInicializacion {
 			def returnArray = [:]
             returnArray['id'] = it.id
             returnArray['nombre'] = it.nombre
-            returnArray['puntosDeAtaque'] = it.puntosDeAtaque
+            returnArray['puntosAtaque'] = it.puntosAtaque
             
             return returnArray
         }
@@ -43,10 +44,11 @@ class JsonInicializacion {
 			def returnArray = [:]
             returnArray['id'] = it.id
             returnArray['nombre'] = it.nombre
-            returnArray['puntosDeFuerza'] = it.puntosDeFuerza
-            returnArray['puntosDeSalud'] = it.puntosDeSalud
+            returnArray['puntosFuerza'] = it.puntosFuerza
+            returnArray['puntosSalud'] = it.puntosSalud
             returnArray['fechaCreacion'] = it.fechaCreacion
-            returnArray['gritoDeGuerra'] = it.gritoDeGuerra
+            returnArray['gritoGuerra'] = it.gritoGuerra
+            returnArray['user'] = it.user.id
             returnArray['arma'] = it.arma.nombre
             
             return returnArray

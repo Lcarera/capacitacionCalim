@@ -1,14 +1,18 @@
 package capacitacioncalim.personaje
 
-import capacitacioncalim.personaje.Arma
+import capacitacioncalim.personaje.ArmaService
+import capacitacioncalim.User
 
 import grails.transaction.Transactional
 import org.hibernate.transform.Transformers
 import org.joda.time.LocalDate
+import grails.plugin.springsecurity.SpringSecurityService
 
 @Transactional
 class PersonajeService {
     def sessionFactory
+    ArmaService armaService
+    SpringSecurityService springSecurityService
 
     public List<Personaje> listPersonajes() {
 
@@ -20,6 +24,7 @@ class PersonajeService {
             personaje.puntos_fuerza as puntosFuerza,
             to_char( personaje.fecha_creacion, 'DD/MM/yyyy') as fechaCreacion,
             personaje.grito_guerra as gritoGuerra,
+            personaje.user_id as user,
             arma.nombre as arma
         FROM personaje personaje
         JOIN arma arma
@@ -33,17 +38,50 @@ class PersonajeService {
             item["puntosFuerza"] = it.puntosfuerza
             item["fechaCreacion"] = it.fechacreacion
             item["gritoGuerra"] = it.gritoguerra ?: '-'
+            item["user"] = it.user
             item["arma"] = it.arma
            
             return item
         }    
-        
+        return personajes
+    } 
+
+        public List<Personaje> listPersonajesFilter(userId) {
+            
+        def query= """  
+        SELECT 
+            personaje.id as id,
+            personaje.nombre as nombre,
+            personaje.puntos_salud as puntosSalud,
+            personaje.puntos_fuerza as puntosFuerza,
+            to_char( personaje.fecha_creacion, 'DD/MM/yyyy') as fechaCreacion,
+            personaje.grito_guerra as gritoGuerra,
+            personaje.user_id as user,
+            arma.nombre as arma
+        FROM personaje personaje
+        JOIN arma arma
+        on arma.id = personaje.arma_id
+        WHERE personaje.user_id = :userId ;"""
+    
+        def personajes = sessionFactory.currentSession.createSQLQuery(query).setParameter('userId', userId).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
+            def item = [:]
+            item["id"] = it.id
+            item["nombre"] = it.nombre
+            item["puntosSalud"] = it.puntossalud
+            item["puntosFuerza"] = it.puntosfuerza
+            item["fechaCreacion"] = it.fechacreacion
+            item["gritoGuerra"] = it.gritoguerra ?: '-'
+            item["user"] = it.user
+            item["arma"] = it.arma
+           
+            return item
+        }    
         return personajes
     } 
 
     public Personaje save(PersonajeCommand command) {
         assert command.nombre != null: "El nombre no es validofinerror"
-        assert armaId != null: "Seleccione un armafinerror"
+        assert command.armaId != null: "Seleccione un armafinerror"
         assert command.puntosFuerza > 0: "Los puntos de fuerza deben ser mayores a 0finerror" 
         assert command.puntosSalud > 0: "Los puntos de salud deben ser mayores a 0finerror" 
 
@@ -52,9 +90,11 @@ class PersonajeService {
         personaje.nombre = command.nombre
         personaje.puntosSalud = command.puntosSalud
         personaje.puntosFuerza = command.puntosFuerza
-        Arma arma = getArma(command.armaId)
+        Arma arma = armaService.getArma(command.armaId)
         personaje.arma = arma
         personaje.gritoGuerra = command.gritoGuerra
+        User user = getUsuarioActual()
+        personaje.user = user
         personaje.fechaCreacion = new LocalDate()
         
         return personaje.save(flush:true, failOnError:true)
@@ -95,6 +135,7 @@ class PersonajeService {
         personajeCommand.puntosSalud = personaje.puntosSalud
         personajeCommand.puntosFuerza = personaje.puntosFuerza
         personajeCommand.gritoGuerra = personaje.gritoGuerra
+        personajeCommand.user = personaje.user.id
         personajeCommand.armaId = personaje.arma.id
         return personajeCommand
     }
@@ -121,5 +162,10 @@ class PersonajeService {
         }
 
         return personaje
+    }
+
+    private def getUsuarioActual() {
+        def usuarioActual = springSecurityService.currentUser
+            return usuarioActual
     }
 }

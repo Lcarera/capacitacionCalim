@@ -46,14 +46,17 @@ class Inicializacion {
     }
 
     private static void inicializarPersonajes() {
+
         println "Inicializando personajes"
         def personajes = [
             ["nombre": "Test1", "puntosFuerza": 12, "puntosSalud": 12, "gritoGuerra": "Peleo mucho", 
-             "arma": Arma.findByNombre('Martillo'), "fechaCreacion": new LocalDate()],
+             "arma": Arma.findByNombre('Martillo'), "fechaCreacion": new LocalDate(), "user": 4],
             ["nombre": "Test2", "puntosFuerza": 20, "puntosSalud": 20, "gritoGuerra": "Peleo mejor", 
-             "arma": Arma.findByNombre('Arco'), "fechaCreacion": new LocalDate()],
+             "arma": Arma.findByNombre('Arco'), "fechaCreacion": new LocalDate(), "user": 4],
             ["nombre": "Test3", "puntosFuerza": 24, "puntosSalud": 24, "gritoGuerra": null, 
-             "arma": Arma.findByNombre('Espada'), "fechaCreacion": new LocalDate()]
+             "arma": Arma.findByNombre('Espada'), "fechaCreacion": new LocalDate(), "user": 4],
+            ["nombre": "valen1", "puntosFuerza": 24, "puntosSalud": 24, "gritoGuerra": null, 
+             "arma": Arma.findByNombre('Espada'), "fechaCreacion": new LocalDate(), "user": 12]
         ]
         personajes.each { personaje ->
             if(Personaje.findByNombre(personaje.nombre)) return
@@ -67,6 +70,8 @@ class Inicializacion {
             ["username": "admin", "password": "admin", "enabled": true, "accountExpired": false, 
              "accountLocked": false, "passwordExpired": false, "roles": [Role.findByAuthority('ROLE_ADMIN')]],
             ["username": "user", "password": "user", "enabled": true, "accountExpired": false, 
+             "accountLocked": false, "passwordExpired": false, "roles": [Role.findByAuthority('ROLE_USER')]],
+            ["username": "valen", "password": "valen", "enabled": true, "accountExpired": false, 
              "accountLocked": false, "passwordExpired": false, "roles": [Role.findByAuthority('ROLE_USER')]]
         ]
         usuarios.each { usuario ->

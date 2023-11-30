@@ -4,12 +4,15 @@ import capacitacioncalim.Auxiliar
 
 import grails.converters.JSON
 
+import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.annotation.Secured
+import grails.plugin.springsecurity.SpringSecurityUtils
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])
 class PersonajeController {
 
     def personajeService
+    SpringSecurityService springSecurityService
 
     def index() {
         render (view: 'list')
@@ -17,6 +20,7 @@ class PersonajeController {
 
     def list() {}
 
+    @Secured(['ROLE_USER'])
     def create() {}
 
     def save(PersonajeCommand personajeCommand) {
@@ -79,8 +83,13 @@ class PersonajeController {
     }
 
     def ajaxGetPersonajes() {
+        if (SpringSecurityUtils.ifAllGranted('ROLE_ADMIN')) {
         def personajes = personajeService.listPersonajes()
         render personajes as JSON
+        } else if (SpringSecurityUtils.ifAllGranted('ROLE_USER')) {
+        def usuarioActual = springSecurityService.currentUser
+        def personajes = personajeService.listPersonajesFilter(usuarioActual.id)
+        render personajes as JSON}
     }
 
     def ajaxGetPersonajeMasPoderoso() {
