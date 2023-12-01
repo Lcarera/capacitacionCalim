@@ -6,7 +6,6 @@ import capacitacioncalim.UserRole
 
 import capacitacioncalim.arma.Arma
 import capacitacioncalim.personaje.Personaje
-
 import org.joda.time.LocalDate
 
 class Inicializacion {
