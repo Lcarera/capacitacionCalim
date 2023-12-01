@@ -4,7 +4,7 @@ import capacitacioncalim.Auxiliar
 import org.hibernate.transform.Transformers
 import java.util.LinkedHashMap
 
-
+@Secured(['ROLE_ADMIN', 'ROLE_USER'])
 class PersonajeController {
     def sessionFactory
     def personajeService
