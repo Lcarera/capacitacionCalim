@@ -57,9 +57,8 @@
                                 <th>Arma</th>
                                 <th>Fecha de Creación</th>
                                 <sec:ifAnyGranted roles="ROLE_ADMIN">
-                            <th>User</th>
-                        </sec:ifAnyGranted>
-
+                                    <th>Usuario Creador</th>
+                                </sec:ifAnyGranted>
                                 </tr>
                             </thead>
                             <tbody></tbody>

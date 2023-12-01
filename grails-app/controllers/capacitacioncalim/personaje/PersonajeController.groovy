@@ -17,7 +17,6 @@ class PersonajeController {
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def list() {
         User user = accessRulesService.getCurrentUser()
-
         if ( accessRulesService.isAdmin() ) {
             def personajes = personajeService.listPersonajes()
             [personajes: personajes]
