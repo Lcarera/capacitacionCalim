@@ -2,14 +2,10 @@ package capacitacioncalim.libro
 
 import capacitacioncalim.editorial.Editorial
 
-import capacitacioncalim.editorial.Editorial
-
 class Libro {
     String titulo
     String autor
     Integer ano
-
-    static belongsTo = [editorial: Editorial]
 
     static belongsTo = [editorial: Editorial]
     static hasMany = [libroPrecios: LibroPrecio]

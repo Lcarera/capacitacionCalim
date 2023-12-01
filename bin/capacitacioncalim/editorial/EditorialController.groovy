@@ -78,9 +78,4 @@ class EditorialController {
         render editoriales as JSON
     }
 
-    def ajaxGetEditoriales() {
-        def editoriales = editorialService.listEditoriales()
-        render editoriales as JSON
-    }
-
 }
