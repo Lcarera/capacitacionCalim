@@ -48,11 +48,11 @@ class Inicializacion {
         println "Inicializando personajes"
         def personajes = [
             ["nombre": "Test1", "puntosFuerza": 12, "puntosSalud": 12, "gritoGuerra": "Peleo mucho", 
-             "arma": Arma.findByNombre('Martillo'), "fechaCreacion": new LocalDate(), "userId" : User.getCurrentUser()],
+             "arma": Arma.findByNombre('Martillo'), "fechaCreacion": new LocalDate(), "user" : 3],
             ["nombre": "Test2", "puntosFuerza": 20, "puntosSalud": 20, "gritoGuerra": "Peleo mejor", 
-             "arma": Arma.findByNombre('Arco'), "fechaCreacion": new LocalDate(), "userId" : User.getCurrentUser()],
+             "arma": Arma.findByNombre('Arco'), "fechaCreacion": new LocalDate(), "user" : 3],
             ["nombre": "Test3", "puntosFuerza": 24, "puntosSalud": 24, "gritoGuerra": null, 
-             "arma": Arma.findByNombre('Espada'), "fechaCreacion": new LocalDate(), "userId" : User.getCurrentUser()]
+             "arma": Arma.findByNombre('Espada'), "fechaCreacion": new LocalDate(), "user" : 3]
         ]
         personajes.each { personaje ->
             if(Personaje.findByNombre(personaje.nombre)) return

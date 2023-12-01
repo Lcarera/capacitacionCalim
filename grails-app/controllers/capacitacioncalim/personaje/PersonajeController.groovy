@@ -4,11 +4,15 @@ import capacitacioncalim.Auxiliar
 import org.hibernate.transform.Transformers
 import java.util.LinkedHashMap
 import grails.plugin.springsecurity.annotation.Secured
-
+import grails.plugin.springsecurity.SpringSecurityService
+import grails.plugin.springsecurity.SpringSecurityUtils
+import capacitacioncalim.AccessRulesService
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])
 class PersonajeController {
     def sessionFactory
     def personajeService
+    def AccessRulesService
+    SpringSecurityService springSecurityService
 
     def list() {
         def personajes = personajeService.listPersonajes()
@@ -78,13 +82,18 @@ class PersonajeController {
         render armas as JSON
     }
 
-    def ajaxGetPersonajeMasFuerte(){
-        def personaje = personajeService.getPersonajeMasFuerte()
-        render personaje as JSON
+    def ajaxGetPersonajes() {
+        if (SpringSecurityUtils.ifAllGranted('ROLE_ADMIN')) {
+        def personajes = personajeService.listPersonajes()
+        render personajes as JSON
+        } else if (SpringSecurityUtils.ifAllGranted('ROLE_USER')) {
+        def usuarioActual = springSecurityService.currentUser
+        def personajes = personajeService.listPersonajesUsuario(usuarioActual.id)
+        render personajes as JSON}
     }
 
-    def ajaxGetPersonajes(){
-        def personajes = personajeService.listPersonajes()
+    def ajaxGetPersonajeMasFuerte(){
+        def personajes = personajeService.getPersonajeMasFuerte()
         render personajes as JSON
     }
 }

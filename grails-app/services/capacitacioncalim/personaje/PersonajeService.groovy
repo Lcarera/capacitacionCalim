@@ -6,6 +6,7 @@ import org.joda.time.LocalDate
 import java.util.LinkedHashMap
 import org.hibernate.transform.Transformers
 import capacitacioncalim.AccessRulesService
+import grails.plugin.springsecurity.SpringSecurityService
 
 @Transactional
 class PersonajeService{
@@ -35,18 +36,60 @@ class PersonajeService{
 
         def personajes = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
-            item["id"] = it.id
-           item["nombre"] = it.nombre
-           item["puntosSalud"] = it.puntossalud
-           item["puntosFuerza"] = it.puntosfuerza
-           item["fechaCreacion"] = it.fechacreacion
-           item["gritoGuerra"] = it.gritoguerra ?: '-'
-           item["arma"] = it.arma
-           item["user"] = it.user
-            return item
+            item.id = it.id
+           item.nombre = it.nombre
+           item.puntosSalud = it.puntos_salud
+           item.puntosFuerza = it.puntos_fuerza
+           item.fechaCreacion = it.fecha_creacion
+           item.gritoGuerra = it.grito_guerra ?: '-'
+           item.arma = it.arma
+           item.user = it.user
+           return item
         }
         return personajes   
     }   
+
+    public List<Personaje> listPersonajesUsuario(long userId) {
+            println userId
+        def query= """  
+        SELECT 
+            personaje.id as id,
+            personaje.nombre as nombre,
+            personaje.puntos_salud as puntosSalud,
+            personaje.puntos_fuerza as puntosFuerza,
+            to_char( personaje.fecha_creacion, 'DD/MM/yyyy') as fechaCreacion,
+            personaje.grito_guerra as gritoGuerra,
+            personaje.user_id as user,
+            arma.nombre as arma
+        FROM 
+            personaje personaje
+        JOIN 
+            arma arma
+        ON 
+            arma.id = personaje.arma_id
+        WHERE 
+            personaje.user_id = :userId ;"""
+    
+        def personajes = sessionFactory.currentSession.createSQLQuery(query).setParameter('userId', userId).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
+            def item = [:]
+            item["id"] = it.id
+            item["nombre"] = it.nombre
+            item["puntosSalud"] = it.puntossalud
+            item["puntosFuerza"] = it.puntosfuerza
+            item["fechaCreacion"] = it.fechacreacion
+            item["gritoGuerra"] = it.gritoguerra ?: '-'
+            item["user"] = it.user
+            item["arma"] = it.arma
+           
+            return item
+        }    
+        return personajes
+    } 
+
+    private def getUsuarioActual() {
+        def usuarioActual = springSecurityService.currentUser
+            return usuarioActual
+    }
 
     def getPersonajeMasFuerte(){
         def query = """
@@ -85,7 +128,7 @@ class PersonajeService{
         assert command.armaId != null: "Campo de arma invalidofinerror"
         Personaje personaje = new Personaje()
         Arma arma = Arma.get(command.armaId)
-        User user = getCurrentUser()
+        User user = getUsuarioActual()
         personaje.nombre = command.nombre
         personaje.puntosFuerza = command.puntosFuerza
         personaje.puntosSalud = command.puntosSalud
@@ -134,6 +177,7 @@ class PersonajeService{
         personajeCommand.puntosSalud = personaje.puntosSalud
         personajeCommand.gritoGuerra = personaje.gritoGuerra
         personajeCommand.armaId = personaje.armaId
+        personajeCommand.user = personaje.user.id
         return personajeCommand
     }
 }

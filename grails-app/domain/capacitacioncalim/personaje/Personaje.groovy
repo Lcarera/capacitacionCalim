@@ -11,7 +11,7 @@ class Personaje {
     String gritoGuerra
 
     static hasOne = [arma: Arma]
-    static belongsTo = [userId: User]
+    static belongsTo = [user: User]
 
     static constraints = {
         nombre nullable: false
@@ -20,6 +20,6 @@ class Personaje {
         fechaCreacion nullable: false
         gritoGuerra nullable: true
         arma nullable: false
-        userId nullable: false
+        user nullable: false
     }
 }

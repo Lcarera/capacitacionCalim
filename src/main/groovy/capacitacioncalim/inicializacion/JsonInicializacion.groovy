@@ -27,6 +27,7 @@ class JsonInicializacion {
             returnArray['fechaCreacion'] = it.fechaCreacion
             returnArray['gritoGuerra'] = it.gritoGuerra
             returnArray['arma'] = it.arma
+            returnArray['user'] = it.user
             
             return returnArray
         }

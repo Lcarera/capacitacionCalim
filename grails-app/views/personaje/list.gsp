@@ -18,6 +18,7 @@
         </div>
     </div>
     <meta name="layout" content="main" />
+    <g:set var="userRoles" value="${request.isUserInRole('ROLE_ADMIN') ? 'ROLE_ADMIN' : ''}" />
 </head>
 
 <body>
@@ -45,7 +46,10 @@
                     <div class="dt-responsive table-responsive">
                         <div style="float: right;margin-left: 1em;">
                             <button class="btn btn-success"  onclick="mostrarMasPoderoso()">Mostrar mas poderoso</button>
-                            <g:link controller="personaje" action="create" class="btn btn-primary">Agregar Personaje</g:link>
+                            <sec:ifAnyGranted roles="ROLE_USER">
+                                <g:link controller="personaje" action="create" class="btn btn-primary">Agregar Personaje</g:link>
+                            </sec:ifAnyGranted>
+                            
                         </div>
                         <table id="listPersonajes" class="table table-striped table-bordered nowrap" style="cursor: pointer">
                             <thead>
@@ -67,9 +71,12 @@
         </div>
     </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     var tabla;
+    var isAdmin = '${userRoles}'.includes('ROLE_ADMIN');
+
     jQuery(document).ready(function () {
         tabla = $('#listPersonajes').DataTable({
             //bAutoWidth: false,
@@ -109,16 +116,19 @@
             }, {
                 "aTargets": [3],
                 "mData": "gritoGuerra",
+                "mRender": function (data, type, full) {
+                    return data ? data : '-';
+                }
             },{
                 "aTargets": [4],
                 "mData": "arma"
             },{
                 "aTargets": [5],
                 "mData": "fechaCreacion"
-            }{
+            },{
                 "aTargets": [6],
-                "mData": "user"                
-                "visible": 
+                "mData": "user",
+                "visible":  isAdmin
             }],
             buttons: [],
             sPaginationType: 'simple',
@@ -147,7 +157,7 @@
     }
 
     function mostrarMasPoderoso() {
-        $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajeMasPoderoso')}", {
+        $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajeMasFuerte')}", {
             dataType: "json",
             data: {}
         }).done(function (data) {
@@ -171,6 +181,7 @@
             }
         });
     }
+
 </script>
 </body>
 </html>
