@@ -4,7 +4,7 @@ import capacitacioncalim.User
 import capacitacioncalim.Role
 import capacitacioncalim.UserRole
 
-import capacitacioncalim.personaje.Arma
+import capacitacioncalim.arma.Arma
 import capacitacioncalim.personaje.Personaje
 
 import org.joda.time.LocalDate
