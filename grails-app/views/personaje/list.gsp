@@ -129,7 +129,7 @@
                 "aTargets": [5],
                 "mData": "fechaCreacion"
             },{
-                "aTargets": [6],  // Replace 6 with the appropriate column index
+                "aTargets": [6],
                 "mData": "user",
                 "visible": <%= request.isUserInRole("ROLE_ADMIN") %>
             }
