@@ -3,7 +3,7 @@ package capacitacioncalim.inicializacion
 import capacitacioncalim.User
 import capacitacioncalim.Role
 import capacitacioncalim.UserRole
-
+import capacitacioncalim.AccessRulesService
 import capacitacioncalim.arma.Arma
 import capacitacioncalim.personaje.Personaje
 import org.joda.time.LocalDate
@@ -48,11 +48,11 @@ class Inicializacion {
         println "Inicializando personajes"
         def personajes = [
             ["nombre": "Test1", "puntosFuerza": 12, "puntosSalud": 12, "gritoGuerra": "Peleo mucho", 
-             "arma": Arma.findByNombre('Martillo'), "fechaCreacion": new LocalDate()],
+             "arma": Arma.findByNombre('Martillo'), "fechaCreacion": new LocalDate(), "userId" : User.getCurrentUser()],
             ["nombre": "Test2", "puntosFuerza": 20, "puntosSalud": 20, "gritoGuerra": "Peleo mejor", 
-             "arma": Arma.findByNombre('Arco'), "fechaCreacion": new LocalDate()],
+             "arma": Arma.findByNombre('Arco'), "fechaCreacion": new LocalDate(), "userId" : User.getCurrentUser()],
             ["nombre": "Test3", "puntosFuerza": 24, "puntosSalud": 24, "gritoGuerra": null, 
-             "arma": Arma.findByNombre('Espada'), "fechaCreacion": new LocalDate()]
+             "arma": Arma.findByNombre('Espada'), "fechaCreacion": new LocalDate(), "userId" : User.getCurrentUser()]
         ]
         personajes.each { personaje ->
             if(Personaje.findByNombre(personaje.nombre)) return

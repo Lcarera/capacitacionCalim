@@ -1,9 +1,11 @@
 package capacitacioncalim.personaje
 import grails.transaction.Transactional
 import capacitacioncalim.arma.Arma
+import capacitacioncalim.User
 import org.joda.time.LocalDate
 import java.util.LinkedHashMap
 import org.hibernate.transform.Transformers
+import capacitacioncalim.AccessRulesService
 
 @Transactional
 class PersonajeService{
@@ -16,29 +18,31 @@ class PersonajeService{
     public List<Personaje> listPersonajes(){
         def query ="""
         SELECT
-            a.id,
-            a.nombre,
-            a.puntos_fuerza,
-            a.puntos_salud,
-            TO_CHAR(a.fecha_creacion, 'DD/MM/YYYY') AS fecha_creacion,
-            a.grito_guerra,
-            b.nombre AS arma
+            personaje.id,
+            personaje.nombre,
+            personaje.puntos_fuerza,
+            personaje.puntos_salud,
+            TO_CHAR(personaje.fecha_creacion, 'DD/MM/YYYY') AS fecha_creacion,
+            personaje.grito_guerra,
+            arma.nombre AS arma,
+            personaje.user_id as user
         FROM
-            personaje a
+            personaje personaje
         JOIN
-            arma b
+            arma arma
         ON
-            a.arma_id = b.id;"""
+            personaje.arma_id = arma.id;"""
 
         def personajes = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
             def item = [:]
-            item.id = it.id
-            item.nombre = it.nombre
-            item.puntosFuerza = it.puntos_fuerza
-            item.puntosSalud = it.puntos_salud
-            item.fechaCreacion = it.fecha_creacion
-            item.gritoGuerra = it.grito_guerra
-            item.arma = it.arma
+            item["id"] = it.id
+           item["nombre"] = it.nombre
+           item["puntosSalud"] = it.puntossalud
+           item["puntosFuerza"] = it.puntosfuerza
+           item["fechaCreacion"] = it.fechacreacion
+           item["gritoGuerra"] = it.gritoguerra ?: '-'
+           item["arma"] = it.arma
+           item["user"] = it.user
             return item
         }
         return personajes   
@@ -81,12 +85,14 @@ class PersonajeService{
         assert command.armaId != null: "Campo de arma invalidofinerror"
         Personaje personaje = new Personaje()
         Arma arma = Arma.get(command.armaId)
+        User user = getCurrentUser()
         personaje.nombre = command.nombre
         personaje.puntosFuerza = command.puntosFuerza
         personaje.puntosSalud = command.puntosSalud
         personaje.fechaCreacion = LocalDate.now()
         personaje.gritoGuerra = command.gritoGuerra
         personaje.arma = arma
+        personaje.user = user
         personaje.save(flush: true, failOnError: true)
         return personaje
     }
@@ -107,6 +113,7 @@ class PersonajeService{
         personaje.puntosSalud = command.puntosSalud
         personaje.gritoGuerra = command.gritoGuerra
         personaje.arma = arma
+        
         personaje.save(flush:true)
         return personaje
     }

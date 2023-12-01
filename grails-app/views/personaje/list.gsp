@@ -56,6 +56,7 @@
                                 <th>Grito de Guerra</th>
                                 <th>Arma</th>
                                 <th>Fecha de Creación</th>
+                                <th>Usuario</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -117,6 +118,13 @@
             },{
                 "aTargets": [5],
                 "mData": "fechaCreacion"
+            }{
+                "aTargets": [6],
+                "mData": "user"                
+                "visible": 
+                "mRender": function (data, type, full) {
+                    return data ? data : '-';
+                }
             }],
             buttons: [],
             sPaginationType: 'simple',
