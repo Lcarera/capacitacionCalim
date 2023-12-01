@@ -3,6 +3,7 @@ import grails.converters.JSON
 import capacitacioncalim.Auxiliar
 import org.hibernate.transform.Transformers
 import java.util.LinkedHashMap
+import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])
 class PersonajeController {
