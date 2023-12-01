@@ -1,47 +1,6 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta name="layout" content="main">
-        <style>
-            h1,
-            h2 {
-                display: inline-block;
-                margin: 0.5em;
-            }
-
-            h1.personajetitulo {
-                text-align: center;
-                color: black;
-            }
-            
-            .container .BotonCalimVerde {
-                background-color: #c1d64a;
-                font-size: 30px;
-                font-weight: bold;
-                height: 35.5px;
-                color: white;
-                text-align: justify;   
-                margin-left: 10px;
-                padding-top: 0px;
-                font-family: "Lucida Console", "Courier New", monospace;          
-                border-radius: 3px;    
-            }
-
-            .BotonCalimCeleste{
-                background-color: #2091a2;
-                color: white;
-                border-radius: 3px;  
-            }
-
-            .FondoBlancoPersonajes{
-                box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
-                padding: 20px;
-                border-radius: 10px;
-            }
-        </style>
-    </head>
-
-    <body>
+<html lang="en">
+<head>
         <div class="theme-loader" id="loaderGrande">
         <div class="ball-scale">
             <div class="contain">
@@ -122,21 +81,19 @@
                     sProcessing: "Buscando...",
                     sSearch: "",
                     sLengthMenu: "_MENU_",
-                    sZeroRecords: "Buscando personaje",
-                    sInfo: "_START_ - _END_ de _TOTAL_",
-                    sInfoFiltered: "${message(code: 'default.datatable.infoFiltered', default: '(filtrado de MAX registros en total)')}",
-                    sInfoPostFix: "",
-                    sUrl: "",
-                    sInfoEmpty: "${message(code: 'default.datatable.infoEmpty', default: '0 de 0')}",
-                    oPaginate: {
-                        "sFirst": "${message(code: 'default.datatable.paginate.first', default: 'Primero')}",
-                        "sPrevious": "<",
-                        "sNext": ">",
-                        "sLast": "${message(code: 'default.datatable.paginate.last', default: '&Uacute;ltimo')}"
-                    }
-                },
-                //iDisplayLength: 100,
-                //scrollX: true,
+                sZeroRecords: "Buscando personaje(s)...",
+                sInfo: "_START_ - _END_ de _TOTAL_",
+                sInfoFiltered: "${message(code: 'default.datatable.infoFiltered', default: '(filtrado de MAX registros en total)')}",
+                sInfoPostFix: "",
+                sUrl: "",
+                sInfoEmpty: "${message(code: 'default.datatable.infoEmpty', default: '0 de 0')}",
+                oPaginate: {
+                    "sFirst": "${message(code: 'default.datatable.paginate.first', default: 'Primero')}",
+                    "sPrevious": "<",
+                    "sNext": ">",
+                    "sLast": "${message(code: 'default.datatable.paginate.last', default: '&Uacute;ltimo')}"
+                }
+            },
                 aaSorting: [
                     [0, 'desc']
                 ],
@@ -155,15 +112,14 @@
                 },{
                     "aTargets": [4],
                     "mData": "arma"
-                }, {
-                    "aTargets": [5],
-                    "mData": "fechaCreacion"
-                }],
-                buttons: [],
-                sPaginationType: 'simple',
-                sDom: '<"row"<"col-4"l><"col-8"Bf>>t<"row"<"col-6"i><"col-6"p>>',
-                fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                    // Row click
+            },{
+                "aTargets": [5],
+                "mData": "fechaCreacion"
+            }],
+            buttons: [],
+            sPaginationType: 'simple',
+            sDom: '<"row"<"col-4"l><"col-8"Bf>>t<"row"<"col-6"i><"col-6"p>>',
+            fnRowCallback: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     $(nRow).off('click').on('click', function () {
                         window.location.href = ('${createLink(controller:"personaje", action:"edit")}') + '/' + aData['id'];
                     });
@@ -220,8 +176,5 @@
         ;
     } 
 </script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-        </div>
     </body>
 </html>
