@@ -35,9 +35,9 @@ class Inicializacion {
     private static void  inicializarArmas() {
         println "Inicializando armas"
         def armas = [
-            ["nombre": "Arco", "puntosAtaque": 12],
-            ["nombre": "Espada", "puntosAtaque": 20],
-            ["nombre": "Martillo", "puntosAtaque": 24]
+            ["nombre": "Arco", "puntosFuerza": 12],
+            ["nombre": "Espada", "puntosFuerza": 20],
+            ["nombre": "Martillo", "puntosFuerza": 24]
         ]
         armas.each { arma ->
             if(Arma.findByNombre(arma.nombre)) return
