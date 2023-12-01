@@ -109,9 +109,6 @@
             }, {
                 "aTargets": [3],
                 "mData": "gritoGuerra",
-                "mRender": function (data, type, full) {
-                    return data ? data : '-';
-                }
             },{
                 "aTargets": [4],
                 "mData": "arma"
@@ -122,9 +119,6 @@
                 "aTargets": [6],
                 "mData": "user"                
                 "visible": 
-                "mRender": function (data, type, full) {
-                    return data ? data : '-';
-                }
             }],
             buttons: [],
             sPaginationType: 'simple',
