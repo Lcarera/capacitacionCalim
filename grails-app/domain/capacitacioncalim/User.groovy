@@ -3,6 +3,7 @@ package capacitacioncalim
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 import grails.compiler.GrailsCompileStatic
+import capacitacioncalim.personaje.Personaje
 
 @GrailsCompileStatic
 @EqualsAndHashCode(includes='username')
@@ -18,6 +19,8 @@ class User implements Serializable {
     boolean accountLocked
     boolean passwordExpired
 
+    static hasMany = [personajes: Personaje]
+
     Set<Role> getAuthorities() {
         (UserRole.findAllByUser(this) as List<UserRole>)*.role as Set<Role>
     }
@@ -25,6 +28,7 @@ class User implements Serializable {
     static constraints = {
         password nullable: false, blank: false, password: true
         username nullable: false, blank: false, unique: true
+        personajes nullable: true
     }
 
     static mapping = {

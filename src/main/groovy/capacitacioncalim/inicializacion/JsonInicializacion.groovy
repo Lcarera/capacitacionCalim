@@ -6,6 +6,7 @@ import org.joda.time.format.DateTimeFormatter
 
 import capacitacioncalim.arma.Arma
 import capacitacioncalim.personaje.Personaje
+import capacitacioncalim.User
 
 class JsonInicializacion {
     static def inicializar(){
@@ -32,6 +33,15 @@ class JsonInicializacion {
             returnArray['fechaCreacion'] = formatter.print(it.fechaCreacion)
             returnArray['gritoGuerra'] = it.gritoGuerra ? it.gritoGuerra : "-"
             returnArray['arma'] = it.arma
+            returnArray['user'] = it.user
+
+            return returnArray
+        }
+
+        JSON.registerObjectMarshaller(User){
+            def returnArray = [:]
+
+            returnArray['id'] = it.id
 
             return returnArray
         }

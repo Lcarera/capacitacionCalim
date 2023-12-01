@@ -4,7 +4,7 @@ import capacitacioncalim.User
 import capacitacioncalim.Role
 import capacitacioncalim.UserRole
 
-import capacitacioncalim.personaje.Arma
+import capacitacioncalim.arma.Arma
 import capacitacioncalim.personaje.Personaje
 
 import org.joda.time.LocalDate
@@ -47,13 +47,21 @@ class Inicializacion {
 
     private static void inicializarPersonajes() {
         println "Inicializando personajes"
+
+        User user1 = User.findByUsername("user")
+        User user2 = User.findByUsername("fer")
+
         def personajes = [
             ["nombre": "Test1", "puntosFuerza": 12, "puntosSalud": 12, "gritoGuerra": "Peleo mucho", 
-             "arma": Arma.findByNombre('Martillo'), "fechaCreacion": new LocalDate()],
+             "arma": Arma.findByNombre('Martillo'), "fechaCreacion": new LocalDate(), "user": user1],
             ["nombre": "Test2", "puntosFuerza": 20, "puntosSalud": 20, "gritoGuerra": "Peleo mejor", 
-             "arma": Arma.findByNombre('Arco'), "fechaCreacion": new LocalDate()],
+             "arma": Arma.findByNombre('Arco'), "fechaCreacion": new LocalDate(), "user": user1],
             ["nombre": "Test3", "puntosFuerza": 24, "puntosSalud": 24, "gritoGuerra": null, 
-             "arma": Arma.findByNombre('Espada'), "fechaCreacion": new LocalDate()]
+             "arma": Arma.findByNombre('Espada'), "fechaCreacion": new LocalDate(), "user": user1],
+            ["nombre": "Test4", "puntosFuerza": 24, "puntosSalud": 24, "gritoGuerra": null, 
+            "arma": Arma.findByNombre('Espada'), "fechaCreacion": new LocalDate(), "user": user2],
+            ["nombre": "Test5", "puntosFuerza": 24, "puntosSalud": 24, "gritoGuerra": null, 
+            "arma": Arma.findByNombre('Espada'), "fechaCreacion": new LocalDate(), "user": user2]
         ]
         personajes.each { personaje ->
             if(Personaje.findByNombre(personaje.nombre)) return
@@ -67,6 +75,10 @@ class Inicializacion {
             ["username": "admin", "password": "admin", "enabled": true, "accountExpired": false, 
              "accountLocked": false, "passwordExpired": false, "roles": [Role.findByAuthority('ROLE_ADMIN')]],
             ["username": "user", "password": "user", "enabled": true, "accountExpired": false, 
+             "accountLocked": false, "passwordExpired": false, "roles": [Role.findByAuthority('ROLE_USER')]],
+            ["username": "user1", "password": "user1", "enabled": true, "accountExpired": false, 
+            "accountLocked": false, "passwordExpired": false, "roles": [Role.findByAuthority('ROLE_USER')]],
+            ["username": "fer", "password": "fer", "enabled": true, "accountExpired": false, 
              "accountLocked": false, "passwordExpired": false, "roles": [Role.findByAuthority('ROLE_USER')]]
         ]
         usuarios.each { usuario ->

@@ -2,6 +2,7 @@ package capacitacioncalim.personaje
 
 import capacitacioncalim.arma.Arma
 import capacitacioncalim.arma.ArmaService
+import capacitacioncalim.User
 import grails.transaction.Transactional
 import org.hibernate.transform.Transformers
 import java.util.LinkedHashMap
@@ -17,13 +18,14 @@ class PersonajeService {
 
     public Personaje[] listPersonajes() {
         String query = """
-            SELECT id, version, nombre, puntos_salud, puntos_fuerza, fecha_creacion, grito_guerra, arma_id FROM personaje;
+            SELECT * FROM personaje;
         """
 
         Personaje[] personajes = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(
             Transformers.aliasToBean(LinkedHashMap)
         ).list().collect {
-            Arma arma = Arma.get(it['arma_id'])
+            Arma arma = armaService.getArma(it['arma_id'].longValue())
+            User user = User.get(it['user_id'])
             
             Personaje personaje = new Personaje(
                 nombre: it['nombre'],
@@ -31,7 +33,37 @@ class PersonajeService {
                 puntosFuerza: it['puntos_fuerza'],
                 fechaCreacion: it['fecha_creacion'],
                 gritoGuerra: it['grito_guerra'],
-                arma: arma
+                arma: arma,
+                user: user
+            )
+            personaje.id = it['id']
+            personaje.version = it['version']
+
+            return personaje
+        }
+        
+        return personajes
+    }
+
+    public Personaje[] listPersonajesByUser(Long userId) {
+        String query = """
+            SELECT * FROM personaje WHERE user_id = ${userId};
+        """
+
+        Personaje[] personajes = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(
+            Transformers.aliasToBean(LinkedHashMap)
+        ).list().collect {
+            Arma arma = armaService.getArma(it['arma_id'].longValue())
+            User user = User.get(it['user_id'])
+            
+            Personaje personaje = new Personaje(
+                nombre: it['nombre'],
+                puntosSalud: it['puntos_salud'],
+                puntosFuerza: it['puntos_fuerza'],
+                fechaCreacion: it['fecha_creacion'],
+                gritoGuerra: it['grito_guerra'],
+                arma: arma,
+                user: user
             )
             personaje.id = it['id']
             personaje.version = it['version']

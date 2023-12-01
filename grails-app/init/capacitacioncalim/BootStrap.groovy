@@ -10,7 +10,5 @@ class BootStrap {
         Inicializacion.comienzo()
     }
     def destroy = {
-    }
-
-    
+    }    
 }

@@ -10,7 +10,7 @@ class ArmaService {
 
     def listArmas() {
         String query = """
-            SELECT id, nombre, puntos_ataque from arma;
+            SELECT id, nombre, puntos_ataque FROM arma;
         """
 
         def armas = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(

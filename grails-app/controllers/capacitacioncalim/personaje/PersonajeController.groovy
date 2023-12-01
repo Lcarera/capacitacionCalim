@@ -1,120 +1,37 @@
 package capacitacioncalim.personaje
 
 import capacitacioncalim.Auxiliar
-
+import capacitacioncalim.AccessRulesService
 import grails.converters.JSON
-
+import org.joda.time.LocalDate
 import grails.plugin.springsecurity.annotation.Secured
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])
 class PersonajeController {
-
+    def accessRulesService
     def personajeService
 
     def index() {
-        render (view: 'list')
+        redirect(action: "list")
     }
 
-    def list() {}
+    def list() {
+        render (view: 'list', model: [isAdmin: accessRulesService.isAdmin()])
+    }
 
+    @Secured(['ROLE_USER'])
     def create() {}
 
     def save(PersonajeCommand personajeCommand) {
         try{
+            command.fechaCreacion = new LocalDate()
             personajeService.save(personajeCommand)
             flash.message = "Personaje guardado correctamente"
             redirect(action: "list")
         }
         catch(AssertionError e) {
-            flash.message = e.message.split("finerror")[0]
-            Auxiliar.printearError e
-            render(view: "create", model: [personajeCommand: personajeCommand])
-        }
-        catch(Exception e){
-            flash.message = "Error al guardar el personaje"
-            Auxiliar.printearError e
-            render(view: "create", model: [personajeCommand: personajeCommand])
-        }
-    }
-
-    def edit(Long id) {
-        [personajeCommand: personajeService.getPersonajeCommand(id)]
-    }
-
-    def update(PersonajeCommand command) {
-        try{
-            personajeService.update(command)
-            redirect(action: "list")
-            flash.message = "Personaje guardado"
-        }
-        catch(AssertionError e) {
-            Auxiliar.printearError e
             flash.error = e.message.split("finerror")[0]
-            render (view: "edit", model: [personajeCommand: command])
-        }
-        catch(Exception e){
-            flash.error = "Error al guardar el personaje"
             Auxiliar.printearError e
-            render (view: "edit", model: [personajeCommand: command])
-        }
-    
-    }
-
-    def delete(Long id) {
-        try{
-            personajeService.delete(id)
-            redirect(action: "list")
-            flash.message = "Personaje borrado"
-        }
-        catch(AssertionError e) {
-            Auxiliar.printearError e
-            flash.error = e.message.split("finerror")[0]
-            render (view: "edit", model: [personajeCommand: command])
-        }
-        catch(Exception e){
-            flash.error = "Error al guardar el personaje"
-            Auxiliar.printearError e
-            render (view: "edit", model: [personajeCommand: command])
-        }
-    }
-
-    def ajaxGetPersonajes() {
-        def personajes = personajeService.listPersonajes()
-        render personajes as JSON
-    }
-
-    def ajaxGetPersonajeMasPoderoso() {
-        def personaje = personajeService.getPersonajeMasPoderoso()
-        render personaje as JSON
-    }
-
-}package capacitacioncalim.personaje
-
-import capacitacioncalim.Auxiliar
-import grails.converters.JSON
-import org.joda.time.LocalDate
-
-class PersonajeController {
-    def personajeService
-
-    def list() {
-        def personajes = personajeService.listPersonajes()
-        [personajes: personajes]
-    }
-
-    def create() {
-    }
-
-    def save(PersonajeCommand command) {
-        try {
-            command.fechaCreacion = new LocalDate()
-            personajeService.save(command)
-            flash.message = "Personaje guardado correctamente"
-            redirect(action: "list")
-        }
-        catch(AssertionError e) {
-            Auxiliar.printearError e
-            flash.error = e.message.split("finerror")[0]
             render (view: "create", model: [personajeCommand: command])
         }
         catch(Exception e) {
@@ -147,8 +64,8 @@ class PersonajeController {
             redirect(action: "list")
         }
         catch(AssertionError e) {
-            Auxiliar.printearError e
             flash.error = e.message.split("finerror")[0]
+            Auxiliar.printearError e
             render (view: "edit", model: [personajeCommand: command])
         }
         catch(Exception e){
@@ -160,24 +77,32 @@ class PersonajeController {
 
     def delete(Long id) {
         try {
-            personajeService.delete(id)
             flash.message = "Personaje eliminado correctamente"
+            personajeService.delete(id)
             redirect(action: "list")
         }
         catch(AssertionError e) {
-            Auxiliar.printearError e
             flash.error = e.message.split("finerror")[0]
-            redirect(action: "edit", params: ["id": id])
+            Auxiliar.printearError e
+            render (view: "edit", model: [personajeCommand: command])
         }
-        catch(Exception e) {
+        catch(Exception e){
             flash.error = "Error al eliminar el personaje"
             Auxiliar.printearError e
-            redirect(action: "edit", params: ["id": id])
+            render (view: "edit", model: [personajeCommand: command])
         }
     }
 
+    @Secured(['ROLE_ADMIN'])
     def ajaxGetPersonajes() {
         def personajes = personajeService.listPersonajes()
+        render personajes as JSON
+    }
+
+    @Secured(['ROLE_USER'])
+    def ajaxGetPersonajesByCurrentUser() {
+        def currentUser = accessRulesService.getCurrentUser()
+        def personajes = personajeService.listPersonajesByUser(currentUser.id)
         render personajes as JSON
     }
 }

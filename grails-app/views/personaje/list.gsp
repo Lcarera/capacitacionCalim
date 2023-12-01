@@ -52,7 +52,9 @@
             </div>
             <div class="dt-responsive table-responsive">
                 <button id="btnPersonajeMasFuerte" class="btn btn-primary" style="float: right; margin-left: 10px">Ver personaje más fuerte</button>
-                <g:link controller="personaje" action="create" class="btn btn-primary" style="float: right; margin-left: 10px">Agregar Personaje</g:link>
+                <g:if test="${!isAdmin}">
+                    <g:link controller="personaje" action="create" class="btn btn-primary" style="float: right; margin-left: 10px">Agregar Personaje</g:link>
+                </g:if>
                 <table id="listPersonaje" class="table table-striped table-bordered nowrap" style="cursor:pointer">
                     <thead>
                         <tr>
@@ -63,6 +65,9 @@
                             <th>Arma</th>
                             <th>Ptos. de ataque totales</th>
                             <th>Grito de guerra</th>
+                            <g:if test="${isAdmin}">
+                                <th>ID del usuario</th>
+                            </g:if>
                         </tr>
                     </thead>
                     <tbody>
@@ -77,6 +82,37 @@
 
                 var tabla;
                 jQuery(document).ready(function () {
+                    const aoColumnDefs = [{
+                        "aTargets": [0],
+                        "mData": "fechaCreacion"
+                    }, {
+                        "aTargets": [1],
+                        "mData": "nombre",
+                    }, {
+                        "aTargets": [2],
+                        "mData": "puntosSalud"
+                    }, {
+                        "aTargets": [3],
+                        "mData": "puntosFuerza"
+                    }, {
+                        "aTargets": [4],
+                        "mData": "arma.nombre"
+                    }, {
+                        "aTargets": [5],
+                        "mData": "puntosAtaqueTotal"
+                    }, {
+                        "aTargets": [6],
+                        "mData": "gritoGuerra"
+                    }];
+
+                    if (${isAdmin} == true) {
+                        aoColumnDefs.push({
+                            "aTargets": [7],
+                            "mData": "user.id",
+                            "visible": "${isAdmin}"
+                        });
+                    }
+
                     tabla = $('#listPersonaje').DataTable({
                         "ordering": true,
                         "searching": true,
@@ -100,28 +136,7 @@
                         aaSorting: [
                             [0, 'desc']
                         ],
-                        aoColumnDefs: [{
-                            "aTargets": [0],
-                            "mData": "fechaCreacion"
-                        }, {
-                            "aTargets": [1],
-                            "mData": "nombre",
-                        }, {
-                            "aTargets": [2],
-                            "mData": "puntosSalud"
-                        }, {
-                            "aTargets": [3],
-                            "mData": "puntosFuerza"
-                        }, {
-                            "aTargets": [4],
-                            "mData": "arma.nombre"
-                        }, {
-                            "aTargets": [5],
-                            "mData": "puntosAtaqueTotal"
-                        }, {
-                            "aTargets": [6],
-                            "mData": "gritoGuerra"
-                        }],
+                        aoColumnDefs: aoColumnDefs,
                         buttons: [],
                         sPaginationType: 'simple',
                         sDom: '<"row"<"col-4"l><"col-8"Bf>>t<"row"<"col-6"i><"col-6"p>>',
@@ -149,7 +164,7 @@
                                     personajesMasFuertes.push(personaje);
                                 }
                             });
-                            console.log(personajesMasFuertes);
+                            
                             if (personajesMasFuertes.length == 1) {
                                 const title = "¿Quién es el más fuerte?";
                                 const text = "El personaje más fuerte es:<br>"
@@ -176,14 +191,17 @@
 
                 function llenarDatoslistPersonaje() {
                     tabla.clear().draw();
-
+                    
+                    const url = ${isAdmin} == true
+                    ? "${createLink(controller:'personaje', action:'ajaxGetPersonajes')}"
+                    : "${createLink(controller:'personaje', action:'ajaxGetPersonajesByCurrentUser')}"
+                    
                     $.ajax({
-                        url: "${createLink(controller:'personaje', action:'ajaxGetPersonajes')}",
+                        url: url,
                         dataType: "json"
                     })
                     .done(data => {
                         personajes = data;
-
                         if (personajes.length > 0) {
                             personajes.sort((a, b) => b.puntosAtaqueTotal - a.puntosAtaqueTotal);
                             maxPuntosAtaqueTotal =  personajes[0].puntosAtaqueTotal;
