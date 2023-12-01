@@ -42,31 +42,71 @@
     </head>
 
     <body>
-        <div class="container col-10">
-            <div class="container col-12 xd">
-                <h1 class="personajetitulo">PERSONAJES</h1>
+        <div class="theme-loader" id="loaderGrande">
+        <div class="ball-scale">
+            <div class="contain">
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
+                <div class="ring"><div class="frame"></div></div>
             </div>
-            <br>
-            <div class="dt-responsive table-responsive FondoBlancoPersonajes">
-                <div class="paraprobar">
-                <g:link controller="personaje" action="create" class="btn BotonCalimVerde" style="float: right">+</g:link>
+        </div>
+    </div>
+    <meta name="layout" content="main" />
+</head>
+
+<body>
+    <div class="main-body">
+        <div class="page-wrapper">
+            <div class="page-header card">
+                <div class="row align-items-end">
+                    <div class="col-lg-8">
+                        <div class="page-header-title">
+                            <div class="d-inline">
+                                <h4>Personajes</h4>
+                                <sec:ifAnyGranted roles="ROLE_USER">
+                                    <span>Lista de personajes del user</span>
+                                </sec:ifAnyGranted>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <table id="listPersonaje" class="table table-striped table-hover table-bordered nowrap" style="cursor:pointer">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Puntos de Salud</th>
-                            <th>Puntos de Fuerza</th>
-                            <th>Grito de Guerra</th>
-                            <th>Arma</th>
-                            <th>Fecha de Creacion</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-                <button onclick="personajeMasFuerte()" href="javascript:;" class="btn BotonCalimCeleste">Personaje Mas Fuerte</button>
             </div>
+        </div>
+
+        <div class="page-body">
+            <div class="card">
+                <div class="card-block">
+                    <div class="dt-responsive table-responsive">
+                        <div style="float: right;margin-left: 1em;">
+                            <button class="btn btn-success"  onclick="mostrarMasPoderoso()">Mostrar mas poderoso</button>
+                            <g:link controller="personaje" action="create" class="btn btn-primary">Agregar Personaje</g:link>
+                        </div>
+                        <table id="listPersonajes" class="table table-striped table-bordered nowrap" style="cursor: pointer">
+                            <thead>
+                                <tr>
+                                <th>Nombre</th>
+                                <th>Puntos de Fueza</th>
+                                <th>Puntos de Salud</th>
+                                <th>Grito de Guerra</th>
+                                <th>Arma</th>
+                                <th>Fecha de Creación</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
             <script>
                 var tabla;
