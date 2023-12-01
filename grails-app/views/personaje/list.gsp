@@ -56,6 +56,10 @@
                                 <th>Grito de Guerra</th>
                                 <th>Arma</th>
                                 <th>Fecha de Creación</th>
+                                <sec:ifAnyGranted roles="ROLE_ADMIN">
+                            <th>User</th>
+                        </sec:ifAnyGranted>
+
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -69,7 +73,13 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     var tabla;
-    let isAdmin=
+    var isAdmin;
+//     $.ajax("${createLink(controller:'personaje', action:'ajaxEsAdmin')}", {
+//     dataType: "json",
+//     data: {}
+// }).done(function (data) {
+//     isAdmin = data.isAdmin;
+// })
     jQuery(document).ready(function () {
         tabla = $('#listPersonajes').DataTable({
             //bAutoWidth: false,
@@ -119,9 +129,9 @@
                 "aTargets": [5],
                 "mData": "fechaCreacion"
             },{
-                "aTargets":[6],
-                "mData": "usuario",
-                "visible": 
+                "aTargets": [6],  // Replace 6 with the appropriate column index
+                "mData": "user",
+                "visible": <%= request.isUserInRole("ROLE_ADMIN") %>
             }
             
         ],
@@ -137,7 +147,6 @@
 
         llenarDatosListPersonaje();
     });
-    console.log(user)
     function llenarDatosListPersonaje() {
         tabla.clear().draw();
         $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajes')}", {
@@ -151,14 +160,7 @@
         });
     }
 
-    function buscarIsAdmin(){
-        $.valAdmin("${createLink(controller:'personaje', action:'isAdmin')}", {
-            dataType: "bool",
-            data: {
-            }
-        })
-        return data
-    }
+    
 
     function mostrarMasPoderoso() {
         $.ajax("${createLink(controller:'personaje', action:'ajaxGetPersonajeMasPoderoso')}", {

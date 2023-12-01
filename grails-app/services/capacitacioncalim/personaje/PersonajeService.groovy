@@ -1,4 +1,5 @@
 package capacitacioncalim.personaje
+import capacitacioncalim.User
 
 import capacitacioncalim.personaje.Arma
 import capacitacioncalim.AccessRulesService
@@ -9,8 +10,40 @@ import org.joda.time.LocalDate
 @Transactional
 class PersonajeService {
     def sessionFactory
-    public List<Personaje> listPersonajes() {
+    public List<Personaje> listPersonajesUsuario(User user) {
+        
+        def query= """  
+        SELECT 
+            personaje.id as id,
+            personaje.nombre as nombre,
+            personaje.puntos_salud as puntosSalud,
+            personaje.puntos_fuerza as puntosFuerza,
+            to_char(personaje.fecha_creacion, 'DD/MM/yyyy') as fechaCreacion,
+            personaje.grito_guerra as gritoGuerra,
+            arma.nombre as arma,
+            personaje.user_id_id as user
+        FROM personaje personaje
+        JOIN arma arma
+        on arma.id = personaje.arma_id where user_id_id = ${user.id} ; """
+    
+        def personajes = sessionFactory.currentSession.createSQLQuery(query).setResultTransformer(Transformers.aliasToBean(LinkedHashMap)).list().collect{
+            def item = [:]
+            item["id"] = it.id
+            item["nombre"] = it.nombre
+            item["puntosSalud"] = it.puntossalud
+            item["puntosFuerza"] = it.puntosfuerza
+            item["fechaCreacion"] = it.fechacreacion
+            item["gritoGuerra"] = it.gritoguerra ?: '-'
+            item["arma"] = it.arma
+            item["user"] = it.user
+            return item
+        }    
+        
+        return personajes
+    } 
 
+    public List<Personaje> listPersonajes() {
+        
         def query= """  
         SELECT 
             personaje.id as id,
