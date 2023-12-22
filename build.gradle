@@ -23,6 +23,7 @@ apply plugin:"org.grails.grails-gsp"
 repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
+    maven { url "https://mvnrepository.com/artifact/com.google.guava/guava" }
 }
 
 dependencies {
@@ -76,6 +77,11 @@ dependencies {
     compile "org.seleniumhq.selenium:selenium-support:3.141.59"
     compile "org.seleniumhq.selenium:selenium-chrome-driver:3.141.59"
     compile "org.seleniumhq.selenium:selenium-firefox-driver:3.141.59"
+	compile 'com.google.guava:guava:r05'
+    compile ('com.google.api-client:google-api-client:1.23.1'){
+        exclude group:'com.google.guava'
+    }
+    compile 'com.google.guava:guava:23.0'
 
 }
 
