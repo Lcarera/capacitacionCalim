@@ -19,7 +19,6 @@
     </div>
     <meta name="layout" content="main" />
 </head>
-
 <body>
     <div class="main-body">
         <div class="page-wrapper">
@@ -165,10 +164,5 @@
                     confirmButtonText: 'OK',
                     confirmButtonColor: '#2091A2',
 
-                });
-            }
-        });
-    }
-</script>
 </body>
 </html>
