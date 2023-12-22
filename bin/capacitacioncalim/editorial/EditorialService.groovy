@@ -8,6 +8,7 @@ class EditorialService {
     public List<Editorial> listEditoriales() {
         Editorial.list()
     }
+    
     public Editorial save(String nombre, String direccion, Integer anoCreacion) {
         Editorial editorial = new Editorial(nombre: nombre, direccion: direccion, anoCreacion: anoCreacion)
         editorial.save(flush:true)
