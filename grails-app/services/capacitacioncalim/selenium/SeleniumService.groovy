@@ -58,4 +58,25 @@ class SeleniumService {
 		
 		return driver
 	}    
+
+	public static buscarYoutube (String link) {
+        WebDriver driver = inicializarDriver();
+
+        driver.get(link);
+
+        driver.getTitle();
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
+
+        WebElement textBox = driver.findElement(By.name("my-text"));
+        WebElement submitButton = driver.findElement(By.cssSelector("button"));
+
+        textBox.sendKeys("Selenium");
+        submitButton.click();
+
+        WebElement message = driver.findElement(By.id("message"));
+        message.getText();
+
+        driver.quit();
+    }
 }
