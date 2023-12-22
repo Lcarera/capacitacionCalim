@@ -33,7 +33,7 @@ class SeleniumService {
 		prefsMap.put("plugins.always_open_pdf_externally", true)
 		prefsMap.put("plugins.plugins_disabled", "Chrome PDF Viewer")
 		
-        File carpeta = new File(downloadPath)
+        File carpeta = new File("../chromedriver_linux64/downloads")
         if(!carpeta.exists())
             carpeta.mkdirs()
     
