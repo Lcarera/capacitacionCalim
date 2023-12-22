@@ -67,7 +67,7 @@ dependencies {
 	compile 'org.grails.plugins:spring-security-core:3.2.3'
     compile "org.grails.plugins:spring-security-rest:2.0.0.M2"
 	compile 'org.grails.plugins:spring-security-ui:4.0.0.M1'
-
+ 
 }
 
 bootRun {
@@ -86,5 +86,5 @@ tasks.withType(Test) {
 
 assets {
     minifyJs = true
-    minifyCss = true
+    minifyCss = true 
 }

@@ -3,7 +3,7 @@ package capacitacioncalim.personaje
 import capacitacioncalim.Auxiliar
 
 import grails.converters.JSON
-
+ 
 import grails.plugin.springsecurity.SpringSecurityService
 import grails.plugin.springsecurity.annotation.Secured
 import grails.plugin.springsecurity.SpringSecurityUtils

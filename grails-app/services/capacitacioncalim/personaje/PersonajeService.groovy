@@ -12,7 +12,7 @@ import grails.plugin.springsecurity.SpringSecurityService
 class PersonajeService {
     def sessionFactory
     ArmaService armaService
-    SpringSecurityService springSecurityService
+    SpringSecurityService springSecurityService 
 
     public List<Personaje> listPersonajes() {
 
