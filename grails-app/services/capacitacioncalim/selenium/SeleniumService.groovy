@@ -53,9 +53,37 @@ class SeleniumService {
 		options.addArguments("--disable-extensions")
 
 		
-        driver = new ChromeDriver(options)
+        def driver = new ChromeDriver(options)
         driver.metaClass.remoto = false
 		
 		return driver
 	}    
+
+	def obtenerInformacionVideo(String titulo) {
+        //def downloadPath = "./chromedriver/chromedriver-linux64"
+        def downloadPath = " "
+		def driver = inicializarDriver(downloadPath)
+
+        try {
+            def youtubeSearchUrl = "https://www.youtube.com/results?search_query=${titulo.replace(' ', '+')}"
+            driver.get(youtubeSearchUrl)
+
+            def firstVideoLink = driver.findElement(By.cssSelector("a#video-title"))
+            firstVideoLink.click()
+
+            Thread.sleep(5000)
+
+            def likes = driver.findElement(By.xpath("//yt-formatted-string[@id='text'][contains(text(),'like this')]/ancestor::yt-formatted-string")).text
+            def description = driver.findElement(By.id("description")).text
+            def commentsCount = driver.findElement(By.xpath("//yt-formatted-string[@id='count'][contains(text(),'Comments')]/ancestor::yt-formatted-string")).text
+
+            println("Likes: $likes")
+            println("Description: $description")
+            println("Comments: $commentsCount")
+
+        } finally {
+            driver.quit()
+        }
+    }
+
 }
