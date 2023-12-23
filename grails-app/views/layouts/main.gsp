@@ -16,7 +16,7 @@
     <meta name="description" content="#">
     <meta name="keywords" content="Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
     <meta name="author" content="#">
-     <!-- Favicon icon -->
+    <!-- Favicon icon -->
 	<asset:link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
     <!-- Google font-->
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">

@@ -57,5 +57,35 @@ class SeleniumService {
         driver.metaClass.remoto = false
 		
 		return driver
-	}    
+	}   
+
+	def getInfoVideo(String titulo) {
+        def downloadPath = " "
+		def driver = inicializarDriver(downloadPath)
+
+        try {
+            def youtubeSearchUrl = "https://www.youtube.com/results?search_query=${titulo.replace(' ', '+')}"
+            driver.get(youtubeSearchUrl)
+
+            def firstVideoLink = driver.findElement(By.cssSelector("a#video-title"))
+            firstVideoLink.click()
+
+            Thread.sleep(5000)
+
+            def likes = driver.findElement(By.xpath("//yt-formatted-string[@id='text'][contains(text(),'like this')]/ancestor::yt-formatted-string")).text
+            def description = driver.findElement(By.id("description")).text
+            def commentsCount = driver.findElement(By.xpath("//yt-formatted-string[@id='count'][contains(text(),'Comments')]/ancestor::yt-formatted-string")).text
+
+            println("Likes: $likes")
+            println("Description: $description")
+            println("Comments: $commentsCount")
+
+			def videoInfo = [likes: likes, description: description, commentsCount: commentsCount]
+
+            return videoInfo
+
+        } finally {
+            driver.quit()
+        }
+    }
 }
