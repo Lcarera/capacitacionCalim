@@ -47,7 +47,7 @@ class SeleniumService {
 
 		options.setExperimentalOption("prefs", prefsMap)
 		options.addArguments("--test-type")
-        System.setProperty("webdriver.chrome.driver","../chromedriver-win64/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver","../chromedriver_linux64/chromedriver.exe");
 		
 		options.addArguments('--kiosk-printing')
 		System.setProperty("webdriver.chrome.args", "--disable-logging");
