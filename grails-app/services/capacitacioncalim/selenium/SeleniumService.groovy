@@ -23,7 +23,13 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
+import org.openqa.selenium.interactions.Actions
+import org.openqa.selenium.Keys
+
+
 class SeleniumService {
+    private WebDriver driver
+
     private WebDriver inicializarDriver(String downloadPath) throws AssertionError{
 		Map<String, Object> prefsMap = new HashMap<String, Object>()
 		prefsMap.put("profile.default_content_settings.popups", 0)
@@ -45,7 +51,10 @@ class SeleniumService {
 
 		options.setExperimentalOption("prefs", prefsMap)
 		options.addArguments("--test-type")
-        System.setProperty("webdriver.chrome.driver","../chromedriver_linux64/chromedriver");
+        System.setProperty("webdriver.chrome.driver","chromedriver_linux64/chromedriver");
+
+        // Set the path to the Chrome binary
+        options.setBinary("/home/lks/Documents/google-chrome-test/chrome-linux64/chrome");
 		
 		options.addArguments('--kiosk-printing')
 		System.setProperty("webdriver.chrome.args", "--disable-logging");
@@ -56,7 +65,7 @@ class SeleniumService {
         driver = new ChromeDriver(options)
         driver.metaClass.remoto = false
 		
-		return driver
+		return this.driver
 	}   
 
 	def getInfoVideo(String titulo) {
@@ -70,11 +79,33 @@ class SeleniumService {
             def firstVideoLink = driver.findElement(By.cssSelector("a#video-title"))
             firstVideoLink.click()
 
-            Thread.sleep(5000)
+            driver.manage().window().maximize()
 
-            def likes = driver.findElement(By.xpath("//yt-formatted-string[@id='text'][contains(text(),'like this')]/ancestor::yt-formatted-string")).text
-            def description = driver.findElement(By.id("description")).text
-            def commentsCount = driver.findElement(By.xpath("//yt-formatted-string[@id='count'][contains(text(),'Comments')]/ancestor::yt-formatted-string")).text
+            // Wait for the likes element to be present
+            def wait = new WebDriverWait(driver, 10) // Adjust the timeout as needed
+            def likesElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[2]/ytd-watch-metadata/div/div[2]/div[2]/div/div/ytd-menu-renderer/div[1]/segmented-like-dislike-button-view-model/yt-smartimation/div/div/like-button-view-model/toggle-button-view-model/button/yt-touch-feedback-shape/div/div[2]")))
+            def likes = likesElement.getText()
+
+            println("Likes: $likes")
+
+            // Scroll down to load additional content
+            Actions actions = new Actions(driver)
+            actions.keyDown(Keys.CONTROL).sendKeys(Keys.END).perform()
+
+            Thread.sleep(3000)
+
+            def showMoreButton = driver.findElement(By.xpath("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[2]/ytd-watch-metadata/div/div[4]/div[1]/div/ytd-text-inline-expander/tp-yt-paper-button[1]"))
+            showMoreButton.click()
+
+            def expandedDescription = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[2]/ytd-watch-metadata/div/div[4]/div[1]/div/ytd-text-inline-expander/yt-attributed-string")))
+            def description = expandedDescription.getText()
+
+            println("Description: $description")
+
+            def commentsCountElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[2]/ytd-comments/ytd-item-section-renderer/div[1]/ytd-comments-header-renderer/div[1]/h2/yt-formatted-string/span[1]")))
+            def commentsCount = commentsCountElement.getText()
+
+            println("Comments: $commentsCount")
 
             println("Likes: $likes")
             println("Description: $description")
