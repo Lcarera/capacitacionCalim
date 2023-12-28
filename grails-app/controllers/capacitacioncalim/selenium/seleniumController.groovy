@@ -11,7 +11,12 @@ class SeleniumController {
     }
 
     def buscarVideo(String titulo) {
+    if (titulo?.trim()) {
         def video = seleniumService.getInfoVideo(titulo)
-        render(view: 'videos', model: [video: video])
+        render(view: 'videos', model: [videoInfo: video, titulo: titulo])
+    } else {
+        flash.message = "Por favor, introduce un título de video."
+        render(view: 'videos')
     }
+}
 }

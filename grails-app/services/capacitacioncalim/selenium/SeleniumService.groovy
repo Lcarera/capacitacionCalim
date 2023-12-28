@@ -61,7 +61,6 @@ class SeleniumService {
 		System.setProperty("webdriver.chrome.silentOutput", "true");
 		options.addArguments("--disable-extensions")
 
-		
         driver = new ChromeDriver(options)
         driver.metaClass.remoto = false
 		
@@ -81,18 +80,11 @@ class SeleniumService {
 
             driver.manage().window().maximize()
 
-            // Wait for the likes element to be present
-            def wait = new WebDriverWait(driver, 10) // Adjust the timeout as needed
-            def likesElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[2]/ytd-watch-metadata/div/div[2]/div[2]/div/div/ytd-menu-renderer/div[1]/segmented-like-dislike-button-view-model/yt-smartimation/div/div/like-button-view-model/toggle-button-view-model/button/yt-touch-feedback-shape/div/div[2]")))
+            def wait = new WebDriverWait(driver, 10) 
+            def likesElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[2]/ytd-watch-metadata/div/div[2]/div[2]/div/div/ytd-menu-renderer/div[1]/segmented-like-dislike-button-view-model/yt-smartimation/div/div/like-button-view-model/toggle-button-view-model/button/div[2]")))
             def likes = likesElement.getText()
 
-            println("Likes: $likes")
-
-            // Scroll down to load additional content
-            Actions actions = new Actions(driver)
-            actions.keyDown(Keys.CONTROL).sendKeys(Keys.END).perform()
-
-            Thread.sleep(3000)
+            scrollUntilVisible("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[2]/ytd-watch-metadata/div/div[4]/div[1]/div/ytd-text-inline-expander/tp-yt-paper-button[1]")
 
             def showMoreButton = driver.findElement(By.xpath("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[2]/ytd-watch-metadata/div/div[4]/div[1]/div/ytd-text-inline-expander/tp-yt-paper-button[1]"))
             showMoreButton.click()
@@ -100,12 +92,10 @@ class SeleniumService {
             def expandedDescription = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[2]/ytd-watch-metadata/div/div[4]/div[1]/div/ytd-text-inline-expander/yt-attributed-string")))
             def description = expandedDescription.getText()
 
-            println("Description: $description")
+            scrollUntilVisible("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[2]/ytd-comments/ytd-item-section-renderer/div[1]/ytd-comments-header-renderer/div[1]/h2/yt-formatted-string/span[1]")
 
             def commentsCountElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/ytd-app/div[1]/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[2]/ytd-comments/ytd-item-section-renderer/div[1]/ytd-comments-header-renderer/div[1]/h2/yt-formatted-string/span[1]")))
             def commentsCount = commentsCountElement.getText()
-
-            println("Comments: $commentsCount")
 
             println("Likes: $likes")
             println("Description: $description")
@@ -117,6 +107,22 @@ class SeleniumService {
 
         } finally {
             driver.quit()
+        }
+    }
+
+    // Function to scroll until the specified element is in view
+    def scrollUntilVisible(String xpath) {
+        JavascriptExecutor js = (JavascriptExecutor) driver
+        boolean elementVisible = false
+        while (!elementVisible) {
+            js.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});", driver.findElement(By.xpath(xpath)))
+            Thread.sleep(3000) 
+            try {
+                WebElement element = driver.findElement(By.xpath(xpath))
+                elementVisible = element.isDisplayed()
+            } catch (NoSuchElementException | StaleElementReferenceException e) {
+
+            }
         }
     }
 }
