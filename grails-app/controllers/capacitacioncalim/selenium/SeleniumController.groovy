@@ -12,18 +12,13 @@ class SeleniumController {
         render (view: 'video')
     }
 
-    def prueba() {
-        render "Hola mundo"
-    }
 
-    def listJson() {
-        
-    }
 
-    def buscarVideo(String titulo) {
-        def video = seleniumService.obtenerInformacionVideo(titulo)
-        render video as JSON
-    }
+    def ajaxGetInformacionVideo(String titulo, String tipoInformacion) {
+    def video = seleniumService.obtenerInformacionVideo(titulo, tipoInformacion)
+    def jsonResult = ["result": video]
+    render jsonResult as JSON
+}
 
     def list() {
         

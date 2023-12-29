@@ -1,5 +1,5 @@
 package capacitacioncalim.selenium
-
+import java.util.regex.Matcher
 import org.openqa.selenium.*
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.OutputType
@@ -59,7 +59,8 @@ class SeleniumService {
 		return driver
 	}    
 
-	def obtenerInformacionVideo(String titulo) {
+	def obtenerInformacionVideo(String titulo, String tipoInformacion ) {
+
         //def downloadPath = "./chromedriver/chromedriver-linux64"
         def downloadPath = " "
 		def driver = inicializarDriver(downloadPath)
@@ -72,14 +73,54 @@ class SeleniumService {
             firstVideoLink.click()
 
             Thread.sleep(5000)
+            String informacion = null
 
-            def likes = driver.findElement(By.xpath("//yt-formatted-string[@id='text'][contains(text(),'like this')]/ancestor::yt-formatted-string")).text
-            def description = driver.findElement(By.id("description")).text
-            def commentsCount = driver.findElement(By.xpath("//yt-formatted-string[@id='count'][contains(text(),'Comments')]/ancestor::yt-formatted-string")).text
+            switch (tipoInformacion) {
+            case "Likes":
+                WebDriverWait wait = new WebDriverWait(driver, 10)
+                WebElement botonLikes = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#top-level-buttons-computed like-button-view-model button")))
+                String ariaLabelBotonLikes = botonLikes.getAttribute("aria-label")                             
+                def matcher = (ariaLabelBotonLikes =~ /[\d,]+/)
+                informacion = matcher.find() ? matcher.group() : null 
+                break
+            case "Descripcion":
+                    WebDriverWait wait = new WebDriverWait(driver, 10)
+                    WebElement botonExpandirDescripcion = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#expand")))
+                    botonExpandirDescripcion.click()
 
-            println("Likes: $likes")
-            println("Description: $description")
-            println("Comments: $commentsCount")
+                    WebElement divDescripcionTexto = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#description-inline-expander > yt-attributed-string")))
+                    informacion = divDescripcionTexto.getText()
+                    break
+            case "Comentarios":
+                JavascriptExecutor js = (JavascriptExecutor) driver
+                int scroll = 50
+
+                while (true) {
+                    try {
+                        WebElement spanComentarios = driver.findElement(By.cssSelector("#count yt-formatted-string span:nth-child(1)"))
+                        informacion = spanComentarios.getText()
+                        break
+                    } catch (NoSuchElementException e) {
+                        try {
+                            js.executeScript("window.scrollTo(0, " + scroll + ");")
+                            scroll += 50
+                            Thread.sleep(250)
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace()
+                        }
+                    }
+                            }
+                break
+            default:
+                break
+        }
+
+
+            
+
+println("Resultado: $informacion")
+return tipoInformacion + ": " + informacion
+             
 
         } finally {
             driver.quit()
