@@ -2,7 +2,7 @@ package testchromedriver.selenium
 
 import grails.validation.Validateable
 
-class BuscarEnVideoCommand implements Validateable{
+class SeleniumCommand implements Validateable{
     String buscarPor
     String busqueda
 

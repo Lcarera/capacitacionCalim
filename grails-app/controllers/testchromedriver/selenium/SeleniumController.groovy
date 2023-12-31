@@ -1,7 +1,9 @@
 package testchromedriver.selenium
 
-import org.openqa.selenium.JavascriptExecutor
+import grails.converters.JSON
 import java.util.regex.Matcher
+import java.util.LinkedHashMap
+import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
@@ -11,13 +13,18 @@ import org.openqa.selenium.support.ui.ExpectedConditions
 
 class SeleniumController {
     SeleniumService seleniumService
+    WebDriver driver
 
     def buscarEnVideo() {
         render (view: 'buscarEnVideo')
     }
 
-    def ajaxGetVideoData(BuscarEnVideoCommand command) {
-        WebDriver driver = seleniumService.inicializarDriver("")
+    def buscarEnPokeAPI() {
+        render (view: 'buscarEnPokeAPI')
+    }
+
+    def ajaxGetVideoData(SeleniumCommand command) {
+        driver = seleniumService.inicializarDriver("")
         String searchQuery = command.busqueda.replace(" ", "+")
         String url = "https://www.youtube.com/results?search_query=" + searchQuery
         String resultado
@@ -80,5 +87,89 @@ class SeleniumController {
             driver.quit()
             render text: resultado
         }
+    }
+
+    def ajaxGetPokeAPIData(SeleniumCommand command) {
+        String nombrePokemon = command.busqueda
+        driver = seleniumService.inicializarDriver("")
+
+        LinkedHashMap<String, Object> resultado = []
+
+        try {
+            if (command.buscarPor == "evolucion") {
+                resultado["evolucion"] = getEvolucion(nombrePokemon)
+            } else {
+                String apiUrl = "https://pokeapi.co/api/v2/pokemon/$nombrePokemon"
+                driver.get(apiUrl)
+
+                String dataPokemonString = driver.findElement(By.tagName("body")).getText()
+                LinkedHashMap<String, Object> dataPokemon = new groovy.json.JsonSlurper().parseText(dataPokemonString)
+
+                switch(command.buscarPor) {
+                    case "sprite":
+                        resultado["sprite"] = getSprite(dataPokemon)
+                        break
+                    case "habilidades":
+                        resultado["habilidades"] = getHabilidades(dataPokemon)
+                        break
+                    case "todas":
+                        resultado = getTodas(dataPokemon)
+                        break
+                }
+            }
+        }
+        catch (Exception e) {
+            resultado["error"] = "La informacion solicitada es invalida"
+        }
+        finally {
+            driver.quit()
+            render resultado as JSON
+        }
+    }
+
+    private String getSprite(LinkedHashMap<String, Object> dataPokemon) {
+        return dataPokemon.sprites.front_default
+    }
+
+    private String getEvolucion(String nombrePokemon) {
+        String apiUrl = "https://pokeapi.co/api/v2/pokemon-species/$nombrePokemon"
+        driver.get(apiUrl)
+        
+        String dataPokemonSpeciesString = driver.findElement(By.tagName("body")).getText()
+        LinkedHashMap<String, Object> speciesData = new groovy.json.JsonSlurper().parseText(dataPokemonSpeciesString)
+
+        String evolutionChainUrl = speciesData.evolution_chain.url
+        driver.get(evolutionChainUrl)
+
+        String dataEvolutionChainString = driver.findElement(By.tagName("body")).getText()
+        LinkedHashMap<String, Object> evolutionChainData = new groovy.json.JsonSlurper().parseText(dataEvolutionChainString)
+
+        LinkedHashMap<String, Object> chain = evolutionChainData.chain
+        String pokemonNombreChain = chain.species.name
+
+        while (pokemonNombreChain != nombrePokemon && chain.evolves_to.size() > 0) {
+            chain = chain.evolves_to[0]
+            pokemonNombreChain = chain.species.name
+        }
+
+        if (pokemonNombreChain == nombrePokemon && chain.evolves_to.size() > 0) {
+            return chain.evolves_to[0].species.name
+        } else {
+            return "No se encontró la siguiente evolución para $nombrePokemon"
+        }
+    }
+
+    private String[] getHabilidades(LinkedHashMap<String, Object> dataPokemon) {
+        def habilidades = dataPokemon.abilities.collect { it.ability.name }
+        return habilidades
+    }
+
+    private LinkedHashMap<String, Object> getTodas(LinkedHashMap<String, Object> dataPokemon) {
+        LinkedHashMap<String, Object> resultado = []
+        resultado["sprite"] = getSprite(dataPokemon)
+        resultado["habilidades"] = getHabilidades(dataPokemon)
+        resultado["evolucion"] = getEvolucion(dataPokemon.name)
+
+        return resultado
     }
 }
