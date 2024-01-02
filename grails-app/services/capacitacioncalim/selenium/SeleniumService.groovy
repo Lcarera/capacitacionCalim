@@ -19,42 +19,47 @@ import org.openqa.selenium.remote.RemoteWebDriver
 import org.openqa.selenium.remote.UselessFileDetector
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
+import org.openqa.selenium.support.ui.Select
+
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
 class SeleniumService {
     private WebDriver inicializarDriver(String downloadPath) throws AssertionError{
-		Map<String, Object> prefsMap = new HashMap<String, Object>()
-		prefsMap.put("profile.default_content_settings.popups", 0)
-		prefsMap.put("download.prompt_for_download", "false")
-		prefsMap.put("download.directory_upgrade", "true")
-		prefsMap.put("safebrowsing.enabled", "true")
-		prefsMap.put("plugins.always_open_pdf_externally", true)
-		prefsMap.put("plugins.plugins_disabled", "Chrome PDF Viewer")
-		
+        Map<String, Object> prefsMap = new HashMap<String, Object>()
+        prefsMap.put("profile.default_content_settings.popups", 0)
+        prefsMap.put("download.prompt_for_download", "false")
+        prefsMap.put("download.directory_upgrade", "true")
+        prefsMap.put("safebrowsing.enabled", "true")
+        prefsMap.put("plugins.always_open_pdf_externally", true)
+        prefsMap.put("plugins.plugins_disabled", "Chrome PDF Viewer")
+
         File carpeta = new File(downloadPath)
         if(!carpeta.exists())
             carpeta.mkdirs()
-    
-		prefsMap.put("download.default_directory", downloadPath)
-		prefsMap.put("savefile.default_directory", downloadPath)
 
-		ChromeOptions options = new ChromeOptions()
-		options.addArguments("--window-size=1400,900")
+        prefsMap.put("download.default_directory", downloadPath)
+        prefsMap.put("savefile.default_directory", downloadPath)
 
-		options.setExperimentalOption("prefs", prefsMap)
-		options.addArguments("--test-type")
-        System.setProperty("webdriver.chrome.driver","../chromedriver_linux64/chromedriver");
-		
-		options.addArguments('--kiosk-printing')
-		System.setProperty("webdriver.chrome.args", "--disable-logging");
-		System.setProperty("webdriver.chrome.silentOutput", "true");
-		options.addArguments("--disable-extensions")
 
+        ChromeOptions options = new ChromeOptions()
+        options.addArguments("--window-size=1400,900")
+
+        options.setExperimentalOption("prefs", prefsMap)
+        options.addArguments("--test-type")
+        System.setProperty("webdriver.chrome.driver","chromedriver_linux64/chromedriver");
+
+        options.setBinary("/home/rggb/Documents/chrome-linux64/chrome");
+
+        options.addArguments('--kiosk-printing')
+        System.setProperty("webdriver.chrome.args", "--disable-logging");
+        System.setProperty("webdriver.chrome.silentOutput", "true");
+        options.addArguments("--disable-extensions")
+
+        WebDriver driver = new ChromeDriver(options)
 		
         driver.metaClass.remoto = false
-		
-		return driver
-	}    
+        return driver
+    }   
 }

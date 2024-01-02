@@ -4,15 +4,19 @@
     <title>Selenium Integration</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        function buscarVideoYoutube() {
-            var link = document.getElementById('videoLink').value;
-            var elemento = document.getElementById('infoElemento').value;
-            console.log(link + "    " + elemento)
-            $.ajax({
-                url: "${createLink(controller:'selenium', action:'videoyoutube')}",
-                data: { link: link, elemento: elemento }
-            });
-        }
+    function buscarVideoYoutube() {
+        var link = document.getElementById('videoLink').value;
+        var elemento = document.getElementById('infoElemento').value;
+        $.ajax({
+            url: "${createLink(controller:'selenium', action:'videoyoutube')}",
+            method: "POST",
+            data: { link: link, elemento: elemento },
+            success: function(data) {
+
+                document.getElementById('resultado').innerText = data;
+            }
+        });
+    }
     </script>
 </head>
 <body>
@@ -23,8 +27,7 @@
         <option value="likes">Likes</option>
     </select>
     <button onclick="buscarVideoYoutube()">Buscar</button>
-    
-    <!-- Mostrar el resultado aquí -->
+
     <div id="resultado"></div>
 
 </body>
