@@ -53,7 +53,6 @@ class SeleniumService {
 		options.addArguments("--disable-extensions")
 
 		
-        driver = new ChromeDriver(options)
         driver.metaClass.remoto = false
 		
 		return driver

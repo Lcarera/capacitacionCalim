@@ -10,7 +10,6 @@
             console.log(link + "    " + elemento)
             $.ajax({
                 url: "${createLink(controller:'selenium', action:'videoyoutube')}",
-                method: "POST",
                 data: { link: link, elemento: elemento }
             });
         }

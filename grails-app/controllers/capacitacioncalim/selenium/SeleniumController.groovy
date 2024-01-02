@@ -16,7 +16,6 @@ class SeleniumController {
         WebDriver driver = seleniumService.inicializarDriver("")
         driver.get(link)
         if (elemento == "likes"){
-            WebElement likes = driver.findElement(By.className("yt-spec-button-shape-next__button-text-content"))
             Thread.sleep(5000)
             likes.sendKeys("ChromeDriver");
             likes.submit();
