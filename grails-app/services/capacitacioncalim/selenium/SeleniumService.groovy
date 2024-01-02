@@ -22,6 +22,8 @@ import org.openqa.selenium.support.ui.WebDriverWait
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.util.concurrent.TimeUnit
+
 
 class SeleniumService {
     private WebDriver inicializarDriver(String downloadPath) throws AssertionError{
@@ -45,7 +47,7 @@ class SeleniumService {
 
 		options.setExperimentalOption("prefs", prefsMap)
 		options.addArguments("--test-type")
-        System.setProperty("webdriver.chrome.driver","../chromedriver_linux64/chromedriver");
+        System.setProperty("webdriver.chrome.driver","../chromedriver-linux64/chromedriver");
 		
 		options.addArguments('--kiosk-printing')
 		System.setProperty("webdriver.chrome.args", "--disable-logging");
@@ -53,30 +55,54 @@ class SeleniumService {
 		options.addArguments("--disable-extensions")
 
 		
-        driver = new ChromeDriver(options)
+        WebDriver driver = new ChromeDriver(options);
         driver.metaClass.remoto = false
 		
 		return driver
 	}    
 
-	public static buscarYoutube (String link) {
-        WebDriver driver = inicializarDriver();
-
-        driver.get(link);
-
-        driver.getTitle();
-
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
-
-        WebElement textBox = driver.findElement(By.name("my-text"));
-        WebElement submitButton = driver.findElement(By.cssSelector("button"));
-
-        textBox.sendKeys("Selenium");
-        submitButton.click();
-
-        WebElement message = driver.findElement(By.id("message"));
-        message.getText();
-
-        driver.quit();
+	public static getLikes (String link) {
+        WebDriver driver = new ChromeDriver();
+		try{
+			driver.get(link);
+ 			WebDriverWait wait = new WebDriverWait(driver, 20);
+ 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='top-level-buttons-computed']/segmented-like-dislike-button-view-model/yt-smartimation/div/div/like-button-view-model/toggle-button-view-model/button/div[2]")));
+           	WebElement likesElement = driver.findElement(By.xpath("//*[@id='top-level-buttons-computed']/segmented-like-dislike-button-view-model/yt-smartimation/div/div/like-button-view-model/toggle-button-view-model/button/div[2]"));
+        	String informacion = likesElement.getText();
+		return informacion
+		} finally {
+			driver.quit();
+		}
     }
+
+	public static getVistas (String link) {
+        WebDriver driver = new ChromeDriver();
+		try{
+			driver.get(link);
+ 			WebDriverWait wait = new WebDriverWait(driver, 20);
+ 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='info']/span[1]")));
+           	WebElement vistasElement = driver.findElement(By.xpath("//*[@id='info']/span[1]"));
+        	String informacion = vistasElement.getText();
+		return informacion
+		} finally {
+			driver.quit();
+		}
+    }
+
+	public static getDescripcion (String link) {
+        WebDriver driver = new ChromeDriver();
+		try{
+			driver.get(link);
+ 			WebDriverWait wait = new WebDriverWait(driver, 20);
+ 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='snippet']")));
+           	WebElement descripcionElement = driver.findElement(By.xpath("//*[@id='snippet']"));
+
+			descripcionElement.click();
+
+        	String informacion = descripcionElement.getText();
+		return informacion
+		} finally {
+			driver.quit();
+		}
+    }	
 }

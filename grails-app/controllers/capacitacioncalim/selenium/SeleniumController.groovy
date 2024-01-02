@@ -14,17 +14,35 @@ class SeleniumController {
    def seleniumService
 
     def index() {
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.selenium.dev/selenium/web/web-form.html");
-        driver.getTitle();
-        driver.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
-        WebElement textBox = driver.findElement(By.name("my-text"));
-        WebElement submitButton = driver.findElement(By.cssSelector("button"));
-        textBox.sendKeys("Selenium");
-        submitButton.click();
-        WebElement message = driver.findElement(By.id("message"));
-        driver.quit();
+        render (view: 'list')
     }
 
+    def obtenerInformacion() {
+            def url = params.url
+            def opcion = params.opcion
+
+            try {
+                def String informacion;
+
+                switch(opcion) {
+                case "likes":
+                    informacion = seleniumService.getLikes(url)
+                    break
+                case "descripcion":
+                    informacion = seleniumService.getDescripcion(url)
+                    break
+                case "vistas":
+                    informacion = seleniumService.getVistas(url)
+                    break
+                default:
+                    throw new IllegalArgumentException("Opción no válida: $opcion")
+                }
+
+                render (view: 'resultado', model: [informacion: informacion])
+            } catch (Exception e){
+                println(e)       
+                render (view: 'list')         
+            }
+        }
     
 }
