@@ -9,9 +9,11 @@ class SeleniumController{
     
     def seleniumService
     
-    def index() {
-        render (view: 'indexsel')
-    }
+    /*def index() {
+        render(view: 'buscarVideo')
+    }*/
+
+    def buscarVideo() {}
 
     def buscarUrl(String tituloVideo){
         WebDriver driver = seleniumService.inicializarDriver("");

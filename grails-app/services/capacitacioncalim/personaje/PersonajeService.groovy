@@ -64,6 +64,8 @@ class PersonajeService {
         return Personaje.get(id)
     }
 
+    
+
     public Personaje update(PersonajeCommand command) {
         assert command.nombre != null: "El nombre no es validofinerror"
         assert armaId != null: "Seleccione un armafinerror"
