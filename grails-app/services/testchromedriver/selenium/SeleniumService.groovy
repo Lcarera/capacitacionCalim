@@ -26,7 +26,7 @@ import java.nio.file.Paths
 class SeleniumService {
 	private WebDriver driver
 
-    private WebDriver inicializarDriver(String downloadPath) throws AssertionError{
+	public WebDriver inicializarDriver(String downloadPath) throws AssertionError{
 		Map<String, Object> prefsMap = new HashMap<String, Object>()
 		prefsMap.put("profile.default_content_settings.popups", 0)
 		prefsMap.put("download.prompt_for_download", "false")

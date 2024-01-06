@@ -1,13 +1,14 @@
 package testchromedriver.selenium
 
 import grails.converters.JSON
+import groovy.json.JsonException
+import groovy.json.JsonSlurper
+
 import java.util.regex.Matcher
-import java.util.LinkedHashMap
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
-import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.support.ui.WebDriverWait
 import org.openqa.selenium.support.ui.ExpectedConditions
 
@@ -54,7 +55,7 @@ class SeleniumController {
                     WebElement botonLikes = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#top-level-buttons-computed like-button-view-model button")))
                     String ariaLabelBotonLikes = botonLikes.getAttribute("aria-label")
 
-                    def patron = /al igual que otras (\d+(,\d+)*) personas/
+                    String patron = /al igual que otras (\d+(,\d+)*) personas/
                     Matcher matcher = (ariaLabelBotonLikes =~ patron)
                     matcher.find()
                     resultado = matcher.group(1)
@@ -89,42 +90,54 @@ class SeleniumController {
         }
     }
 
-    def ajaxGetPokeAPIData(SeleniumCommand command) {
-        String nombrePokemon = command.busqueda
-        driver = seleniumService.inicializarDriver("")
+    private boolean validatePokeAPICommand(SeleniumCommand command) {
+        return command.buscarPor && command.busqueda && command.busqueda =~ /^[a-zA-Z ]+$/ && ['sprite', 'evolucion', 'habilidades', 'todas'].contains(command.buscarPor)
+    }
 
+    def ajaxGetPokeAPIData(SeleniumCommand command) {
         LinkedHashMap<String, Object> resultado = []
 
-        try {
-            if (command.buscarPor == "evolucion") {
-                resultado["evolucion"] = getEvolucion(nombrePokemon)
-            } else {
-                String apiUrl = "https://pokeapi.co/api/v2/pokemon/$nombrePokemon"
-                driver.get(apiUrl)
+        if (!validatePokeAPICommand(command)) {
+            resultado["error"] = "La informacion solicitada es invalida"
+        } else {
+            String nombrePokemon = command.busqueda
+            driver = seleniumService.inicializarDriver("")
 
-                String dataPokemonString = driver.findElement(By.tagName("body")).getText()
-                LinkedHashMap<String, Object> dataPokemon = new groovy.json.JsonSlurper().parseText(dataPokemonString)
+            try {
+                if (command.buscarPor == "evolucion") {
+                    resultado["evolucion"] = getEvolucion(nombrePokemon)
+                } else {
+                    String apiUrl = "https://pokeapi.co/api/v2/pokemon/$nombrePokemon"
+                    driver.get(apiUrl)
 
-                switch(command.buscarPor) {
-                    case "sprite":
-                        resultado["sprite"] = getSprite(dataPokemon)
-                        break
-                    case "habilidades":
-                        resultado["habilidades"] = getHabilidades(dataPokemon)
-                        break
-                    case "todas":
-                        resultado = getTodas(dataPokemon)
-                        break
+                    String dataPokemonString = driver.findElement(By.tagName("body")).getText()
+                    LinkedHashMap<String, Object> dataPokemon = new JsonSlurper().parseText(dataPokemonString) as LinkedHashMap<String, Object>
+
+                    switch(command.buscarPor) {
+                        case "sprite":
+                            resultado["sprite"] = getSprite(dataPokemon)
+                            break
+                        case "habilidades":
+                            resultado["habilidades"] = getHabilidades(dataPokemon)
+                            break
+                        case "todas":
+                            resultado = getTodas(dataPokemon)
+                            break
+                    }
                 }
             }
+            catch (JsonException e) {
+                resultado["error"] = "No se ha encontrado un pokemon con ese nombre"
+            }
+            catch (Exception e) {
+                resultado["error"] = "La informacion solicitada es invalida"
+            }
+            finally {
+                driver.quit()
+            }
         }
-        catch (Exception e) {
-            resultado["error"] = "La informacion solicitada es invalida"
-        }
-        finally {
-            driver.quit()
-            render resultado as JSON
-        }
+
+        render resultado as JSON
     }
 
     private String getSprite(LinkedHashMap<String, Object> dataPokemon) {
@@ -136,15 +149,15 @@ class SeleniumController {
         driver.get(apiUrl)
         
         String dataPokemonSpeciesString = driver.findElement(By.tagName("body")).getText()
-        LinkedHashMap<String, Object> speciesData = new groovy.json.JsonSlurper().parseText(dataPokemonSpeciesString)
+        LinkedHashMap<String, Object> speciesData = new JsonSlurper().parseText(dataPokemonSpeciesString) as LinkedHashMap<String, Object>
 
         String evolutionChainUrl = speciesData.evolution_chain.url
         driver.get(evolutionChainUrl)
 
         String dataEvolutionChainString = driver.findElement(By.tagName("body")).getText()
-        LinkedHashMap<String, Object> evolutionChainData = new groovy.json.JsonSlurper().parseText(dataEvolutionChainString)
+        LinkedHashMap<String, Object> evolutionChainData = new JsonSlurper().parseText(dataEvolutionChainString) as LinkedHashMap<String, Object>
 
-        LinkedHashMap<String, Object> chain = evolutionChainData.chain
+        LinkedHashMap<String, Object> chain = evolutionChainData.chain as LinkedHashMap<String, Object>
         String pokemonNombreChain = chain.species.name
 
         while (pokemonNombreChain != nombrePokemon && chain.evolves_to.size() > 0) {

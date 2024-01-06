@@ -28,8 +28,7 @@
 
         botonSubmit.addEventListener("click", async (e) => {
             e.preventDefault();
-            
-            const respuesta = await fetch('${createLink(controller:"selenium", action:"ajaxGetVideoData")}', {
+            const respuesta = await fetch('${createLink(controller: "selenium", action:"ajaxGetVideoData")}', {
                 method: 'POST',
                 body: new FormData(formulario)
             })
